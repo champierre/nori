@@ -80,7 +80,8 @@ pub struct Summary {
 /// overwritten; on failure nothing is left behind.
 ///
 /// `jobs` inputs are parsed at once on separate threads. Parsing dominates
-/// for inputs with many objects, so this scales nearly linearly with cores,
+/// for inputs with many objects, so several jobs cut the time well below the
+/// sequential one (writing stays serial, so not in proportion to the cores),
 /// at the cost of holding up to about twice that many inputs in memory.
 pub fn merge<P: AsRef<Path> + Sync>(
     inputs: &[P],

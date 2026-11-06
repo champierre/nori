@@ -14,7 +14,69 @@ nori -o merged.pdf a.pdf b.pdf c.pdf
 
 The same 14-page PDF was copied 10 to 2,000 times and merged with nori, with [qpdf](https://qpdf.sourceforge.io/), and with the merge code from the [lopdf](https://github.com/J-F-Liu/lopdf) README. Wall-clock time, peak memory and output size were measured; see [How the comparison was made](#how-the-comparison-was-made).
 
-<!-- BENCH -->
+Measured on a Mac (Intel Core i5-8500B, 6 cores, 16 GB, macOS 15.8) with qpdf 12.4.2, lopdf 0.47.0 and nori 0.1.0. Values are the median of 5 runs; memory is peak RSS. `nori -j6` parses six inputs at a time. A `-` marks a case not run because the next step would not fit in memory (on the Chrome PDF, qpdf needs 5 GB at 1,000 files and lopdf 2.6 GB at 100).
+
+### PDF made by LibreOffice (14 pages, 58 objects, 73 KB)
+
+Time
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 22 ms | 18 ms | 151 ms | 26 ms |
+| 100 | 1,400 | 76 ms | 49 ms | 1.34 s | 141 ms |
+| 1,000 | 14,000 | 577 ms | 331 ms | 15.08 s | 2.31 s |
+| 2,000 | 28,000 | 1.30 s | 762 ms | 31.38 s | 6.63 s |
+
+Peak memory
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 2.2 MB | 4.2 MB | 5.8 MB | 5.8 MB |
+| 100 | 1,400 | 3.3 MB | 5.3 MB | 24.9 MB | 48.3 MB |
+| 1,000 | 14,000 | 4.7 MB | 7.1 MB | 211.2 MB | 461.6 MB |
+| 2,000 | 28,000 | 5.9 MB | 8.5 MB | 419.1 MB | 918.3 MB |
+
+Output size
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 0.7 MB | 0.7 MB | 0.7 MB | 0.7 MB |
+| 100 | 1,400 | 6.6 MB | 6.6 MB | 6.7 MB | 6.7 MB |
+| 1,000 | 14,000 | 65.9 MB | 65.9 MB | 66.8 MB | 67.2 MB |
+| 2,000 | 28,000 | 131.9 MB | 131.9 MB | 133.6 MB | 134.5 MB |
+
+On inputs with few objects, nori is 7 to 24 times faster than qpdf and uses 6 MB even for 2,000 files (28,000 pages). qpdf and lopdf grow in proportion to the number of inputs.
+
+### PDF made by Chrome (14 pages, 3,002 objects, 670 KB)
+
+Time
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 311 ms | 157 ms | 399 ms | 669 ms |
+| 100 | 1,400 | 2.74 s | 1.44 s | 3.71 s | 6.87 s |
+| 1,000 | 14,000 | 28.01 s | 14.01 s | 85.33 s | - |
+| 2,000 | 28,000 | 54.33 s | 28.71 s | - | - |
+
+Peak memory
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 51.9 MB | 117.6 MB | 70.3 MB | 272.1 MB |
+| 100 | 1,400 | 76.6 MB | 138.5 MB | 672.8 MB | 2.63 GB |
+| 1,000 | 14,000 | 79.6 MB | 210.8 MB | 5.05 GB | - |
+| 2,000 | 28,000 | 83.4 MB | 253.6 MB | - | - |
+
+Output size
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 2.6 MB | 2.6 MB | 2.7 MB | 6.1 MB |
+| 100 | 1,400 | 26.6 MB | 26.6 MB | 26.7 MB | 62.2 MB |
+| 1,000 | 14,000 | 267.7 MB | 267.7 MB | 268.3 MB | - |
+| 2,000 | 28,000 | 536.0 MB | 536.0 MB | - | - |
+
+On inputs with many objects, lopdf takes 24 ms to parse each file, which is 80% of nori's time. nori is still 1.3 to 3 times faster than qpdf, and 2.5 to 6 times with `-j6`. qpdf reaches 5 GB at 1,000 files where nori uses 80 MB, and nori stays at 83 MB for 2,000 files. lopdf's output is twice the size because the README's merge code keeps objects that no page refers to, such as the structure tree of tagged PDF.
 
 ## Installation
 

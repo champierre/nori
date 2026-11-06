@@ -128,18 +128,21 @@ def main():
         sys.exit("no tools found")
     OUTPUTS.mkdir(exist_ok=True)
 
-    results = {
+    # Fixtures measured earlier stay in the file, so each can be run with its own limits.
+    results = json.loads(RESULTS.read_text()) if RESULTS.is_file() else {}
+    results.update({
         "platform": platform.platform(),
         "machine": platform.machine(),
         "cpu_count": os.cpu_count(),
         "runs": args.runs,
-        "tools": {name: version(binary) for name, (binary, _) in available.items()},
-        "fixtures": [],
-    }
+        "tools": {name: version(name, binary) for name, (binary, _) in available.items()},
+    })
+    results["fixtures"] = [f for f in results.get("fixtures", []) if f["name"] not in {x.name for x in fixtures}]
     for fixture in fixtures:
         entry = {"name": fixture.name, "bytes": fixture.stat().st_size, "pages": page_count(args.qpdf, fixture),
                  "objects": object_count(args.qpdf, fixture), "cases": []}
         results["fixtures"].append(entry)
+        results["fixtures"].sort(key=lambda f: f["name"])
         print(f"== {fixture.name}: {entry['pages']} pages, {entry['objects']} objects, {human_size(entry['bytes'])}")
         for count in counts:
             inputs = prepare_inputs(fixture, count)
@@ -158,7 +161,12 @@ def main():
     print_tables(results)
 
 
-def version(binary):
+def version(name, binary):
+    if name == "lopdf":
+        # lopdf-merge has no --version; the crate version is what matters.
+        lock = (ROOT / "Cargo.lock").read_text()
+        match = re.search(r'name = "lopdf"\nversion = "([^"]+)"', lock)
+        return f"lopdf {match.group(1)}" if match else ""
     out = subprocess.run([binary, "--version"], capture_output=True, text=True).stdout.strip().splitlines()
     return out[0] if out else ""
 
