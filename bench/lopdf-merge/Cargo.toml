@@ -1,0 +1,10 @@
+[package]
+name = "lopdf-merge"
+description = "Baseline for the benchmark: merges PDFs the way lopdf's README shows"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[dependencies]
+lopdf = { version = "0.47", default-features = false }

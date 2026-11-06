@@ -1,0 +1,23 @@
+[workspace]
+members = [".", "bench/lopdf-merge"]
+
+[package]
+name = "nori"
+description = "Merge many PDF files into one, fast and in constant memory"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+repository = "https://github.com/champierre/nori"
+rust-version = "1.88"
+
+[[bin]]
+name = "nori"
+path = "src/main.rs"
+
+[dependencies]
+lopdf = { version = "0.47", default-features = false }
+clap = { version = "4", features = ["derive"] }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

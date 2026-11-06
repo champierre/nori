@@ -1,0 +1,218 @@
+{
+  "platform": "macOS-10.16-x86_64-i386-64bit",
+  "machine": "x86_64",
+  "cpu_count": 6,
+  "runs": 2,
+  "tools": {
+    "nori": "nori 0.1.0",
+    "nori -j6": "nori 0.1.0",
+    "qpdf": "qpdf version 12.4.2",
+    "lopdf": ""
+  },
+  "fixtures": [
+    {
+      "name": "statement-chrome.pdf",
+      "bytes": 669914,
+      "pages": 14,
+      "objects": 3002,
+      "cases": [
+        {
+          "count": 10,
+          "pages": 140,
+          "input_bytes": 6699140,
+          "tools": {
+            "nori": {
+              "time_s": 0.30803253504564054,
+              "time_min_s": 0.2947204580414109,
+              "time_max_s": 0.3213446120498702,
+              "rss_bytes": 54913024.0,
+              "rss_max_bytes": 58396672,
+              "output_bytes": 2642782,
+              "pages": 140,
+              "check_ok": true
+            },
+            "nori -j6": {
+              "time_s": 0.15894601750187576,
+              "time_min_s": 0.15605719503946602,
+              "time_max_s": 0.1618348399642855,
+              "rss_bytes": 114401280.0,
+              "rss_max_bytes": 121749504,
+              "output_bytes": 2642782,
+              "pages": 140,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.3972582719870843,
+              "time_min_s": 0.3658888629870489,
+              "time_max_s": 0.4286276809871197,
+              "rss_bytes": 70277120.0,
+              "rss_max_bytes": 70287360,
+              "output_bytes": 2650296,
+              "pages": 140,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.6709885355085135,
+              "time_min_s": 0.633135611016769,
+              "time_max_s": 0.7088414600002579,
+              "rss_bytes": 271491072.0,
+              "rss_max_bytes": 272502784,
+              "output_bytes": 6071456,
+              "pages": 140,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 100,
+          "pages": 1400,
+          "input_bytes": 66991400,
+          "tools": {
+            "nori": {
+              "time_s": 2.5235286690003704,
+              "time_min_s": 2.5178096650051884,
+              "time_max_s": 2.5292476729955524,
+              "rss_bytes": 76615680.0,
+              "rss_max_bytes": 76640256,
+              "output_bytes": 26603170,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "nori -j6": {
+              "time_s": 1.3204899749835022,
+              "time_min_s": 1.3056331889820285,
+              "time_max_s": 1.3353467609849758,
+              "rss_bytes": 135221248.0,
+              "rss_max_bytes": 135479296,
+              "output_bytes": 26603170,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 3.6288267984928098,
+              "time_min_s": 3.597536613990087,
+              "time_max_s": 3.6601169829955325,
+              "rss_bytes": 672823296.0,
+              "rss_max_bytes": 672829440,
+              "output_bytes": 26667486,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 6.931599793490022,
+              "time_min_s": 6.778121452021878,
+              "time_max_s": 7.085078134958167,
+              "rss_bytes": 2633938944.0,
+              "rss_max_bytes": 2638155776,
+              "output_bytes": 62194043,
+              "pages": 1400,
+              "check_ok": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "statement-libreoffice.pdf",
+      "bytes": 72613,
+      "pages": 14,
+      "objects": 58,
+      "cases": [
+        {
+          "count": 10,
+          "pages": 140,
+          "input_bytes": 726130,
+          "tools": {
+            "nori": {
+              "time_s": 0.021826955518918112,
+              "time_min_s": 0.018428408016916364,
+              "time_max_s": 0.02522550302091986,
+              "rss_bytes": 2199552.0,
+              "rss_max_bytes": 2203648,
+              "output_bytes": 657715,
+              "pages": 140,
+              "check_ok": true
+            },
+            "nori -j6": {
+              "time_s": 0.020124944509007037,
+              "time_min_s": 0.017609763017389923,
+              "time_max_s": 0.02264012600062415,
+              "rss_bytes": 4216832.0,
+              "rss_max_bytes": 4247552,
+              "output_bytes": 657715,
+              "pages": 140,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.16625030498835258,
+              "time_min_s": 0.16605374502250925,
+              "time_max_s": 0.16644686495419592,
+              "rss_bytes": 5830656.0,
+              "rss_max_bytes": 5832704,
+              "output_bytes": 666446,
+              "pages": 140,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.02803789300378412,
+              "time_min_s": 0.02386220300104469,
+              "time_max_s": 0.03221358300652355,
+              "rss_bytes": 5808128.0,
+              "rss_max_bytes": 5816320,
+              "output_bytes": 670476,
+              "pages": 140,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 100,
+          "pages": 1400,
+          "input_bytes": 7261300,
+          "tools": {
+            "nori": {
+              "time_s": 0.06597567250719294,
+              "time_min_s": 0.06512965599540621,
+              "time_max_s": 0.06682168901897967,
+              "rss_bytes": 3522560.0,
+              "rss_max_bytes": 3629056,
+              "output_bytes": 6584598,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "nori -j6": {
+              "time_s": 0.05156934246770106,
+              "time_min_s": 0.04793268797220662,
+              "time_max_s": 0.0552059969631955,
+              "rss_bytes": 5386240.0,
+              "rss_max_bytes": 5488640,
+              "output_bytes": 6584598,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 1.3948245494975708,
+              "time_min_s": 1.3492866730084643,
+              "time_max_s": 1.4403624259866774,
+              "rss_bytes": 24748032.0,
+              "rss_max_bytes": 24780800,
+              "output_bytes": 6671226,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.15945128348539583,
+              "time_min_s": 0.15423434000695124,
+              "time_max_s": 0.16466822696384043,
+              "rss_bytes": 48678912.0,
+              "rss_max_bytes": 49041408,
+              "output_bytes": 6711990,
+              "pages": 1400,
+              "check_ok": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
