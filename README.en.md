@@ -14,16 +14,32 @@ nori -o merged.pdf a.pdf b.pdf c.pdf
 
 PDFs picked at random from Wikimedia Commons were merged with nori, with [qpdf](https://qpdf.sourceforge.io/), and with the merge code from the [lopdf](https://github.com/J-F-Liu/lopdf) README. Wall-clock time, peak memory and output size were measured; see [How the comparison was made](#how-the-comparison-was-made) for the procedure and how the inputs were chosen.
 
-Measured on a Mac (Intel Core i5-8500B, 6 cores, 16 GB, macOS 15.8) with qpdf 12.4.2, lopdf 0.47.0 and nori 0.1.0. Values are the median of 5 runs; memory is peak RSS. `nori -j6` parses six inputs at a time. A `-` marks a case not run because the next step would not fit in memory.
+Measured on two machines, a Mac and a Linux box. The input PDFs are the same, but the numbers depend on the environment. Values are the median of 5 runs; memory is peak RSS. `nori -j6` and `nori -j8` parse as many inputs at a time as the machine has cores. A `-` marks a case not run because the next step would not fit in memory.
+
+| | Mac | Linux |
+|---|---|---|
+| Machine | Intel Core i5-8500B (6 cores), 16 GB | AMD Ryzen 7 6800H (8 cores, 16 threads), GEEKOM A6, 32 GB |
+| OS | macOS 15.8 | Omarchy 4.0.6 (based on Arch Linux), Linux 7.2.8 |
+| Tools | nori 0.1.0, qpdf 12.4.2, lopdf 0.47.0 | nori 0.1.0, qpdf 12.4.2, lopdf 0.47.0 |
 
 ### 40 PDFs of every make, merged once
 
 40 random files (277 pages, 33.8 MB in all: official journals, regulations, scanned newspapers and notebooks, Internet Archive books) were merged in one go, in name order. All four tools produced a 277-page output that passes qpdf's check. The list is in `bench/public-pdfs.json`.
 
+Mac (Intel Core i5-8500B)
+
 | | nori | nori -j6 | qpdf | lopdf |
 |---|---:|---:|---:|---:|
 | Time | 88 ms | 53 ms | 1.43 s | 170 ms |
 | Peak memory | 21.3 MB | 36.8 MB | 30.3 MB | 111.2 MB |
+| Output size | 32.0 MB | 32.0 MB | 31.9 MB | 33.7 MB |
+
+Linux (AMD Ryzen 7 6800H)
+
+| | nori | nori -j8 | qpdf | lopdf |
+|---|---:|---:|---:|---:|
+| Time | 37 ms | 28 ms | 690 ms | 94 ms |
+| Peak memory | 16.4 MB | 47.8 MB | 36.8 MB | 102.5 MB |
 | Output size | 32.0 MB | 32.0 MB | 31.9 MB | 33.7 MB |
 
 ### One PDF copied 10 to 2,000 times
@@ -38,7 +54,7 @@ Three of the 40 were chosen for how differently they are built.
 
 #### UK regulation (4 pages, 36 objects, 40 KB)
 
-Time
+Time (Mac)
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
@@ -47,7 +63,16 @@ Time
 | 1,000 | 4,000 | 522 ms | 360 ms | 3.28 s | 1.49 s |
 | 2,000 | 8,000 | 1.12 s | 626 ms | 5.86 s | 3.61 s |
 
-Peak memory
+Time (Linux)
+
+| Files | Pages | nori | nori -j8 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 40 | 5 ms | 5 ms | 17 ms | 8 ms |
+| 100 | 400 | 18 ms | 12 ms | 111 ms | 46 ms |
+| 1,000 | 4,000 | 136 ms | 76 ms | 1.22 s | 515 ms |
+| 2,000 | 8,000 | 279 ms | 148 ms | 2.44 s | 1.19 s |
+
+Peak memory (Mac)
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
@@ -56,18 +81,27 @@ Peak memory
 | 1,000 | 4,000 | 4.6 MB | 7.5 MB | 212.8 MB | 349.7 MB |
 | 2,000 | 8,000 | 5.7 MB | 8.5 MB | 422.5 MB | 694.7 MB |
 
+Peak memory (Linux)
+
+| Files | Pages | nori | nori -j8 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 40 | 4.0 MB | 5.4 MB | 14.3 MB | 6.4 MB |
+| 100 | 400 | 4.7 MB | 7.4 MB | 35.7 MB | 34.8 MB |
+| 1,000 | 4,000 | 5.3 MB | 8.6 MB | 243.9 MB | 321.0 MB |
+| 2,000 | 8,000 | 6.0 MB | 9.6 MB | 476.6 MB | 640.1 MB |
+
 Output size
 
-| Files | Pages | nori | nori -j6 | qpdf | lopdf |
-|---:|---:|---:|---:|---:|---:|
-| 10 | 40 | 0.4 MB | 0.4 MB | 0.4 MB | 0.4 MB |
-| 100 | 400 | 3.8 MB | 3.8 MB | 3.8 MB | 3.8 MB |
-| 1,000 | 4,000 | 38.4 MB | 38.4 MB | 38.4 MB | 38.2 MB |
-| 2,000 | 8,000 | 76.8 MB | 76.8 MB | 76.8 MB | 76.3 MB |
+| Files | Pages | nori | qpdf | lopdf |
+|---:|---:|---:|---:|---:|
+| 10 | 40 | 0.4 MB | 0.4 MB | 0.4 MB |
+| 100 | 400 | 3.8 MB | 3.8 MB | 3.8 MB |
+| 1,000 | 4,000 | 38.4 MB | 38.4 MB | 38.2 MB |
+| 2,000 | 8,000 | 76.8 MB | 76.8 MB | 76.3 MB |
 
 #### EU Official Journal (7 pages, 478 objects, 540 KB)
 
-Time
+Time (Mac)
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
@@ -76,7 +110,16 @@ Time
 | 1,000 | 7,000 | 3.46 s | 2.03 s | 8.59 s | - |
 | 2,000 | 14,000 | 6.14 s | 3.96 s | 17.95 s | - |
 
-Peak memory
+Time (Linux)
+
+| Files | Pages | nori | nori -j8 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 70 | 17 ms | 14 ms | 53 ms | 48 ms |
+| 100 | 700 | 114 ms | 75 ms | 479 ms | 442 ms |
+| 1,000 | 7,000 | 1.15 s | 637 ms | 4.98 s | 4.31 s |
+| 2,000 | 14,000 | 2.25 s | 1.30 s | 9.82 s | 9.11 s |
+
+Peak memory (Mac)
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
@@ -85,18 +128,27 @@ Peak memory
 | 1,000 | 7,000 | 14.8 MB | 33.4 MB | 1.02 GB | - |
 | 2,000 | 14,000 | 16.3 MB | 36.7 MB | 2.03 GB | - |
 
+Peak memory (Linux)
+
+| Files | Pages | nori | nori -j8 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 70 | 7.1 MB | 24.3 MB | 23.8 MB | 40.1 MB |
+| 100 | 700 | 7.6 MB | 32.9 MB | 126.6 MB | 369.8 MB |
+| 1,000 | 7,000 | 9.0 MB | 40.5 MB | 1.16 GB | 3.67 GB |
+| 2,000 | 14,000 | 9.7 MB | 42.6 MB | 2.30 GB | 7.35 GB |
+
 Output size
 
-| Files | Pages | nori | nori -j6 | qpdf | lopdf |
-|---:|---:|---:|---:|---:|---:|
-| 10 | 70 | 4.9 MB | 4.9 MB | 4.9 MB | 5.4 MB |
-| 100 | 700 | 49.2 MB | 49.2 MB | 49.2 MB | 54.1 MB |
-| 1,000 | 7,000 | 492.0 MB | 492.0 MB | 492.0 MB | - |
-| 2,000 | 14,000 | 984.2 MB | 984.2 MB | 984.3 MB | - |
+| Files | Pages | nori | qpdf | lopdf |
+|---:|---:|---:|---:|---:|
+| 10 | 70 | 4.9 MB | 4.9 MB | 5.4 MB |
+| 100 | 700 | 49.2 MB | 49.2 MB | 54.1 MB |
+| 1,000 | 7,000 | 492.0 MB | 492.0 MB | 542.7 MB |
+| 2,000 | 14,000 | 984.2 MB | 984.3 MB | 1.09 GB |
 
 #### Scanned newspaper (1 page, 9 objects, 610 KB)
 
-Time
+Time (Mac)
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
@@ -105,7 +157,16 @@ Time
 | 1,000 | 1,000 | 715 ms | 661 ms | 1.16 s | 1.62 s |
 | 2,000 | 2,000 | 1.53 s | 1.41 s | 2.60 s | - |
 
-Peak memory
+Time (Linux)
+
+| Files | Pages | nori | nori -j8 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 10 | 9 ms | 8 ms | 18 ms | 12 ms |
+| 100 | 100 | 63 ms | 24 ms | 83 ms | 83 ms |
+| 1,000 | 1,000 | 671 ms | 197 ms | 813 ms | 853 ms |
+| 2,000 | 2,000 | 1.37 s | 387 ms | 1.62 s | 1.80 s |
+
+Peak memory (Mac)
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
@@ -114,18 +175,29 @@ Peak memory
 | 1,000 | 1,000 | 4.6 MB | 11.7 MB | 30.6 MB | 1.26 GB |
 | 2,000 | 2,000 | 5.4 MB | 11.8 MB | 56.7 MB | - |
 
+Peak memory (Linux)
+
+| Files | Pages | nori | nori -j8 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 10 | 5.9 MB | 12.8 MB | 12.7 MB | 16.1 MB |
+| 100 | 100 | 5.9 MB | 20.9 MB | 15.7 MB | 128.9 MB |
+| 1,000 | 1,000 | 6.3 MB | 27.6 MB | 41.2 MB | 1.38 GB |
+| 2,000 | 2,000 | 6.9 MB | 29.2 MB | 69.8 MB | 2.57 GB |
+
 Output size
 
-| Files | Pages | nori | nori -j6 | qpdf | lopdf |
-|---:|---:|---:|---:|---:|---:|
-| 10 | 10 | 6.1 MB | 6.1 MB | 6.1 MB | 6.1 MB |
-| 100 | 100 | 61.1 MB | 61.1 MB | 61.1 MB | 61.1 MB |
-| 1,000 | 1,000 | 610.7 MB | 610.7 MB | 610.8 MB | 610.9 MB |
-| 2,000 | 2,000 | 1.22 GB | 1.22 GB | 1.22 GB | - |
+| Files | Pages | nori | qpdf | lopdf |
+|---:|---:|---:|---:|---:|
+| 10 | 10 | 6.1 MB | 6.1 MB | 6.1 MB |
+| 100 | 100 | 61.1 MB | 61.1 MB | 61.1 MB |
+| 1,000 | 1,000 | 610.7 MB | 610.8 MB | 610.9 MB |
+| 2,000 | 2,000 | 1.22 GB | 1.22 GB | 1.22 GB |
 
 ### Japanese PDFs, merged once
 
 20 files picked at random from Commons’ "Japanese-language PDF files" category (115 pages, 8.9 MB in all: government papers, laws, scanned notices, sheet music, Google Docs exports) merged in one go. All four tools produced a 115-page output that passes qpdf's check. The list is in `bench/public-pdfs-ja.json`.
+
+Mac (Intel Core i5-8500B)
 
 | | nori | nori -j6 | qpdf | lopdf |
 |---|---:|---:|---:|---:|
@@ -133,11 +205,19 @@ Output size
 | Peak memory | 17.1 MB | 21.7 MB | 14.7 MB | 39.7 MB |
 | Output size | 8.7 MB | 8.7 MB | 8.7 MB | 8.9 MB |
 
+Linux (AMD Ryzen 7 6800H)
+
+| | nori | nori -j8 | qpdf | lopdf |
+|---|---:|---:|---:|---:|
+| Time | 24 ms | 18 ms | 53 ms | 43 ms |
+| Peak memory | 12.8 MB | 25.3 MB | 18.7 MB | 35.1 MB |
+| Output size | 8.7 MB | 8.7 MB | 8.7 MB | 8.9 MB |
+
 ### A Japanese government bill copied 10 to 2,000 times
 
 [Comparison table of a bill on smartphone software competition](https://commons.wikimedia.org/wiki/File:スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案_新旧対照条文.pdf) (Cabinet Secretariat, CC BY 4.0): 14 pages, 65 objects, 140 KB, made with JUST PDF 4 with MS Mincho subsets embedded. The closest of the inputs to a CJK business form.
 
-Time
+Time (Mac)
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
@@ -146,7 +226,16 @@ Time
 | 1,000 | 14,000 | 711 ms | 406 ms | 3.83 s | 2.59 s |
 | 2,000 | 28,000 | 1.28 s | 775 ms | 7.53 s | 7.47 s |
 
-Peak memory
+Time (Linux)
+
+| Files | Pages | nori | nori -j8 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 7 ms | 6 ms | 24 ms | 11 ms |
+| 100 | 1,400 | 29 ms | 18 ms | 186 ms | 89 ms |
+| 1,000 | 14,000 | 283 ms | 130 ms | 2.11 s | 1.36 s |
+| 2,000 | 28,000 | 503 ms | 258 ms | 4.20 s | 3.48 s |
+
+Peak memory (Mac)
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
@@ -155,21 +244,31 @@ Peak memory
 | 1,000 | 14,000 | 5.7 MB | 10.2 MB | 344.5 MB | 773.4 MB |
 | 2,000 | 28,000 | 8.0 MB | 11.5 MB | 686.4 MB | 1.52 GB |
 
+Peak memory (Linux)
+
+| Files | Pages | nori | nori -j8 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 5.0 MB | 8.3 MB | 15.8 MB | 9.9 MB |
+| 100 | 1,400 | 5.1 MB | 10.4 MB | 50.1 MB | 72.3 MB |
+| 1,000 | 14,000 | 5.8 MB | 13.2 MB | 389.7 MB | 696.6 MB |
+| 2,000 | 28,000 | 6.6 MB | 14.2 MB | 768.2 MB | 1.39 GB |
+
 Output size
 
-| Files | Pages | nori | nori -j6 | qpdf | lopdf |
-|---:|---:|---:|---:|---:|---:|
-| 10 | 140 | 1.3 MB | 1.3 MB | 1.3 MB | 1.3 MB |
-| 100 | 1,400 | 13.5 MB | 13.5 MB | 13.5 MB | 13.4 MB |
-| 1,000 | 14,000 | 135.0 MB | 135.0 MB | 135.0 MB | 134.4 MB |
-| 2,000 | 28,000 | 270.0 MB | 270.0 MB | 270.0 MB | 268.9 MB |
+| Files | Pages | nori | qpdf | lopdf |
+|---:|---:|---:|---:|---:|
+| 10 | 140 | 1.3 MB | 1.3 MB | 1.3 MB |
+| 100 | 1,400 | 13.5 MB | 13.5 MB | 13.4 MB |
+| 1,000 | 14,000 | 135.0 MB | 135.0 MB | 134.4 MB |
+| 2,000 | 28,000 | 270.0 MB | 270.0 MB | 268.9 MB |
 
 ### What the numbers say
 
-- With few objects per file, both speed and memory differ by orders of magnitude. Merging 2,000 copies of the regulation (8,000 pages) took nori 1.12 s and 5.7 MB, qpdf 5.9 s and 423 MB, lopdf 3.6 s and 695 MB. nori's memory barely moved from the 1.8 MB it used for 10 files
-- With many objects per file, memory still stays flat. The journal has 478 objects per file and takes longer to parse, yet nori is 2.9 times faster than qpdf, 4.5 times with `-j6`. At 2,000 files nori used 16 MB and qpdf 2 GB
-- With scanned images, the gap in time narrows. The newspaper has 9 objects per page, so merging is mostly copying image data. For 2,000 files (1.2 GB) nori took 1.53 s and qpdf 2.60 s, 1.7 times apart, but memory was 5.4 MB for nori, 57 MB for qpdf and 1.3 GB for lopdf at 1,000 files
-- CJK documents behave the same. The Japanese bill merged 2,000 times (28,000 pages) took nori 1.28 s and 8 MB, qpdf 7.5 s and 686 MB, lopdf 7.5 s and 1.5 GB
+- With few objects per file, both speed and memory differ by orders of magnitude. Merging 2,000 copies of the regulation (8,000 pages) took nori 1.12 s and 5.7 MB, qpdf 5.9 s and 423 MB, lopdf 3.6 s and 695 MB on the Mac; on Linux nori 0.28 s and 6.0 MB, qpdf 2.4 s and 477 MB, lopdf 1.2 s and 640 MB. nori's memory barely moved from what it used for 10 files (1.8 MB on the Mac, 4.0 MB on Linux)
+- With many objects per file, memory still stays flat. The journal has 478 objects per file and takes longer to parse, yet nori is 2.9 times faster than qpdf (4.4 on Linux), 4.5 times with `-j6` or `-j8` (7.6). At 2,000 files nori used 10 to 16 MB and qpdf 2 to 2.3 GB; lopdf reached 7.4 GB on Linux
+- With scanned images, the gap in time narrows. The newspaper has 9 objects per page, so merging is mostly copying image data. For 2,000 files (1.2 GB) nori took 1.53 s and qpdf 2.60 s on the Mac, 1.7 times apart, and 1.37 s against 1.62 s on Linux, 1.2 times. Memory was 5 to 7 MB for nori, 57 to 70 MB for qpdf, and 2.6 GB for lopdf at 2,000 files on Linux (the Mac stopped at 1.3 GB for 1,000)
+- CJK documents behave the same. The Japanese bill merged 2,000 times (28,000 pages) took nori 1.28 s and 8 MB, qpdf 7.5 s and 686 MB, lopdf 7.5 s and 1.5 GB on the Mac; on Linux nori 0.50 s and 6.6 MB, qpdf 4.2 s and 768 MB, lopdf 3.5 s and 1.4 GB
+- Both machines show the same picture. Every tool is faster on the Ryzen 7 Linux box than on the Mac. The gap between nori and qpdf is wider on Linux for PDFs with many objects and narrower for the scanned images. Memory grows the same way on both
 - lopdf is not slow; the merge code is the problem. nori itself parses inputs with lopdf. The README's merge code gathers every input into one `Document` and saves at the end, so memory grows with the total input, and objects no page refers to stay in the output, which makes it a little larger
 - Outputs are about the same size from every tool, all pass `qpdf --check`, and all have the expected page count
 
@@ -275,7 +374,8 @@ python3 bench/bench.py --fixture bench/inputs/ja/ja-01.pdf
 - qpdf is run as `qpdf --warning-exit-0 --empty --pages <inputs>... -- <output>`
 - lopdf is `bench/lopdf-merge/`, the merge code from the lopdf README made into a binary. It loads every input, gathers all objects into one `Document`, and saves at the end
 - nori itself parses inputs with lopdf. lopdf is neither slow nor memory-hungry; the README's merge code holds every input in memory until the final save, so its memory grows with the total input. nori writes each input out as soon as it is read, so its memory does not depend on the number of inputs
-- `--max-count` stops a tool before its memory would exceed the benchmark machine's 16 GB
+- `--max-count` stops a tool before its memory would exceed the machine. On the Mac (16 GB) lopdf was cut off as shown above; on Linux (32 GB) everything was run to 2,000 files, with `--jobs 8`
+- Results accumulate in `bench/results-macos.json` and `bench/results-linux.json`; `docs/build.py` builds the landing page from both
 
 ## Tests
 

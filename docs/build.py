@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Builds the landing page (docs/index.html and docs/en/index.html) from bench/results-macos.json.
+"""Builds the landing page (docs/index.html and docs/en/index.html) from bench/results-*.json.
 
-The numbers on the page come from the benchmark results, so re-run this after bench.py.
-Standard library only.
+The numbers on the page come from the benchmark results, one file per machine, so re-run this
+after bench.py. Standard library only.
 """
 import json
 import pathlib
 
 HERE = pathlib.Path(__file__).resolve().parent
-RESULTS = HERE.parent / "bench" / "results-macos.json"
-TOOLS = ["nori", "nori -j6", "qpdf", "lopdf"]
+# Order on the page; the first machine is the one shown until a button is pressed.
+MACHINES = ["macos", "linux"]
+RESULTS = {m: HERE.parent / "bench" / f"results-{m}.json" for m in MACHINES}
 # Order on the page, per language; each is a file fetch.py downloads from Wikimedia Commons.
 # The Japanese page leads with the Japanese government PDF, the English page with the others.
 FIXTURES = {
@@ -36,11 +37,15 @@ T = {
             "public-24.pdf": "The New Orleans Bee、1900 年 10 月の 1 面。1 ページがまるごと画像のスキャン",
         },
         "chart_caption": {
-            "ja-01.pdf": "ＭＳ明朝のサブセットを埋め込んだ、JUST PDF 製の条文の表。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（28,000 ページ）でも 8 MB です。",
-            "public-17.pdf": "文字だけの軽い PDF。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（8,000 ページ）でも 5.7 MB です。",
-            "public-13.pdf": "1 ページあたりのオブジェクトが多い PDF。qpdf は 2,000 ファイルで 2 GB に達し、nori は 16 MB です。lopdf は 100 ファイルで 410 MB だったので、その先は測っていません。",
-            "public-24.pdf": "1 ページが画像のスキャン。オブジェクトが少ないぶん qpdf のメモリも伸びにくいものの、2,000 ファイルで nori 5.4 MB に対して qpdf は 57 MB、lopdf は 1,000 ファイルで 1.3 GB でした。",
+            "ja-01.pdf": "ＭＳ明朝のサブセットを埋め込んだ、JUST PDF 製の条文の表。qpdf と lopdf は入力の数に比例して増え、nori は {count} ファイル（{pages} ページ）でも {nori} です。",
+            "public-17.pdf": "文字だけの軽い PDF。qpdf と lopdf は入力の数に比例して増え、nori は {count} ファイル（{pages} ページ）でも {nori} です。",
+            "public-13.pdf": "1 ページあたりのオブジェクトが多い PDF。{count} ファイルで qpdf は {qpdf}、{lopdf_last} に達し、nori は {nori} です。",
+            "public-24.pdf": "1 ページが画像のスキャン。オブジェクトが少ないぶん qpdf のメモリも伸びにくいものの、{count} ファイルで nori {nori} に対して qpdf は {qpdf}、{lopdf_last} でした。",
         },
+        "lopdf_last": "lopdf は {value}", "lopdf_cut": "lopdf は {count} ファイルで {value}",
+        "machine_label": {"macos": "Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8）", "linux": "Linux（AMD Ryzen 7 6800H 8 コア、GEEKOM A6、メモリ 32 GB、Omarchy 4.0.6）"},
+        "machine_short": {"macos": "Mac（Core i5）", "linux": "Linux（Ryzen 7）"},
+        "aria_machine": "計測したマシン",
         "fixture_col": "PDF", "fixture_desc_col": "どんな PDF か", "pages_col": "ページ", "objects_col": "オブジェクト", "size_col": "サイズ",
         "objects": "オブジェクト", "output_title": "出力サイズ",
         "corpus_title": {"ja": "日本語の PDF をまとめてつなぐ", "public": "世界中のばらばらな PDF をまとめてつなぐ"},
@@ -49,8 +54,8 @@ T = {
             "public": "Commons 全体からランダムに選んだ {files} 件（{pages} ページ、合計 {size}）を、名前の順に 1 回でつなぎました。EU 官報、英国の法令、19 世紀の新聞やノートのスキャン、Internet Archive の書籍など、言語も年代もばらばらです。",
         },
         "corpus_note": {
-            "ja": "4 ツールとも 115 ページの出力を作り、qpdf の検査も通りました。nori は 56 ms と qpdf の 2 倍速く、メモリ 17 MB はいちばん大きい入力（2.6 MB のスキャン）を読むぶんが主です。件数が 20 と少ないので、qpdf との差は伸び方の計測ほど開いていません。",
-            "public": "4 ツールとも 277 ページの出力を作り、qpdf の検査も通りました。nori は 88 ms と、qpdf の 16 倍速く、lopdf の 2 倍速い結果です。メモリは 21 MB で、いちばん大きい入力（2.9 MB）を読むぶんが主です。",
+            "ja": "4 ツールとも {pages} ページの出力を作り、qpdf の検査も通りました。nori は {nori_time} と qpdf の {vs_qpdf}速く、メモリ {nori_mem} はいちばん大きい入力（{largest} のスキャン）を読むぶんが主です。件数が 20 と少ないので、qpdf との差は伸び方の計測ほど開いていません。",
+            "public": "4 ツールとも {pages} ページの出力を作り、qpdf の検査も通りました。nori は {nori_time} と、qpdf の {vs_qpdf}速く、lopdf の {vs_lopdf}速い結果です。メモリは {nori_mem} で、いちばん大きい入力（{largest}）を読むぶんが主です。",
         },
         "corpus_files": "つないだ PDF の一覧",
         "not_measured": "計測せず",
@@ -67,7 +72,7 @@ T = {
             ("解析は先読みできます", "<code>-j 6</code> のように指定すると、6 つの入力を別スレッドで同時に解析します。オブジェクトの多い入力では時間が半分になり、メモリは解析中の入力の分だけ増えます。"),
         ],
         "bench_title": "qpdf と lopdf との比較",
-        "bench_p1": "Wikimedia Commons にある PDF を 10〜2,000 個コピーしてつなぎ、qpdf と、lopdf の README にある結合コードとで、実行時間と最大メモリを比べました。いずれもコマンドとして実行した 5 回の中央値です。グラフの上のボタンで、入力の PDF を切り替えられます。",
+        "bench_p1": "Wikimedia Commons にある PDF を 10〜2,000 個コピーしてつなぎ、qpdf と、lopdf の README にある結合コードとで、実行時間と最大メモリを比べました。いずれもコマンドとして実行した 5 回の中央値で、Mac（Intel Core i5）と Linux（AMD Ryzen 7）の 2 台で測りました。グラフの上のボタンで、マシンと入力の PDF を切り替えられます。",
         "bench_p2": "コピー元は、日本語 PDF のカテゴリから選んだ内閣官房の法律案の条文と、Commons 全体からランダムに取った 40 件の中から作りの違う 3 件です。どれもパブリックドメインか自由なライセンスで、リンク先からそのまま取得できます。",
         "time_title": "実行時間", "memory_title": "最大メモリ使用量",
         "bench_lede_time": "棒の長さは、ファイル数ごとにいちばん時間のかかったツールを基準にしています。右の数字は、nori が qpdf の何倍速かったか。",
@@ -76,13 +81,14 @@ T = {
         "ratio_time": "倍", "ratio_time_small": "qpdf 比", "ratio_memory_small": "qpdf 比",
         "ratio_none": "qpdf は計測せず",
         "notes": [
-            ("日本語の帳票に近い PDF で、速さもメモリも桁が違います", "内閣官房の法律案の条文（JUST PDF 製、ＭＳ明朝のサブセット埋め込み、14 ページ）を 2,000 ファイル（28,000 ページ）つなぐと、nori が 1.28 秒・8 MB、qpdf が 7.5 秒・686 MB、lopdf が 7.5 秒・1.5 GB でした。nori のメモリは 10 ファイルの 2.8 MB からほとんど増えていません。"),
-            ("作り手の違う PDF でも傾向は同じです", "英国の法令（Ghostscript 製）では nori が qpdf の 5.2 倍速く、EU 官報（PDFlib 製、1 ファイル 478 オブジェクト）では 2.9 倍、<code>-j6</code> なら 4.5 倍です。メモリは 2,000 ファイルで nori 6〜16 MB、qpdf 423 MB〜2 GB でした。"),
-            ("スキャンした画像の PDF では、時間の差は縮まります", "新聞のスキャンは 1 ページ 9 オブジェクトしかなく、処理の大半が画像データの書き写しです。2,000 ファイル（1.2 GB）で nori 1.53 秒、qpdf 2.60 秒と差は 1.7 倍にとどまりますが、メモリは nori 5.4 MB、qpdf 57 MB、lopdf は 1,000 ファイルで 1.3 GB でした。"),
+            ("日本語の帳票に近い PDF で、速さもメモリも桁が違います", "内閣官房の法律案の条文（JUST PDF 製、ＭＳ明朝のサブセット埋め込み、14 ページ）を 2,000 ファイル（28,000 ページ）つなぐと、Mac では nori が 1.28 秒・8 MB、qpdf が 7.5 秒・686 MB、lopdf が 7.5 秒・1.5 GB でした。Linux では nori 0.50 秒・6.6 MB、qpdf 4.2 秒・768 MB、lopdf 3.5 秒・1.4 GB です。nori のメモリは 10 ファイルのとき（Mac 2.8 MB、Linux 5.0 MB）からほとんど増えていません。"),
+            ("作り手の違う PDF でも傾向は同じです", "英国の法令（Ghostscript 製）では nori が qpdf の 5.2 倍（Linux では 8.7 倍）速く、EU 官報（PDFlib 製、1 ファイル 478 オブジェクト）では 2.9 倍（4.4 倍）、解析を先読みさせれば 4.5 倍（7.6 倍）です。メモリは 2,000 ファイルで nori 6〜16 MB、qpdf 423 MB〜2.3 GB でした。"),
+            ("スキャンした画像の PDF では、時間の差は縮まります", "新聞のスキャンは 1 ページ 9 オブジェクトしかなく、処理の大半が画像データの書き写しです。2,000 ファイル（1.2 GB）で Mac では nori 1.53 秒、qpdf 2.60 秒と差は 1.7 倍、Linux では 1.37 秒と 1.62 秒で 1.2 倍にとどまります。メモリは nori 5〜7 MB、qpdf 57〜70 MB で、lopdf は Linux の 2,000 ファイルで 2.6 GB でした（Mac では 1,000 ファイルの 1.3 GB で打ち切っています）。"),
+            ("2 台で傾向は同じです", "Ryzen 7 の Linux はどのツールも Mac より速く、nori と qpdf の差は、オブジェクトの多い PDF では Linux の方が開き、画像のスキャンでは縮まります。メモリの伸び方は 2 台でほぼ同じです。"),
             ("lopdf が遅いのではなく、結合コードの作りの問題です", "nori 自身も入力の解析には lopdf を使っています。README の結合コードは全入力を 1 つの <code>Document</code> に集めて最後に保存するため、メモリが入力の合計に比例します。ページから参照されないオブジェクトも出力に残すので、出力が少し大きくなります。"),
         ],
         "method_summary": "計測方法",
-        "method_p1": "Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8）で、nori 0.1.0、qpdf 12.4.2、lopdf 0.47.0 を比べました。伸び方の計測では入力を指定した数だけコピーし、各ツールをコマンドとして 1 回ウォームアップしてから 5 回実行し、時間とメモリ（最大常駐メモリ）を <code>/usr/bin/time</code> で取得しています。出力は qpdf でページ数と <code>--check</code> を確かめました。",
+        "method_p1": "2 台で計測しました。Mac は Intel Core i5-8500B（6 コア、メモリ 16 GB、macOS 15.8）、Linux は AMD Ryzen 7 6800H（8 コア 16 スレッド、GEEKOM A6、メモリ 32 GB、Omarchy 4.0.6、Arch Linux ベース）です。どちらも nori 0.1.0、qpdf 12.4.2、lopdf 0.47.0 です。伸び方の計測では入力を指定した数だけコピーし、各ツールをコマンドとして 1 回ウォームアップしてから 5 回実行し、時間とメモリ（最大常駐メモリ）を <code>/usr/bin/time</code> で取得しています。出力は qpdf でページ数と <code>--check</code> を確かめました。入力の PDF は 2 台で同じものを使いましたが、数値は環境によって変わります。",
         "method_p2": "入力は Wikimedia Commons からランダムに選んだ PDF で、<code>bench/fetch.py</code> が一覧の作成と取得をします。lopdf は EU 官報で 100 ファイル、新聞のスキャンで 1,000 ファイルの時点でメモリが 400 MB〜1.3 GB に達したため、その先はこのマシンでは測っていません。計測スクリプトと入力の一覧は <a href=\"https://github.com/champierre/nori/tree/main/bench\" target=\"_blank\" rel=\"noopener\">bench/</a> にあります。",
         "scope_title": "コピーするもの、引き継がないもの",
         "scope_yes_title": "コピーするもの",
@@ -123,8 +129,8 @@ end""",
         "lede": "nori は複数の PDF を 1 つにつなぐコマンドです。入力を 1 枚ずつ読み、そのページに要るものだけを出力に貼り足してから、次の 1 枚を開きます。だから、メモリ使用量は入力の数に関係なく、いちばん大きい入力 1 つ分にとどまります。",
         "paste_memory": "メモリ", "paste_memory_value": "8.0 MB", "paste_memory_note": "2,000 枚でもこのまま",
         "paste_caption": "入力を 1 枚ずつ読み、要るものを書き足してから捨てる。だから貼る枚数が増えても、手元に持つのは 1 枚分。",
-        "cards": [("8 MB", "日本語の法律案 PDF を 2,000 ファイル（28,000 ページ）つないだときの最大メモリ。qpdf は 686 MB"), ("5.9 倍", "同じ結合で qpdf より速い。-j6 なら 9.7 倍"), ("1 つ", "外部コマンドに依存しない単体のバイナリ。MIT ライセンス")],
-        "chart_section_lede": "横軸はファイル数。nori の線は、入力が 200 倍になってもほとんど動きません。lopdf の線が途中で終わるのは、その先はメモリが計測機に収まらないためです。",
+        "cards": [("8 MB", "日本語の法律案 PDF を 2,000 ファイル（28,000 ページ）つないだときの最大メモリ。qpdf は 686 MB（Mac）"), ("5.9 倍", "同じ結合で qpdf より速い（Linux では 8.3 倍）。-j6 なら 9.7 倍")],
+        "chart_section_lede": "横軸はファイル数。nori の線は、入力が 200 倍になってもほとんど動きません。Mac で lopdf の線が途中で終わるのは、その先はメモリ 16 GB に収まらないためです。グラフの上のボタンで、計測した 2 台と入力の PDF を切り替えられます。",
     },
     "en": {
         "lang": "en", "dir": "en/", "alt_href": "../", "alt_label": "日本語", "alt_lang": "ja",
@@ -143,11 +149,15 @@ end""",
             "public-24.pdf": "The New Orleans Bee, front page, October 1900. A scan: each page is one image",
         },
         "chart_caption": {
-            "ja-01.pdf": "Tables of a bill, made with JUST PDF and carrying MS Mincho subsets. qpdf and lopdf grow with the number of inputs; nori is at 8 MB for 2,000 files (28,000 pages).",
-            "public-17.pdf": "A light, text-only PDF. qpdf and lopdf grow with the number of inputs; nori is at 5.7 MB even for 2,000 files (8,000 pages).",
-            "public-13.pdf": "A PDF with many objects per page. qpdf reaches 2 GB at 2,000 files; nori uses 16 MB. lopdf was at 410 MB for 100 files, so larger counts were not run.",
-            "public-24.pdf": "A scan with one image per page. With so few objects even qpdf's memory grows slowly, yet at 2,000 files nori used 5.4 MB against qpdf's 57 MB, and lopdf 1.3 GB at 1,000.",
+            "ja-01.pdf": "Tables of a bill, made with JUST PDF and carrying MS Mincho subsets. qpdf and lopdf grow with the number of inputs; nori is at {nori} for {count} files ({pages} pages).",
+            "public-17.pdf": "A light, text-only PDF. qpdf and lopdf grow with the number of inputs; nori is at {nori} even for {count} files ({pages} pages).",
+            "public-13.pdf": "A PDF with many objects per page. At {count} files qpdf reaches {qpdf} and {lopdf_last}; nori uses {nori}.",
+            "public-24.pdf": "A scan with one image per page. With so few objects even qpdf's memory grows slowly, yet at {count} files nori used {nori} against qpdf's {qpdf}, and {lopdf_last}.",
         },
+        "lopdf_last": "lopdf {value}", "lopdf_cut": "lopdf {value} at {count}",
+        "machine_label": {"macos": "Mac (Intel Core i5-8500B, 6 cores, 16 GB, macOS 15.8)", "linux": "Linux (AMD Ryzen 7 6800H, 8 cores, GEEKOM A6, 32 GB, Omarchy 4.0.6)"},
+        "machine_short": {"macos": "Mac (Core i5)", "linux": "Linux (Ryzen 7)"},
+        "aria_machine": "Machine",
         "fixture_col": "PDF", "fixture_desc_col": "What it is", "pages_col": "Pages", "objects_col": "Objects", "size_col": "Size",
         "objects": "objects", "output_title": "Output size",
         "corpus_title": {"public": "PDFs of every make from all over Commons, merged once", "ja": "Japanese PDFs, merged once"},
@@ -156,8 +166,8 @@ end""",
             "ja": "{files} PDFs picked at random from Commons\u2019 Japanese-language category ({pages} pages, {size} in all) merged in one go: government papers, laws, scanned notices, sheet music, Google Docs exports, from many producers.",
         },
         "corpus_note": {
-            "public": "All four tools produced a 277-page output that passes qpdf's check. nori took 88 ms, 16 times faster than qpdf and twice as fast as lopdf, in 21 MB of memory, most of it for reading the largest input (2.9 MB).",
-            "ja": "All four tools produced a 115-page output that passes qpdf's check. nori took 56 ms, twice as fast as qpdf, in 17 MB, most of it for reading the largest input (a 2.6 MB scan). With only 20 files the gap to qpdf is smaller than in the scaling runs.",
+            "public": "All four tools produced a {pages}-page output that passes qpdf's check. nori took {nori_time}, {vs_qpdf} faster than qpdf and {vs_lopdf} faster than lopdf, in {nori_mem} of memory, most of it for reading the largest input ({largest}).",
+            "ja": "All four tools produced a {pages}-page output that passes qpdf's check. nori took {nori_time}, {vs_qpdf} faster than qpdf, in {nori_mem}, most of it for reading the largest input (a {largest} scan). With only 20 files the gap to qpdf is smaller than in the scaling runs.",
         },
         "corpus_files": "The PDFs that were merged",
         "not_measured": "not run",
@@ -174,7 +184,7 @@ end""",
             ("Parsing can run ahead", "With <code>-j 6</code>, six inputs are parsed at once on separate threads. On inputs with many objects this halves the time; memory grows by the inputs being parsed."),
         ],
         "bench_title": "Compared with qpdf and lopdf",
-        "bench_p1": "PDFs picked at random from Wikimedia Commons were copied 10 to 2,000 times and merged with nori, with qpdf, and with the merge code from the lopdf README. All were run as commands; the values are the median of 5 runs. The buttons above each chart switch the input PDF.",
+        "bench_p1": "PDFs picked at random from Wikimedia Commons were copied 10 to 2,000 times and merged with nori, with qpdf, and with the merge code from the lopdf README. All were run as commands on two machines, a Mac (Intel Core i5) and a Linux box (AMD Ryzen 7); the values are the median of 5 runs. The buttons above each chart switch the machine and the input PDF.",
         "bench_p2": "Three were chosen from 40 random files for how differently they are built, plus a Japanese government bill from Commons\u2019 Japanese-language category. All are public domain or freely licensed and can be fetched from the links as they are.",
         "time_title": "Time", "memory_title": "Peak memory",
         "bench_lede_time": "Bars are relative to the slowest tool at each file count. The number on the right is how many times faster nori was than qpdf.",
@@ -183,14 +193,15 @@ end""",
         "ratio_time": "×", "ratio_time_small": "vs qpdf", "ratio_memory_small": "of qpdf",
         "ratio_none": "qpdf not run",
         "notes": [
-            ("With few objects per file, both speed and memory differ by orders of magnitude", "Merging 2,000 copies of the UK regulation (8,000 pages) took nori 1.12 s and 5.7 MB, qpdf 5.9 s and 423 MB, lopdf 3.6 s and 695 MB. nori's memory barely moved from the 1.8 MB it used for 10 files."),
-            ("With many objects per file, memory still stays flat", "The EU journal has 478 objects per file and takes longer to parse. nori is still 2.9 times faster than qpdf, 4.5 times with <code>-j6</code>. At 2,000 files nori used 16 MB and qpdf 2 GB."),
-            ("With scanned images, the gap in time narrows", "The scanned newspaper has 9 objects per page, so merging is mostly copying image data. For 2,000 files (1.2 GB) nori took 1.53 s and qpdf 2.60 s, only 1.7 times apart, but memory was 5.4 MB for nori, 57 MB for qpdf and 1.3 GB for lopdf at 1,000 files."),
-            ("CJK documents behave the same", "The Japanese bill (made with JUST PDF, with MS Mincho subsets embedded, 14 pages) merged 2,000 times (28,000 pages) took nori 1.28 s and 8 MB, qpdf 7.5 s and 686 MB, lopdf 7.5 s and 1.5 GB."),
+            ("With few objects per file, both speed and memory differ by orders of magnitude", "Merging 2,000 copies of the UK regulation (8,000 pages) took nori 1.12 s and 5.7 MB, qpdf 5.9 s and 423 MB, lopdf 3.6 s and 695 MB on the Mac. On Linux it was nori 0.28 s and 6.0 MB, qpdf 2.4 s and 477 MB, lopdf 1.2 s and 640 MB. nori's memory barely moved from what it used for 10 files (1.8 MB on the Mac, 4.0 MB on Linux)."),
+            ("With many objects per file, memory still stays flat", "The EU journal has 478 objects per file and takes longer to parse. nori is still 2.9 times faster than qpdf (4.4 on Linux), 4.5 times with parsing run ahead (7.6). At 2,000 files nori used 10 to 16 MB and qpdf 2 to 2.3 GB; lopdf reached 7.4 GB on Linux."),
+            ("With scanned images, the gap in time narrows", "The scanned newspaper has 9 objects per page, so merging is mostly copying image data. For 2,000 files (1.2 GB) nori took 1.53 s and qpdf 2.60 s on the Mac, 1.7 times apart, and 1.37 s against 1.62 s on Linux, 1.2 times. Memory was 5 to 7 MB for nori, 57 to 70 MB for qpdf, and 2.6 GB for lopdf at 2,000 files on Linux (the Mac stopped at 1.3 GB for 1,000)."),
+            ("CJK documents behave the same", "The Japanese bill (made with JUST PDF, with MS Mincho subsets embedded, 14 pages) merged 2,000 times (28,000 pages) took nori 1.28 s and 8 MB, qpdf 7.5 s and 686 MB, lopdf 7.5 s and 1.5 GB on the Mac; on Linux nori 0.50 s and 6.6 MB, qpdf 4.2 s and 768 MB, lopdf 3.5 s and 1.4 GB."),
+            ("Both machines show the same picture", "Every tool is faster on the Ryzen 7 Linux box than on the Mac. The gap between nori and qpdf is wider on Linux for PDFs with many objects and narrower for the scanned images. Memory grows the same way on both."),
             ("lopdf is not slow; the merge code is the problem", "nori itself parses inputs with lopdf. The README's merge code gathers every input into one <code>Document</code> and saves at the end, so memory grows with the total input. Objects no page refers to stay in the output, which makes it a little larger."),
         ],
         "method_summary": "How it was measured",
-        "method_p1": "On a Mac (Intel Core i5-8500B, 6 cores, 16 GB, macOS 15.8) with nori 0.1.0, qpdf 12.4.2 and lopdf 0.47.0. The input was copied the given number of times, each tool was run as a command once to warm up and then 5 times, and time and peak resident memory were taken from <code>/usr/bin/time</code>. Outputs were checked with qpdf for page count and with <code>--check</code>.",
+        "method_p1": "On two machines: a Mac with an Intel Core i5-8500B (6 cores, 16 GB, macOS 15.8) and a Linux box with an AMD Ryzen 7 6800H (8 cores, 16 threads, GEEKOM A6, 32 GB, Omarchy 4.0.6, based on Arch Linux). Both ran nori 0.1.0, qpdf 12.4.2 and lopdf 0.47.0. The input was copied the given number of times, each tool was run as a command once to warm up and then 5 times, and time and peak resident memory were taken from <code>/usr/bin/time</code>. Outputs were checked with qpdf for page count and with <code>--check</code>. The same input PDFs were used on both machines, but the numbers depend on the environment.",
         "method_p2": "The inputs are PDFs picked at random from Wikimedia Commons; <code>bench/fetch.py</code> builds the list and downloads them. lopdf reached 400 MB to 1.3 GB at 100 files of the journal and 1,000 of the newspaper, so larger counts were not run on this machine. The benchmark script and the list of inputs are in <a href=\"https://github.com/champierre/nori/tree/main/bench\" target=\"_blank\" rel=\"noopener\">bench/</a>.",
         "scope_title": "What is copied, what is not",
         "scope_yes_title": "Copied",
@@ -231,8 +242,8 @@ end""",
         "lede": "nori merges PDF files into one. It reads one input, pastes what its pages need onto the output, and only then opens the next. Memory use therefore stays around the size of the largest single input, however many files you merge.",
         "paste_memory": "memory", "paste_memory_value": "5.7 MB", "paste_memory_note": "still this at 2,000 sheets",
         "paste_caption": "One sheet at a time: read it, paste what its pages need, let it go. However many sheets, only one is in hand.",
-        "cards": [("6 MB", "peak memory for 2,000 files (5.4 to 16 MB across three kinds of PDF)"), ("16×", "faster than qpdf merging 40 random PDFs from Wikimedia Commons"), ("1", "single binary, no external commands. MIT license")],
-        "chart_section_lede": "The x axis is the number of files. nori's line barely moves while the input grows 200-fold. lopdf's line stops where the next step would not fit in the machine's memory.",
+        "cards": [("6 MB", "peak memory for 2,000 files (5.4 to 16 MB across three kinds of PDF and two machines)"), ("16×", "faster than qpdf merging 40 random PDFs from Wikimedia Commons (18× on Linux)")],
+        "chart_section_lede": "The x axis is the number of files. nori's line barely moves while the input grows 200-fold. On the Mac, lopdf's line stops where the next step would not fit in its 16 GB. The buttons above each chart switch between the two machines and between the input PDFs.",
     },
 }
 
@@ -248,21 +259,29 @@ def fmt_size(b):
 
 
 def load():
-    results = json.loads(RESULTS.read_text())
-    data = {"fixtures": {}, "corpora": results.get("corpora", {})}
-    for fixture in results["fixtures"]:
-        data["fixtures"][fixture["name"]] = {
-            "pages": fixture["pages"], "objects": fixture["objects"], "bytes": fixture["bytes"],
-            "source": fixture.get("source") or {}, "cases": {c["count"]: c for c in fixture["cases"]}}
+    """One entry per machine. The tool names (nori -j6 on the Mac, nori -j8 on Linux) come from the file."""
+    data = {}
+    for machine in MACHINES:
+        results = json.loads(RESULTS[machine].read_text())
+        d = data[machine] = {"tools": list(results["tools"]), "fixtures": {}, "corpora": results.get("corpora", {})}
+        for fixture in results["fixtures"]:
+            d["fixtures"][fixture["name"]] = {
+                "pages": fixture["pages"], "objects": fixture["objects"], "bytes": fixture["bytes"],
+                "source": fixture.get("source") or {}, "cases": {c["count"]: c for c in fixture["cases"]}}
     return data
+
+
+def bar_class(tool):
+    return "bar-norij" if tool.startswith("nori -j") else f"bar-{tool}"
 
 
 def key_of(name):
     return name.removesuffix(".pdf")
 
 
-def chart(data, key, t):
+def chart(data, key, t, machine):
     """SVG line chart of peak memory against file count, one line per tool."""
+    tools = data["tools"]
     cases = data["fixtures"][key]["cases"]
     counts = sorted(cases)
     w, h = 640, 380
@@ -273,8 +292,8 @@ def chart(data, key, t):
     ymax = (int(ymax / step) + 1) * step
     xs = {c: left + pw * i / (len(counts) - 1) for i, c in enumerate(counts)}
     y = lambda v: top + ph - ph * v / ymax
-    out = [f'<svg class="chart" viewBox="0 0 {w} {h}" role="img" aria-labelledby="chart-{key_of(key)}-title">',
-           f'<title id="chart-{key_of(key)}-title">{t["chart_title"]}: {t["fixture_label"][key]}</title>']
+    out = [f'<svg class="chart" viewBox="0 0 {w} {h}" role="img" aria-labelledby="chart-{machine}-{key_of(key)}-title">',
+           f'<title id="chart-{machine}-{key_of(key)}-title">{t["chart_title"]}: {t["fixture_label"][key]}（{t["machine_label"][machine]}）</title>']
     tick = step
     while tick <= ymax:
         yy = y(tick)
@@ -286,15 +305,15 @@ def chart(data, key, t):
     for c in counts:
         out.append(f'<text x="{xs[c]:.1f}" y="{top + ph + 24}" text-anchor="middle" class="tick">{c:,}</text>')
     out.append(f'<text x="{left + pw / 2:.1f}" y="{h - 6}" text-anchor="middle" class="tick">{t["files"]}</text>')
-    styles = {"nori": ("var(--nori)", "3.5", ""), "nori -j6": ("var(--nori)", "2", "6 5"),
+    styles = {"nori": ("var(--nori)", "3.5", ""), "nori -j": ("var(--nori)", "2", "6 5"),
               "qpdf": ("var(--ink-soft)", "2.5", ""), "lopdf": ("var(--ink-faint)", "2.5", "6 5")}
     labels = []
-    for tool in TOOLS:
+    for tool in tools:
         points = [(c, cases[c]["tools"][tool]["rss_bytes"]) for c in counts
                   if tool in cases[c]["tools"] and "rss_bytes" in cases[c]["tools"][tool]]
         if not points:
             continue
-        color, width, dash = styles[tool]
+        color, width, dash = styles["nori -j" if tool.startswith("nori -j") else tool]
         path = " ".join(f"{xs[c]:.1f},{y(v):.1f}" for c, v in points)
         dash_attr = f' stroke-dasharray="{dash}"' if dash else ""
         out.append(f'<polyline points="{path}" fill="none" stroke="{color}" stroke-width="{width}"{dash_attr} stroke-linejoin="round"/>')
@@ -320,21 +339,36 @@ def chart(data, key, t):
     return "\n".join(out)
 
 
+def chart_caption(d, key, t):
+    """The caption's numbers come from the last measured file count on that machine."""
+    cases = d["fixtures"][key]["cases"]
+    last = max(cases)
+    tools = cases[last]["tools"]
+    lopdf_count = max(c for c in cases if "rss_bytes" in cases[c]["tools"].get("lopdf", {}))
+    lopdf_value = fmt_size(cases[lopdf_count]["tools"]["lopdf"]["rss_bytes"])
+    lopdf_last = (t["lopdf_last"].format(value=lopdf_value) if lopdf_count == last
+                  else t["lopdf_cut"].format(count=f"{lopdf_count:,}", value=lopdf_value))
+    return t["chart_caption"][key].format(
+        count=f"{last:,}", pages=f"{cases[last]['pages']:,}", nori=fmt_size(tools["nori"]["rss_bytes"]),
+        qpdf=fmt_size(tools["qpdf"]["rss_bytes"]), lopdf_last=lopdf_last)
+
+
 def bench_rows(data, key, metric, t):
+    tools = data["tools"]
     cases = data["fixtures"][key]["cases"]
     rows = []
     for count in sorted(cases):
         case = cases[count]
-        entries = {tool: case["tools"].get(tool) for tool in TOOLS}
+        entries = {tool: case["tools"].get(tool) for tool in tools}
         values = {tool: e[metric] for tool, e in entries.items() if e and metric in e}
         biggest = max(values.values())
         fmt = fmt_time if metric == "time_s" else fmt_size
         bars = []
         spoken = []
-        for tool in TOOLS:
+        for tool in tools:
             if tool in values:
                 v = values[tool]
-                bars.append(f'<div class="bar bar-{tool.replace(" ", "").replace("-", "")}"><span>{tool} <b>{fmt(v, t["lang"]) if metric == "time_s" else fmt(v)}</b></span>'
+                bars.append(f'<div class="bar {bar_class(tool)}"><span>{tool} <b>{fmt(v, t["lang"]) if metric == "time_s" else fmt(v)}</b></span>'
                             f'<div class="bar-fill" style="--w: {100 * v / biggest:.2f}%"></div></div>')
                 spoken.append(f"{tool} {fmt(v, t['lang']) if metric == 'time_s' else fmt(v)}")
             else:
@@ -367,35 +401,47 @@ def fixture_buttons(t, group, aria):
             + "</div>")
 
 
+def machine_buttons(t, group):
+    """Mac / Linux switch; every group on the page switches together."""
+    return (f'<div class="modes modes-machine" role="group" aria-label="{t["aria_machine"]}" data-group="{group}">'
+            + "".join(f'<button type="button" data-machine="{m}" aria-pressed="{"true" if i == 0 else "false"}">{t["machine_short"][m]}</button>' for i, m in enumerate(MACHINES))
+            + "</div>")
+
+
+def per_machine(data, t, render):
+    """Renders a block once per machine; only the first is visible until a button is pressed."""
+    return "\n".join(render(data[m], m, "" if i == 0 else " hidden") for i, m in enumerate(MACHINES))
+
+
 def fixture_table(data, t):
     """One row per benchmark PDF: what it is, where it comes from, how it is built."""
     rows = []
     for name in FIXTURES[t["lang"]]:
-        f = data["fixtures"][name]
+        f = data[MACHINES[0]]["fixtures"][name]
         src = f["source"]
         link = f'<a href="{src["page"]}" target="_blank" rel="noopener">{t["fixture_label"][name]}</a>' if src else t["fixture_label"][name]
         rows.append(f'          <tr><td>{link}</td><td>{t["fixture_desc"][name]}</td><td>{f["pages"]}</td><td>{f["objects"]:,}</td><td>{fmt_size(f["bytes"])}</td></tr>')
     return "\n".join(rows)
 
 
-def corpus_block(data, t, key):
-    corpus = data["corpora"].get(key)
-    if not corpus:
-        return ""
+def corpus_table(d, machine, hidden, t, key):
+    """Time, memory and output size of one machine's corpus run, plus the note under it."""
+    corpus = d["corpora"][key]
+    tools = d["tools"]
     cells = []
     for metric, fmt in [("time_s", lambda v: fmt_time(v, t["lang"])), ("rss_bytes", fmt_size), ("output_bytes", fmt_size)]:
-        cells.append("".join(f'<td>{fmt(corpus["tools"][n][metric]) if n in corpus["tools"] and metric in corpus["tools"][n] else "-"}</td>' for n in TOOLS))
-    files = "\n".join(
-        f'            <li><a href="{f["source"]["page"]}" target="_blank" rel="noopener">{f["source"]["title"].removeprefix("File:").removesuffix(".pdf")}</a><span>{f["pages"]} {t["pages"]} · {f["objects"]:,} {t["objects"]} · {fmt_size(f["bytes"])} · {f["source"]["license"]}</span></li>'
-        for f in corpus["files"] if f.get("source"))
-    total_bytes = sum(f["bytes"] for f in corpus["files"])
-    return f'''      <div class="bench-head">
-        <h3 class="bench-title">{t["corpus_title"][key]}</h3>
-      </div>
-      <p class="bench-lede">{t["corpus_lede"][key].format(files=len(corpus["files"]), pages=f"{corpus['pages']:,}", size=fmt_size(total_bytes))}</p>
+        cells.append("".join(f'<td>{fmt(corpus["tools"][n][metric]) if n in corpus["tools"] and metric in corpus["tools"][n] else "-"}</td>' for n in tools))
+    r = corpus["tools"]
+    largest = max(f["bytes"] for f in corpus["files"])
+    note = t["corpus_note"][key].format(
+        pages=f"{corpus['pages']:,}", nori_time=fmt_time(r["nori"]["time_s"], t["lang"]),
+        vs_qpdf=ratio_words(r["qpdf"]["time_s"] / r["nori"]["time_s"], t),
+        vs_lopdf=ratio_words(r["lopdf"]["time_s"] / r["nori"]["time_s"], t),
+        nori_mem=fmt_size(r["nori"]["rss_bytes"]), largest=fmt_size(largest))
+    return f'''      <div class="corpus-run" data-machine="{machine}"{hidden}>
       <div class="table-scroll">
         <table class="corpus">
-          <thead><tr><th></th>{"".join(f"<th>{n}</th>" for n in TOOLS)}</tr></thead>
+          <thead><tr><th></th>{"".join(f"<th>{n}</th>" for n in tools)}</tr></thead>
           <tbody>
             <tr><th>{t["time_title"]}</th>{cells[0]}</tr>
             <tr><th>{t["memory_title"]}</th>{cells[1]}</tr>
@@ -403,7 +449,31 @@ def corpus_block(data, t, key):
           </tbody>
         </table>
       </div>
-      <p class="bench-lede">{t["corpus_note"][key]}</p>
+      <p class="bench-lede">{note}</p>
+      </div>'''
+
+
+def ratio_words(ratio, t):
+    """'2 倍' / '2×', or '16 倍' / '16×'; one decimal below 10."""
+    n = f"{ratio:.1f}" if ratio < 10 else f"{ratio:.0f}"
+    return f"{n} {t['ratio_time']}" if t["lang"] == "ja" else f"{n}{t['ratio_time']}"
+
+
+def corpus_block(data, t, key):
+    corpus = data[MACHINES[0]]["corpora"].get(key)
+    if not corpus:
+        return ""
+    files = "\n".join(
+        f'            <li><a href="{f["source"]["page"]}" target="_blank" rel="noopener">{f["source"]["title"].removeprefix("File:").removesuffix(".pdf")}</a><span>{f["pages"]} {t["pages"]} · {f["objects"]:,} {t["objects"]} · {fmt_size(f["bytes"])} · {f["source"]["license"]}</span></li>'
+        for f in corpus["files"] if f.get("source"))
+    total_bytes = sum(f["bytes"] for f in corpus["files"])
+    tables = per_machine(data, t, lambda d, m, hidden: corpus_table(d, m, hidden, t, key))
+    return f'''      <div class="bench-head">
+        <h3 class="bench-title">{t["corpus_title"][key]}</h3>
+        {machine_buttons(t, f"corpus-{key}")}
+      </div>
+      <p class="bench-lede">{t["corpus_lede"][key].format(files=len(corpus["files"]), pages=f"{corpus['pages']:,}", size=fmt_size(total_bytes))}</p>
+{tables}
       <details class="method">
         <summary>{t["corpus_files"]}</summary>
         <div class="method-body">
@@ -419,7 +489,9 @@ def page(data, t):
     site = "https://champierre.github.io/nori/"
     nav = "\n".join(f'      <a href="{href}">{label}</a>' for href, label in t["nav"])
     h1 = "".join(f"<span>{line}</span>" for line in t["h1"])
-    charts = "\n".join(f'      <figure class="chart-figure" data-fixture="{key_of(k)}"{"" if i == 0 else " hidden"}>\n{chart(data, k, t)}\n        <figcaption>{t["chart_caption"][k]}</figcaption>\n      </figure>' for i, k in enumerate(FIXTURES[t["lang"]]))
+    charts = per_machine(data, t, lambda d, m, hidden: "\n".join(
+        f'      <figure class="chart-figure" data-fixture="{key_of(k)}" data-machine="{m}"{"" if i == 0 and not hidden else " hidden"}>\n{chart(d, k, t, m)}\n        <figcaption>{chart_caption(d, k, t)}</figcaption>\n      </figure>'
+        for i, k in enumerate(FIXTURES[t["lang"]])))
     sheets = "\n".join(f'          <span class="paste-sheet" style="--i: {i}"></span>' for i in range(8))
     cards = "\n".join(f"      <li><b>{big}</b><span>{small}</span></li>" for big, small in t["cards"])
     flow = lambda steps: "".join(f"<li>{s}</li>" for s in steps)
@@ -427,7 +499,9 @@ def page(data, t):
     notes = "\n".join(f"        <li><strong>{title}</strong><span>{body}</span></li>" for title, body in t["notes"])
     lists = {}
     for metric in ["time_s", "rss_bytes"]:
-        lists[metric] = "\n".join(f'      <ul class="bench" data-fixture="{key_of(k)}"{"" if i == 0 else " hidden"}>\n{bench_rows(data, k, metric, t)}\n      </ul>' for i, k in enumerate(FIXTURES[t["lang"]]))
+        lists[metric] = per_machine(data, t, lambda d, m, hidden, metric=metric: "\n".join(
+            f'      <ul class="bench" data-fixture="{key_of(k)}" data-machine="{m}"{"" if i == 0 and not hidden else " hidden"}>\n{bench_rows(d, k, metric, t)}\n      </ul>'
+            for i, k in enumerate(FIXTURES[t["lang"]])))
     corpora = "\n".join(corpus_block(data, t, key) for key in CORPORA[t["lang"]])
     scope = lambda items: "\n".join(f"            <li>{i}</li>" for i in items)
     return f'''<!doctype html>
@@ -536,7 +610,7 @@ def page(data, t):
 
       <div class="bench-head">
         <h3 class="bench-title">{t["chart_title"]}</h3>
-        {fixture_buttons(t, "chart", t["aria_fixture"])}
+        <div class="mode-groups">{machine_buttons(t, "chart")}{fixture_buttons(t, "chart", t["aria_fixture"])}</div>
       </div>
       <p class="bench-lede">{t["chart_section_lede"]}</p>
       <div class="chart-sheet">
@@ -545,14 +619,14 @@ def page(data, t):
 
       <div class="bench-head">
         <h3 class="bench-title">{t["time_title"]}</h3>
-        {fixture_buttons(t, "time", t["aria_fixture_time"])}
+        <div class="mode-groups">{machine_buttons(t, "time")}{fixture_buttons(t, "time", t["aria_fixture_time"])}</div>
       </div>
       <p class="bench-lede">{t["bench_lede_time"]}</p>
 {lists["time_s"]}
 
       <div class="bench-head">
         <h3 class="bench-title">{t["memory_title"]}</h3>
-        {fixture_buttons(t, "memory", t["aria_fixture_memory"])}
+        <div class="mode-groups">{machine_buttons(t, "memory")}{fixture_buttons(t, "memory", t["aria_fixture_memory"])}</div>
       </div>
       <p class="bench-lede">{t["bench_lede_memory"]}</p>
 {lists["rss_bytes"]}
@@ -644,13 +718,20 @@ nori --version</code></pre><button class="copy" type="button">{t["copy"]}</butto
 </footer>
 <script>
 (() => {{
-  // Input PDF toggles: every group switches together.
-  const buttons = document.querySelectorAll("button[data-fixture]");
-  buttons.forEach((button) => {{
+  // Input PDF and machine toggles: every group switches together.
+  const state = {{ fixture: document.querySelector("button[data-fixture]").dataset.fixture, machine: "{MACHINES[0]}" }};
+  const apply = () => {{
+    document.querySelectorAll("button[data-fixture]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.fixture === state.fixture)));
+    document.querySelectorAll("button[data-machine]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.machine === state.machine)));
+    document.querySelectorAll("[data-machine]:not(button)").forEach((el) => {{
+      el.hidden = el.dataset.machine !== state.machine || ("fixture" in el.dataset && el.dataset.fixture !== state.fixture);
+    }});
+  }};
+  document.querySelectorAll("button[data-fixture], button[data-machine]").forEach((button) => {{
     button.addEventListener("click", () => {{
-      const key = button.dataset.fixture;
-      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.fixture === key)));
-      document.querySelectorAll(".bench[data-fixture], .chart-figure[data-fixture]").forEach((el) => {{ el.hidden = el.dataset.fixture !== key; }});
+      if (button.dataset.fixture) state.fixture = button.dataset.fixture;
+      if (button.dataset.machine) state.machine = button.dataset.machine;
+      apply();
     }});
   }});
   // Copy buttons.
@@ -756,10 +837,10 @@ CSS = """  /* Kraft paper, white sheets, sumi ink, and one color: the red of a t
     .paste-sheet, .paste-strip { animation: none; }
   }
 
-  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 32px); margin: clamp(40px, 5vw, 64px) auto 0; padding-block: 0; list-style: none; }
+  .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 32px); margin: clamp(40px, 5vw, 64px) auto 0; padding-block: 0; list-style: none; }
   .cards li { position: relative; padding: 22px 24px 20px; background: var(--sheet); border-radius: 2px; box-shadow: var(--paper-shadow); }
   .cards li:nth-child(1) { transform: rotate(-1deg); }
-  .cards li:nth-child(3) { transform: rotate(1deg); }
+  .cards li:nth-child(2) { transform: rotate(1deg); }
   .cards li::before { content: ""; position: absolute; top: -8px; left: 50%; width: 36px; height: 14px; margin-left: -18px; background: var(--nori); opacity: 0.85; transform: rotate(-3deg); }
   .cards b { display: block; font-family: var(--code); font-weight: 700; font-size: 2.4rem; line-height: 1.1; color: var(--nori); }
   .cards span { display: block; margin-top: 6px; font-size: 0.875rem; color: var(--ink-soft); line-height: 1.6; }
@@ -793,6 +874,8 @@ CSS = """  /* Kraft paper, white sheets, sumi ink, and one color: the red of a t
   .modes button + button { border-left: 2px solid var(--ink); }
   .modes button[aria-pressed="true"] { background: var(--nori); color: var(--sheet); }
   .bench-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin: 48px 0 4px; }
+  .mode-groups { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .corpus-run { margin-top: 12px; }
   .bench-title { margin: 0 !important; }
   .bench-lede { font-size: 0.9375rem; color: var(--ink-soft); }
   .chart-sheet { padding: clamp(12px, 2vw, 24px); border: 1px solid var(--rule-light); border-radius: 2px; }
@@ -810,7 +893,7 @@ CSS = """  /* Kraft paper, white sheets, sumi ink, and one color: the red of a t
   .bar { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 12px; align-items: center; font-size: 0.8125rem; color: var(--ink-soft); }
   .bar b { color: var(--ink); font-family: var(--code); }
   .bar-fill { height: 12px; width: var(--w); min-width: 2px; background: var(--nori); }
-  .bar-norij6 .bar-fill { background: repeating-linear-gradient(90deg, var(--nori) 0 6px, transparent 6px 9px); }
+  .bar-norij .bar-fill { background: repeating-linear-gradient(90deg, var(--nori) 0 6px, transparent 6px 9px); }
   .bar-qpdf .bar-fill { background: var(--ink-soft); }
   .bar-lopdf .bar-fill { background: var(--ink-faint); }
   .bar-none b { color: var(--ink-faint); font-weight: 400; }

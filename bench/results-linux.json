@@ -1,0 +1,1576 @@
+{
+  "platform": "Linux-7.2.8-9-omarchy-x86_64-with-glibc2.44",
+  "machine": "x86_64",
+  "cpu_count": 16,
+  "runs": 5,
+  "tools": {
+    "nori": "nori 0.1.0",
+    "nori -j8": "nori 0.1.0",
+    "qpdf": "qpdf version 12.4.2",
+    "lopdf": "lopdf 0.47.0"
+  },
+  "fixtures": [
+    {
+      "name": "ja-01.pdf",
+      "bytes": 135372,
+      "pages": 14,
+      "objects": 65,
+      "source": {
+        "title": "File:スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案 新旧対照条文.pdf",
+        "page": "https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E5%88%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E7%89%B9%E5%AE%9A%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E4%BF%82%E3%82%8B%E7%AB%B6%E4%BA%89%E3%81%AE%E4%BF%83%E9%80%B2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E6%A1%88_%E6%96%B0%E6%97%A7%E5%AF%BE%E7%85%A7%E6%9D%A1%E6%96%87.pdf",
+        "license": "CC BY 4.0"
+      },
+      "cases": [
+        {
+          "count": 10,
+          "pages": 140,
+          "input_bytes": 1353720,
+          "tools": {
+            "nori": {
+              "time_s": 0.006735603092238307,
+              "time_min_s": 0.00605735694989562,
+              "time_max_s": 0.007089253980666399,
+              "rss_bytes": 4956160,
+              "rss_max_bytes": 5017600,
+              "output_bytes": 1346497,
+              "pages": 140,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.005927852005697787,
+              "time_min_s": 0.005898064933717251,
+              "time_max_s": 0.006546695018187165,
+              "rss_bytes": 8318976,
+              "rss_max_bytes": 8667136,
+              "output_bytes": 1346497,
+              "pages": 140,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.024324215948581696,
+              "time_min_s": 0.02330785896629095,
+              "time_max_s": 0.024660894996486604,
+              "rss_bytes": 15810560,
+              "rss_max_bytes": 16003072,
+              "output_bytes": 1346847,
+              "pages": 140,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.011086824000813067,
+              "time_min_s": 0.010532171931117773,
+              "time_max_s": 0.01187031005974859,
+              "rss_bytes": 9916416,
+              "rss_max_bytes": 10072064,
+              "output_bytes": 1341526,
+              "pages": 140,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 100,
+          "pages": 1400,
+          "input_bytes": 13537200,
+          "tools": {
+            "nori": {
+              "time_s": 0.028709703008644283,
+              "time_min_s": 0.027484690072014928,
+              "time_max_s": 0.029506534920074046,
+              "rss_bytes": 5140480,
+              "rss_max_bytes": 5189632,
+              "output_bytes": 13479286,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.017814012011513114,
+              "time_min_s": 0.016581153962761164,
+              "time_max_s": 0.01942043809685856,
+              "rss_bytes": 10436608,
+              "rss_max_bytes": 10850304,
+              "output_bytes": 13479286,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.1861002460354939,
+              "time_min_s": 0.18409302097279578,
+              "time_max_s": 0.1877084750449285,
+              "rss_bytes": 50110464,
+              "rss_max_bytes": 50274304,
+              "output_bytes": 13481227,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.08939925895538181,
+              "time_min_s": 0.08871340902987868,
+              "time_max_s": 0.0914602680131793,
+              "rss_bytes": 72310784,
+              "rss_max_bytes": 72327168,
+              "output_bytes": 13426701,
+              "pages": 1400,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 1000,
+          "pages": 14000,
+          "input_bytes": 135372000,
+          "tools": {
+            "nori": {
+              "time_s": 0.2833832339383662,
+              "time_min_s": 0.2698627149220556,
+              "time_max_s": 0.285470312112011,
+              "rss_bytes": 5840896,
+              "rss_max_bytes": 6025216,
+              "output_bytes": 134962789,
+              "pages": 14000,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.12974961299914867,
+              "time_min_s": 0.12849692697636783,
+              "time_max_s": 0.13945527793839574,
+              "rss_bytes": 13205504,
+              "rss_max_bytes": 13553664,
+              "output_bytes": 134962789,
+              "pages": 14000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 2.1088312240317464,
+              "time_min_s": 2.0901720710098743,
+              "time_max_s": 2.1151363630779088,
+              "rss_bytes": 389681152,
+              "rss_max_bytes": 389832704,
+              "output_bytes": 134967137,
+              "pages": 14000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 1.355775256990455,
+              "time_min_s": 1.3449352260213345,
+              "time_max_s": 1.3568624769104645,
+              "rss_bytes": 696553472,
+              "rss_max_bytes": 696684544,
+              "output_bytes": 134423185,
+              "pages": 14000,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 2000,
+          "pages": 28000,
+          "input_bytes": 270744000,
+          "tools": {
+            "nori": {
+              "time_s": 0.5026328259846196,
+              "time_min_s": 0.49349051096942276,
+              "time_max_s": 0.5146396319614723,
+              "rss_bytes": 6574080,
+              "rss_max_bytes": 6799360,
+              "output_bytes": 270014861,
+              "pages": 28000,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.2577007779618725,
+              "time_min_s": 0.25052409002091736,
+              "time_max_s": 0.2654480279888958,
+              "rss_bytes": 14151680,
+              "rss_max_bytes": 14360576,
+              "output_bytes": 270014861,
+              "pages": 28000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 4.202781853964552,
+              "time_min_s": 4.125314777949825,
+              "time_max_s": 4.2212464939802885,
+              "rss_bytes": 768163840,
+              "rss_max_bytes": 768307200,
+              "output_bytes": 269996145,
+              "pages": 28000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 3.4783065089723095,
+              "time_min_s": 3.466489268001169,
+              "time_max_s": 3.6613736919825897,
+              "rss_bytes": 1390317568,
+              "rss_max_bytes": 1390379008,
+              "output_bytes": 268940649,
+              "pages": 28000,
+              "check_ok": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "public-13.pdf",
+      "bytes": 544648,
+      "pages": 7,
+      "objects": 478,
+      "source": {
+        "title": "File:OJ C 202301032 of 2023 - SK Slovak.pdf",
+        "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202301032_of_2023_-_SK_Slovak.pdf",
+        "license": "Public domain"
+      },
+      "cases": [
+        {
+          "count": 10,
+          "pages": 70,
+          "input_bytes": 5446480,
+          "tools": {
+            "nori": {
+              "time_s": 0.017209907993674278,
+              "time_min_s": 0.01675602700561285,
+              "time_max_s": 0.018567851977422833,
+              "rss_bytes": 7081984,
+              "rss_max_bytes": 7110656,
+              "output_bytes": 4913536,
+              "pages": 70,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.013946441002190113,
+              "time_min_s": 0.013255389989353716,
+              "time_max_s": 0.014687716029584408,
+              "rss_bytes": 24309760,
+              "rss_max_bytes": 25083904,
+              "output_bytes": 4913536,
+              "pages": 70,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.05283350497484207,
+              "time_min_s": 0.052100325003266335,
+              "time_max_s": 0.05430039600469172,
+              "rss_bytes": 23826432,
+              "rss_max_bytes": 23887872,
+              "output_bytes": 4914437,
+              "pages": 70,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.04800223605707288,
+              "time_min_s": 0.04751144605688751,
+              "time_max_s": 0.04855493304785341,
+              "rss_bytes": 40087552,
+              "rss_max_bytes": 40419328,
+              "output_bytes": 5386371,
+              "pages": 70,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 100,
+          "pages": 700,
+          "input_bytes": 54464800,
+          "tools": {
+            "nori": {
+              "time_s": 0.11354640894569457,
+              "time_min_s": 0.1117024429840967,
+              "time_max_s": 0.11502340901643038,
+              "rss_bytes": 7598080,
+              "rss_max_bytes": 7647232,
+              "output_bytes": 49164112,
+              "pages": 700,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.07475778099615127,
+              "time_min_s": 0.06843776896130294,
+              "time_max_s": 0.07638924301136285,
+              "rss_bytes": 32927744,
+              "rss_max_bytes": 38604800,
+              "output_bytes": 49164112,
+              "pages": 700,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.4788338530343026,
+              "time_min_s": 0.47743383795022964,
+              "time_max_s": 0.484013743000105,
+              "rss_bytes": 126586880,
+              "rss_max_bytes": 126668800,
+              "output_bytes": 49170677,
+              "pages": 700,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.44158211699686944,
+              "time_min_s": 0.43888934107962996,
+              "time_max_s": 0.4464887089561671,
+              "rss_bytes": 369819648,
+              "rss_max_bytes": 369893376,
+              "output_bytes": 54066564,
+              "pages": 700,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 1000,
+          "pages": 7000,
+          "input_bytes": 544648000,
+          "tools": {
+            "nori": {
+              "time_s": 1.1494478409877047,
+              "time_min_s": 1.1265764218987897,
+              "time_max_s": 1.1675970809301361,
+              "rss_bytes": 8957952,
+              "rss_max_bytes": 8990720,
+              "output_bytes": 491959215,
+              "pages": 7000,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.6373472639825195,
+              "time_min_s": 0.6300489970017225,
+              "time_max_s": 0.6539178299717605,
+              "rss_bytes": 40468480,
+              "rss_max_bytes": 40898560,
+              "output_bytes": 491959215,
+              "pages": 7000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 4.979529988951981,
+              "time_min_s": 4.905757828964852,
+              "time_max_s": 4.995409589027986,
+              "rss_bytes": 1156407296,
+              "rss_max_bytes": 1156628480,
+              "output_bytes": 492002828,
+              "pages": 7000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 4.310509113944136,
+              "time_min_s": 4.287130335927941,
+              "time_max_s": 4.330121365957893,
+              "rss_bytes": 3674853376,
+              "rss_max_bytes": 3674865664,
+              "output_bytes": 542674523,
+              "pages": 7000,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 2000,
+          "pages": 14000,
+          "input_bytes": 1089296000,
+          "tools": {
+            "nori": {
+              "time_s": 2.2463527790969238,
+              "time_min_s": 2.210748357931152,
+              "time_max_s": 2.2971919430419803,
+              "rss_bytes": 9723904,
+              "rss_max_bytes": 9781248,
+              "output_bytes": 984224052,
+              "pages": 14000,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 1.3044314759317786,
+              "time_min_s": 1.258511595078744,
+              "time_max_s": 1.319940308923833,
+              "rss_bytes": 42553344,
+              "rss_max_bytes": 43720704,
+              "output_bytes": 984224052,
+              "pages": 14000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 9.81578951899428,
+              "time_min_s": 9.74696562194731,
+              "time_max_s": 9.849535951972939,
+              "rss_bytes": 2303533056,
+              "rss_max_bytes": 2303950848,
+              "output_bytes": 984300001,
+              "pages": 14000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 9.110243860050105,
+              "time_min_s": 9.062085459008813,
+              "time_max_s": 9.125652138958685,
+              "rss_bytes": 7347175424,
+              "rss_max_bytes": 7347310592,
+              "output_bytes": 1085816525,
+              "pages": 14000,
+              "check_ok": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "public-17.pdf",
+      "bytes": 38958,
+      "pages": 4,
+      "objects": 36,
+      "source": {
+        "title": "File:The Organic Products (Amendment) Regulations 2015 (UKSI 2015-1669 qp).pdf",
+        "page": "https://commons.wikimedia.org/wiki/File:The_Organic_Products_(Amendment)_Regulations_2015_(UKSI_2015-1669_qp).pdf",
+        "license": "OGL 3"
+      },
+      "cases": [
+        {
+          "count": 10,
+          "pages": 40,
+          "input_bytes": 389580,
+          "tools": {
+            "nori": {
+              "time_s": 0.005040836986154318,
+              "time_min_s": 0.004881636006757617,
+              "time_max_s": 0.0053091360023245215,
+              "rss_bytes": 3964928,
+              "rss_max_bytes": 4173824,
+              "output_bytes": 382779,
+              "pages": 40,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.004706123028881848,
+              "time_min_s": 0.004031023010611534,
+              "time_max_s": 0.004716122057288885,
+              "rss_bytes": 5365760,
+              "rss_max_bytes": 5378048,
+              "output_bytes": 382779,
+              "pages": 40,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.017179902992211282,
+              "time_min_s": 0.016367352101951838,
+              "time_max_s": 0.018068647012114525,
+              "rss_bytes": 14307328,
+              "rss_max_bytes": 14381056,
+              "output_bytes": 382875,
+              "pages": 40,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.007510029012337327,
+              "time_min_s": 0.007119057001546025,
+              "time_max_s": 0.007605580030940473,
+              "rss_bytes": 6414336,
+              "rss_max_bytes": 6524928,
+              "output_bytes": 380257,
+              "pages": 40,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 100,
+          "pages": 400,
+          "input_bytes": 3895800,
+          "tools": {
+            "nori": {
+              "time_s": 0.017940844991244376,
+              "time_min_s": 0.01738221594132483,
+              "time_max_s": 0.01821358292363584,
+              "rss_bytes": 4739072,
+              "rss_max_bytes": 4837376,
+              "output_bytes": 3831863,
+              "pages": 400,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.012433563941158354,
+              "time_min_s": 0.012047813041135669,
+              "time_max_s": 0.013400206924416125,
+              "rss_bytes": 7421952,
+              "rss_max_bytes": 7864320,
+              "output_bytes": 3831863,
+              "pages": 400,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.11072481190785766,
+              "time_min_s": 0.10970713209826499,
+              "time_max_s": 0.11155250004958361,
+              "rss_bytes": 35696640,
+              "rss_max_bytes": 35753984,
+              "output_bytes": 3833425,
+              "pages": 400,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.046294332947582006,
+              "time_min_s": 0.04592318902723491,
+              "time_max_s": 0.04679054406005889,
+              "rss_bytes": 34848768,
+              "rss_max_bytes": 35119104,
+              "output_bytes": 3808018,
+              "pages": 400,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 1000,
+          "pages": 4000,
+          "input_bytes": 38958000,
+          "tools": {
+            "nori": {
+              "time_s": 0.13572157395537943,
+              "time_min_s": 0.13436067500151694,
+              "time_max_s": 0.13700085994787514,
+              "rss_bytes": 5332992,
+              "rss_max_bytes": 5369856,
+              "output_bytes": 38399308,
+              "pages": 4000,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.07570930302608758,
+              "time_min_s": 0.07405435503460467,
+              "time_max_s": 0.07959349697921425,
+              "rss_bytes": 8646656,
+              "rss_max_bytes": 9076736,
+              "output_bytes": 38399308,
+              "pages": 4000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 1.2196023829746991,
+              "time_min_s": 1.2158944519469514,
+              "time_max_s": 1.2267791830236092,
+              "rss_bytes": 243859456,
+              "rss_max_bytes": 243957760,
+              "output_bytes": 38408135,
+              "pages": 4000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.5148700219579041,
+              "time_min_s": 0.5116484140744433,
+              "time_max_s": 0.5222756830044091,
+              "rss_bytes": 320950272,
+              "rss_max_bytes": 321048576,
+              "output_bytes": 38155790,
+              "pages": 4000,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 2000,
+          "pages": 8000,
+          "input_bytes": 77916000,
+          "tools": {
+            "nori": {
+              "time_s": 0.27932483702898026,
+              "time_min_s": 0.26547383598517627,
+              "time_max_s": 0.2802545800805092,
+              "rss_bytes": 6025216,
+              "rss_max_bytes": 6045696,
+              "output_bytes": 76825955,
+              "pages": 8000,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.14801686198916286,
+              "time_min_s": 0.14317861897870898,
+              "time_max_s": 0.15979600499849766,
+              "rss_bytes": 9629696,
+              "rss_max_bytes": 9822208,
+              "output_bytes": 76825955,
+              "pages": 8000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 2.44363410200458,
+              "time_min_s": 2.438123896950856,
+              "time_max_s": 2.473092027939856,
+              "rss_bytes": 476577792,
+              "rss_max_bytes": 476692480,
+              "output_bytes": 76838135,
+              "pages": 8000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 1.1904555220389739,
+              "time_min_s": 1.1842705119634047,
+              "time_max_s": 1.2045467339921743,
+              "rss_bytes": 640106496,
+              "rss_max_bytes": 640212992,
+              "output_bytes": 76336790,
+              "pages": 8000,
+              "check_ok": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "public-24.pdf",
+      "bytes": 611212,
+      "pages": 1,
+      "objects": 9,
+      "source": {
+        "title": "File:The New Orleans Bee 1900 October 0074.pdf",
+        "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_October_0074.pdf",
+        "license": "Public domain"
+      },
+      "cases": [
+        {
+          "count": 10,
+          "pages": 10,
+          "input_bytes": 6112120,
+          "tools": {
+            "nori": {
+              "time_s": 0.00920199602842331,
+              "time_min_s": 0.008595025050453842,
+              "time_max_s": 0.010341516928747296,
+              "rss_bytes": 5918720,
+              "rss_max_bytes": 6000640,
+              "output_bytes": 6107201,
+              "pages": 10,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.008320925990119576,
+              "time_min_s": 0.007916028029285371,
+              "time_max_s": 0.008377102087251842,
+              "rss_bytes": 12832768,
+              "rss_max_bytes": 12943360,
+              "output_bytes": 6107201,
+              "pages": 10,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.018310104962438345,
+              "time_min_s": 0.017687975079752505,
+              "time_max_s": 0.018513489980250597,
+              "rss_bytes": 12742656,
+              "rss_max_bytes": 12771328,
+              "output_bytes": 6107808,
+              "pages": 10,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.01208683499135077,
+              "time_min_s": 0.011378112016245723,
+              "time_max_s": 0.012760201934725046,
+              "rss_bytes": 16113664,
+              "rss_max_bytes": 16121856,
+              "output_bytes": 6108860,
+              "pages": 10,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 100,
+          "pages": 100,
+          "input_bytes": 61121200,
+          "tools": {
+            "nori": {
+              "time_s": 0.0627343290252611,
+              "time_min_s": 0.061437330092303455,
+              "time_max_s": 0.06358533201273531,
+              "rss_bytes": 5926912,
+              "rss_max_bytes": 5984256,
+              "output_bytes": 61068926,
+              "pages": 100,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.023916081991046667,
+              "time_min_s": 0.02238780597690493,
+              "time_max_s": 0.026740698027424514,
+              "rss_bytes": 20856832,
+              "rss_max_bytes": 21118976,
+              "output_bytes": 61068926,
+              "pages": 100,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.0826629219809547,
+              "time_min_s": 0.0821513319388032,
+              "time_max_s": 0.08351275301538408,
+              "rss_bytes": 15663104,
+              "rss_max_bytes": 15724544,
+              "output_bytes": 61076118,
+              "pages": 100,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.08269989094696939,
+              "time_min_s": 0.07955747400410473,
+              "time_max_s": 0.08287581498734653,
+              "rss_bytes": 128937984,
+              "rss_max_bytes": 129003520,
+              "output_bytes": 61087394,
+              "pages": 100,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 1000,
+          "pages": 1000,
+          "input_bytes": 611212000,
+          "tools": {
+            "nori": {
+              "time_s": 0.671448256005533,
+              "time_min_s": 0.6531003989512101,
+              "time_max_s": 0.7050325179006904,
+              "rss_bytes": 6320128,
+              "rss_max_bytes": 6418432,
+              "output_bytes": 610695775,
+              "pages": 1000,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.19730120501480997,
+              "time_min_s": 0.19001857796683908,
+              "time_max_s": 0.20256426301784813,
+              "rss_bytes": 27582464,
+              "rss_max_bytes": 28184576,
+              "output_bytes": 610695775,
+              "pages": 1000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.8127817249624059,
+              "time_min_s": 0.8040201549883932,
+              "time_max_s": 0.8251500849146396,
+              "rss_bytes": 41226240,
+              "rss_max_bytes": 41271296,
+              "output_bytes": 610768128,
+              "pages": 1000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.8526059458963573,
+              "time_min_s": 0.8512107799760997,
+              "time_max_s": 0.8599069659831002,
+              "rss_bytes": 1379930112,
+              "rss_max_bytes": 1379987456,
+              "output_bytes": 610882534,
+              "pages": 1000,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 2000,
+          "pages": 2000,
+          "input_bytes": 1222424000,
+          "tools": {
+            "nori": {
+              "time_s": 1.3698036440182477,
+              "time_min_s": 1.3666994030354545,
+              "time_max_s": 1.416068913997151,
+              "rss_bytes": 6893568,
+              "rss_max_bytes": 6971392,
+              "output_bytes": 1221394180,
+              "pages": 2000,
+              "check_ok": true
+            },
+            "nori -j8": {
+              "time_s": 0.3871189740020782,
+              "time_min_s": 0.3705159770324826,
+              "time_max_s": 0.4029052429832518,
+              "rss_bytes": 29151232,
+              "rss_max_bytes": 30527488,
+              "output_bytes": 1221394180,
+              "pages": 2000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 1.622234164038673,
+              "time_min_s": 1.6128658939851448,
+              "time_max_s": 1.6582568630110472,
+              "rss_bytes": 69849088,
+              "rss_max_bytes": 70111232,
+              "output_bytes": 1221538137,
+              "pages": 2000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 1.7994065700331703,
+              "time_min_s": 1.782481958041899,
+              "time_max_s": 1.8314290080452338,
+              "rss_bytes": 2569613312,
+              "rss_max_bytes": 2569715712,
+              "output_bytes": 1221772829,
+              "pages": 2000,
+              "check_ok": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "corpora": {
+    "ja": {
+      "directory": "bench/inputs/ja",
+      "files": [
+        {
+          "name": "ja-01.pdf",
+          "bytes": 135372,
+          "pages": 14,
+          "objects": 65,
+          "source": {
+            "title": "File:スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案 新旧対照条文.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E5%88%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E7%89%B9%E5%AE%9A%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E4%BF%82%E3%82%8B%E7%AB%B6%E4%BA%89%E3%81%AE%E4%BF%83%E9%80%B2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E6%A1%88_%E6%96%B0%E6%97%A7%E5%AF%BE%E7%85%A7%E6%9D%A1%E6%96%87.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-02.pdf",
+          "bytes": 391240,
+          "pages": 1,
+          "objects": 690,
+          "source": {
+            "title": "File:AV出演被害防止・救済法 概要.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:AV%E5%87%BA%E6%BC%94%E8%A2%AB%E5%AE%B3%E9%98%B2%E6%AD%A2%E3%83%BB%E6%95%91%E6%B8%88%E6%B3%95_%E6%A6%82%E8%A6%81.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-03.pdf",
+          "bytes": 327632,
+          "pages": 3,
+          "objects": 223,
+          "source": {
+            "title": "File:GJSTU-2.0-ja.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:GJSTU-2.0-ja.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-04.pdf",
+          "bytes": 443227,
+          "pages": 9,
+          "objects": 521,
+          "source": {
+            "title": "File:GJSTU-2.0 commentary.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:GJSTU-2.0_commentary.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-05.pdf",
+          "bytes": 548695,
+          "pages": 1,
+          "objects": 34,
+          "source": {
+            "title": "File:令和4年1月11日付徴徴１－３「開示決定等の期限の延長について（通知）」.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E4%BB%A4%E5%92%8C4%E5%B9%B41%E6%9C%8811%E6%97%A5%E4%BB%98%E5%BE%B4%E5%BE%B4%EF%BC%91%EF%BC%8D%EF%BC%93%E3%80%8C%E9%96%8B%E7%A4%BA%E6%B1%BA%E5%AE%9A%E7%AD%89%E3%81%AE%E6%9C%9F%E9%99%90%E3%81%AE%E5%BB%B6%E9%95%B7%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%EF%BC%88%E9%80%9A%E7%9F%A5%EF%BC%89%E3%80%8D.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-06.pdf",
+          "bytes": 136329,
+          "pages": 1,
+          "objects": 39,
+          "source": {
+            "title": "File:高市内閣 閣僚名簿.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E9%AB%98%E5%B8%82%E5%86%85%E9%96%A3_%E9%96%A3%E5%83%9A%E5%90%8D%E7%B0%BF.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-07.pdf",
+          "bytes": 537485,
+          "pages": 2,
+          "objects": 9,
+          "source": {
+            "title": "File:謄本&資格証.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E8%AC%84%E6%9C%AC%26%E8%B3%87%E6%A0%BC%E8%A8%BC.pdf",
+            "license": "CC BY-SA 4.0"
+          }
+        },
+        {
+          "name": "ja-08.pdf",
+          "bytes": 329024,
+          "pages": 3,
+          "objects": 899,
+          "source": {
+            "title": "File:2005 Mudai Aikido J.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:2005_Mudai_Aikido_J.pdf",
+            "license": "CC BY-SA 3.0"
+          }
+        },
+        {
+          "name": "ja-09.pdf",
+          "bytes": 142202,
+          "pages": 1,
+          "objects": 11,
+          "source": {
+            "title": "File:Donguri korokoro score.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Donguri_korokoro_score.pdf",
+            "license": "CC BY-SA 3.0"
+          }
+        },
+        {
+          "name": "ja-10.pdf",
+          "bytes": 281828,
+          "pages": 35,
+          "objects": 135,
+          "source": {
+            "title": "File:スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案 参照条文.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E5%88%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E7%89%B9%E5%AE%9A%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E4%BF%82%E3%82%8B%E7%AB%B6%E4%BA%89%E3%81%AE%E4%BF%83%E9%80%B2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E6%A1%88_%E5%8F%82%E7%85%A7%E6%9D%A1%E6%96%87.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-11.pdf",
+          "bytes": 112404,
+          "pages": 1,
+          "objects": 352,
+          "source": {
+            "title": "File:教育・意識改善軸の実行ステップ.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E6%95%99%E8%82%B2%E3%83%BB%E6%84%8F%E8%AD%98%E6%94%B9%E5%96%84%E8%BB%B8%E3%81%AE%E5%AE%9F%E8%A1%8C%E3%82%B9%E3%83%86%E3%83%83%E3%83%97.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-12.pdf",
+          "bytes": 72279,
+          "pages": 1,
+          "objects": 26,
+          "source": {
+            "title": "File:高市内閣 内閣総理大臣補佐官名簿.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E9%AB%98%E5%B8%82%E5%86%85%E9%96%A3_%E5%86%85%E9%96%A3%E7%B7%8F%E7%90%86%E5%A4%A7%E8%87%A3%E8%A3%9C%E4%BD%90%E5%AE%98%E5%90%8D%E7%B0%BF.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-13.pdf",
+          "bytes": 117462,
+          "pages": 1,
+          "objects": 200,
+          "source": {
+            "title": "File:京都府京都市伏見区で発生した爆発火災（第５報）.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E9%83%BD%E5%B8%82%E4%BC%8F%E8%A6%8B%E5%8C%BA%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E7%88%86%E7%99%BA%E7%81%AB%E7%81%BD%EF%BC%88%E7%AC%AC%EF%BC%95%E5%A0%B1%EF%BC%89.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-14.pdf",
+          "bytes": 503258,
+          "pages": 8,
+          "objects": 43,
+          "source": {
+            "title": "File:Documents of Patent Hitachi Koki and Maya Kogyo.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Documents_of_Patent_Hitachi_Koki_and_Maya_Kogyo.pdf",
+            "license": "CC BY-SA 3.0"
+          }
+        },
+        {
+          "name": "ja-15.pdf",
+          "bytes": 85164,
+          "pages": 1,
+          "objects": 17,
+          "source": {
+            "title": "File:法廷等の秩序維持に関する法律違反事件記録符号規程.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E6%B3%95%E5%BB%B7%E7%AD%89%E3%81%AE%E7%A7%A9%E5%BA%8F%E7%B6%AD%E6%8C%81%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E9%81%95%E5%8F%8D%E4%BA%8B%E4%BB%B6%E8%A8%98%E9%8C%B2%E7%AC%A6%E5%8F%B7%E8%A6%8F%E7%A8%8B.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-16.pdf",
+          "bytes": 1481836,
+          "pages": 27,
+          "objects": 198,
+          "source": {
+            "title": "File:モバイルOS等実態調査報告書（概要）.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E3%83%A2%E3%83%90%E3%82%A4%E3%83%ABOS%E7%AD%89%E5%AE%9F%E6%85%8B%E8%AA%BF%E6%9F%BB%E5%A0%B1%E5%91%8A%E6%9B%B8%EF%BC%88%E6%A6%82%E8%A6%81%EF%BC%89.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-17.pdf",
+          "bytes": 38450,
+          "pages": 1,
+          "objects": 28,
+          "source": {
+            "title": "File:雲沁霓撕.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E9%9B%B2%E6%B2%81%E9%9C%93%E6%92%95.pdf",
+            "license": "CC BY-SA 4.0"
+          }
+        },
+        {
+          "name": "ja-18.pdf",
+          "bytes": 138901,
+          "pages": 1,
+          "objects": 15,
+          "source": {
+            "title": "File:アナゴ・マアナゴ・ハモの方言.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%8A%E3%82%B4%E3%83%BB%E3%83%9E%E3%82%A2%E3%83%8A%E3%82%B4%E3%83%BB%E3%83%8F%E3%83%A2%E3%81%AE%E6%96%B9%E8%A8%80.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-19.pdf",
+          "bytes": 562593,
+          "pages": 1,
+          "objects": 27,
+          "source": {
+            "title": "File:令和4年1月11日付徴徴１－４「開示決定等の期限の延長について（通知）」.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E4%BB%A4%E5%92%8C4%E5%B9%B41%E6%9C%8811%E6%97%A5%E4%BB%98%E5%BE%B4%E5%BE%B4%EF%BC%91%EF%BC%8D%EF%BC%94%E3%80%8C%E9%96%8B%E7%A4%BA%E6%B1%BA%E5%AE%9A%E7%AD%89%E3%81%AE%E6%9C%9F%E9%99%90%E3%81%AE%E5%BB%B6%E9%95%B7%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%EF%BC%88%E9%80%9A%E7%9F%A5%EF%BC%89%E3%80%8D.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-20.pdf",
+          "bytes": 2562035,
+          "pages": 3,
+          "objects": 21,
+          "source": {
+            "title": "File:上白河侯書.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E4%B8%8A%E7%99%BD%E6%B2%B3%E4%BE%AF%E6%9B%B8.pdf",
+            "license": "Public domain"
+          }
+        }
+      ],
+      "pages": 115,
+      "tools": {
+        "nori": {
+          "time_s": 0.023818397894501686,
+          "time_min_s": 0.02262978395447135,
+          "time_max_s": 0.024229836999438703,
+          "rss_bytes": 12820480,
+          "rss_max_bytes": 13303808,
+          "output_bytes": 8710583,
+          "pages": 115,
+          "check_ok": true
+        },
+        "nori -j8": {
+          "time_s": 0.018402096000500023,
+          "time_min_s": 0.01716638298239559,
+          "time_max_s": 0.01981138892006129,
+          "rss_bytes": 25300992,
+          "rss_max_bytes": 25616384,
+          "output_bytes": 8710583,
+          "pages": 115,
+          "check_ok": true
+        },
+        "qpdf": {
+          "time_s": 0.05273560399655253,
+          "time_min_s": 0.0513039700454101,
+          "time_max_s": 0.05331219709478319,
+          "rss_bytes": 18685952,
+          "rss_max_bytes": 18874368,
+          "output_bytes": 8701600,
+          "pages": 115,
+          "check_ok": true
+        },
+        "lopdf": {
+          "time_s": 0.043396364082582295,
+          "time_min_s": 0.043152480968274176,
+          "time_max_s": 0.04374966397881508,
+          "rss_bytes": 35147776,
+          "rss_max_bytes": 35176448,
+          "output_bytes": 8926744,
+          "pages": 115,
+          "check_ok": true
+        }
+      }
+    },
+    "public": {
+      "directory": "bench/inputs/public",
+      "files": [
+        {
+          "name": "public-01.pdf",
+          "bytes": 1664670,
+          "pages": 4,
+          "objects": 196,
+          "source": {
+            "title": "File:Patryota. 1831, nr 41 (14 Stycznia) (IA dlibra.kul pl.40296 patriota-41).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Patryota._1831,_nr_41_(14_Stycznia)_(IA_dlibra.kul_pl.40296_patriota-41).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-02.pdf",
+          "bytes": 115076,
+          "pages": 2,
+          "objects": 24,
+          "source": {
+            "title": "File:List of Public Institutions and of Persons who have contributed to the Society's Library, etc. since the last Anniversary (IA paper-doi-10 1093 mnras 13 4 139).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:List_of_Public_Institutions_and_of_Persons_who_have_contributed_to_the_Society%27s_Library,_etc._since_the_last_Anniversary_(IA_paper-doi-10_1093_mnras_13_4_139).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-03.pdf",
+          "bytes": 336716,
+          "pages": 1,
+          "objects": 91,
+          "source": {
+            "title": "File:OJ C 202502725 of 2025 - HU Hungarian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202502725_of_2025_-_HU_Hungarian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-04.pdf",
+          "bytes": 1931247,
+          "pages": 20,
+          "objects": 602,
+          "source": {
+            "title": "File:OJ C 392 of 2012 - CS Czech.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_392_of_2012_-_CS_Czech.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-05.pdf",
+          "bytes": 869260,
+          "pages": 1,
+          "objects": 84,
+          "source": {
+            "title": "File:OJ C 202301176 of 2023 - IT Italian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202301176_of_2023_-_IT_Italian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-06.pdf",
+          "bytes": 642512,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1878 June 0050.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1878_June_0050.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-07.pdf",
+          "bytes": 1397237,
+          "pages": 36,
+          "objects": 193,
+          "source": {
+            "title": "File:Comment on fonde une méthode (electronic resource) - conférence faite sous la présidence du professeur Pinard (IA b20417226).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Comment_on_fonde_une_m%C3%A9thode_(electronic_resource)_-_conf%C3%A9rence_faite_sous_la_pr%C3%A9sidence_du_professeur_Pinard_(IA_b20417226).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-08.pdf",
+          "bytes": 984682,
+          "pages": 8,
+          "objects": 712,
+          "source": {
+            "title": "File:Approved jurisdictional determination form - USACE-p16021coll15-902.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Approved_jurisdictional_determination_form_-_USACE-p16021coll15-902.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-09.pdf",
+          "bytes": 161171,
+          "pages": 1,
+          "objects": 25,
+          "source": {
+            "title": "File:Regulation (EEC) No 646-74 of the Commission of 22 March 1974 amending for the third time Regulation (EEC) No 320-73 as regards the determination of the price of adult bovine animals on the representative markets (EUR 1974-646).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Regulation_(EEC)_No_646-74_of_the_Commission_of_22_March_1974_amending_for_the_third_time_Regulation_(EEC)_No_320-73_as_regards_the_determination_of_the_price_of_adult_bovine_animals_on_the_representative_markets_(EUR_1974-646).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-10.pdf",
+          "bytes": 73420,
+          "pages": 4,
+          "objects": 25,
+          "source": {
+            "title": "File:NLC404-01J001382-18584 北平生活費指數月報 1934年6卷5期.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:NLC404-01J001382-18584_%E5%8C%97%E5%B9%B3%E7%94%9F%E6%B4%BB%E8%B2%BB%E6%8C%87%E6%95%B8%E6%9C%88%E5%A0%B1_1934%E5%B9%B46%E5%8D%B75%E6%9C%9F.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-11.pdf",
+          "bytes": 559672,
+          "pages": 1,
+          "objects": 112,
+          "source": {
+            "title": "File:OJ C 202503515 of 2025 - BG Bulgarian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202503515_of_2025_-_BG_Bulgarian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-12.pdf",
+          "bytes": 1422485,
+          "pages": 56,
+          "objects": 509,
+          "source": {
+            "title": "File:OJ L 315 of 2014 - RO Romanian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_L_315_of_2014_-_RO_Romanian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-13.pdf",
+          "bytes": 544648,
+          "pages": 7,
+          "objects": 478,
+          "source": {
+            "title": "File:OJ C 202301032 of 2023 - SK Slovak.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202301032_of_2023_-_SK_Slovak.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-14.pdf",
+          "bytes": 529553,
+          "pages": 5,
+          "objects": 39,
+          "source": {
+            "title": "File:(untitled) The North American Review, (1861-07-01), pages 266-270 (IA jstor-25100036).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:(untitled)_The_North_American_Review,_(1861-07-01),_pages_266-270_(IA_jstor-25100036).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-15.pdf",
+          "bytes": 543090,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1907 October 0042.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1907_October_0042.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-16.pdf",
+          "bytes": 452553,
+          "pages": 1,
+          "objects": 214,
+          "source": {
+            "title": "File:OJ C 202401930 of 2024 - SK Slovak.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202401930_of_2024_-_SK_Slovak.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-17.pdf",
+          "bytes": 38958,
+          "pages": 4,
+          "objects": 36,
+          "source": {
+            "title": "File:The Organic Products (Amendment) Regulations 2015 (UKSI 2015-1669 qp).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_Organic_Products_(Amendment)_Regulations_2015_(UKSI_2015-1669_qp).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-18.pdf",
+          "bytes": 86680,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:বাংলাদেশ গেজেট, অতিরিক্ত, ১৯৮৮-০৭-০১ - অর্থ মন্ত্রণালয় (২).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6_%E0%A6%97%E0%A7%87%E0%A6%9C%E0%A7%87%E0%A6%9F,_%E0%A6%85%E0%A6%A4%E0%A6%BF%E0%A6%B0%E0%A6%BF%E0%A6%95%E0%A7%8D%E0%A6%A4,_%E0%A7%A7%E0%A7%AF%E0%A7%AE%E0%A7%AE-%E0%A7%A6%E0%A7%AD-%E0%A7%A6%E0%A7%A7_-_%E0%A6%85%E0%A6%B0%E0%A7%8D%E0%A6%A5_%E0%A6%AE%E0%A6%A8%E0%A7%8D%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A6%A3%E0%A6%BE%E0%A6%B2%E0%A6%AF%E0%A6%BC_(%E0%A7%A8).pdf",
+            "license": "EdictGov-Bangladesh"
+          }
+        },
+        {
+          "name": "public-19.pdf",
+          "bytes": 873611,
+          "pages": 1,
+          "objects": 78,
+          "source": {
+            "title": "File:OJ L 202500271 of 2025 - DE German.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_L_202500271_of_2025_-_DE_German.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-20.pdf",
+          "bytes": 783816,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1870 May 0067.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1870_May_0067.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-21.pdf",
+          "bytes": 90456,
+          "pages": 2,
+          "objects": 33,
+          "source": {
+            "title": "File:The A470 Trunk Road (Moat Lane Level Crossing, Nr. Caersws, Powys) (Temporary Prohibition of Vehicles) Order 2011 (WSI 2011-737 we).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_A470_Trunk_Road_(Moat_Lane_Level_Crossing,_Nr._Caersws,_Powys)_(Temporary_Prohibition_of_Vehicles)_Order_2011_(WSI_2011-737_we).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-22.pdf",
+          "bytes": 72583,
+          "pages": 2,
+          "objects": 12,
+          "source": {
+            "title": "File:104-10185-10004 (November 9, 2017 Release).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:104-10185-10004_(November_9,_2017_Release).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-23.pdf",
+          "bytes": 1744865,
+          "pages": 8,
+          "objects": 90,
+          "source": {
+            "title": "File:The Hovercraft (Fees) Regulations 1978 (UKSI 1978-483).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_Hovercraft_(Fees)_Regulations_1978_(UKSI_1978-483).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-24.pdf",
+          "bytes": 611212,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1900 October 0074.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_October_0074.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-25.pdf",
+          "bytes": 411658,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1901 February 0119.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1901_February_0119.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-26.pdf",
+          "bytes": 38477,
+          "pages": 2,
+          "objects": 46,
+          "source": {
+            "title": "File:The Pollution Prevention and Control (England and Wales) (Amendment) Regulations 2003 (UKSI 2003-1699 qp).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_Pollution_Prevention_and_Control_(England_and_Wales)_(Amendment)_Regulations_2003_(UKSI_2003-1699_qp).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-27.pdf",
+          "bytes": 524780,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1900 January 0125.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_January_0125.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-28.pdf",
+          "bytes": 558728,
+          "pages": 1,
+          "objects": 107,
+          "source": {
+            "title": "File:OJ C 202403571 of 2024 - ET Estonian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202403571_of_2024_-_ET_Estonian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-29.pdf",
+          "bytes": 2857297,
+          "pages": 9,
+          "objects": 59,
+          "source": {
+            "title": "File:Een wonderlijcke history vandē wachtmeester tot Calkar THYSPF 1092.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Een_wonderlijcke_history_vand%C4%93_wachtmeester_tot_Calkar_THYSPF_1092.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "public-30.pdf",
+          "bytes": 1786973,
+          "pages": 18,
+          "objects": 59,
+          "source": {
+            "title": "File:CNTS-00048003805 28 大陸科學院硏究報告. 第1-5卷.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:CNTS-00048003805_28_%E5%A4%A7%E9%99%B8%E7%A7%91%E5%AD%B8%E9%99%A2%E7%A1%8F%E7%A9%B6%E5%A0%B1%E5%91%8A._%E7%AC%AC1-5%E5%8D%B7.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-31.pdf",
+          "bytes": 179298,
+          "pages": 2,
+          "objects": 34,
+          "source": {
+            "title": "File:Commission Regulation (EEC) No 2438-83 of 29 August 1983 altering the rates of the refunds applicable to certain products from the sugar sector exported in the form of goods not covered by Annex II to the Treaty (EUR 1983-2438).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Commission_Regulation_(EEC)_No_2438-83_of_29_August_1983_altering_the_rates_of_the_refunds_applicable_to_certain_products_from_the_sugar_sector_exported_in_the_form_of_goods_not_covered_by_Annex_II_to_the_Treaty_(EUR_1983-2438).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-32.pdf",
+          "bytes": 2467917,
+          "pages": 12,
+          "objects": 41,
+          "source": {
+            "title": "File:NCL-15308-0015 瓶史.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:NCL-15308-0015_%E7%93%B6%E5%8F%B2.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-33.pdf",
+          "bytes": 497472,
+          "pages": 2,
+          "objects": 528,
+          "source": {
+            "title": "File:OJ C 202403844 of 2024 - LT Lithuanian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202403844_of_2024_-_LT_Lithuanian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-34.pdf",
+          "bytes": 898947,
+          "pages": 2,
+          "objects": 214,
+          "source": {
+            "title": "File:OJ L 202401830 of 2024 - MT Maltese.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_L_202401830_of_2024_-_MT_Maltese.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-35.pdf",
+          "bytes": 322423,
+          "pages": 19,
+          "objects": 123,
+          "source": {
+            "title": "File:RL33655 (IA RL33655-crs).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:RL33655_(IA_RL33655-crs).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-36.pdf",
+          "bytes": 477109,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1917 February 0056.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1917_February_0056.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-37.pdf",
+          "bytes": 25035,
+          "pages": 1,
+          "objects": 14,
+          "source": {
+            "title": "File:Newspaper clipping about the son of Mrs. D. C. Lockey published March 11, 1886 - DPLA - 6e2280c3646c329672f834762f9fba92.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Newspaper_clipping_about_the_son_of_Mrs._D._C._Lockey_published_March_11,_1886_-_DPLA_-_6e2280c3646c329672f834762f9fba92.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-38.pdf",
+          "bytes": 2762166,
+          "pages": 4,
+          "objects": 41,
+          "source": {
+            "title": "File:Carta de (Francisco de Paula Rodrigues Alves Filho), secretário da Presidência da República para Juca comunicando que com a ida do pai a Minas, (José (...), Arquivo Nacional (BR RJANRIO ON.0.COR.28-2).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Carta_de_(Francisco_de_Paula_Rodrigues_Alves_Filho),_secret%C3%A1rio_da_Presid%C3%AAncia_da_Rep%C3%BAblica_para_Juca_comunicando_que_com_a_ida_do_pai_a_Minas,_(Jos%C3%A9_(...),_Arquivo_Nacional_(BR_RJANRIO_ON.0.COR.28-2).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-39.pdf",
+          "bytes": 2588632,
+          "pages": 13,
+          "objects": 44,
+          "source": {
+            "title": "File:ЦДАВО 4-1-393 Тим Луїза Антонівна (1922).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%D0%A6%D0%94%D0%90%D0%92%D0%9E_4-1-393_%D0%A2%D0%B8%D0%BC_%D0%9B%D1%83%D1%97%D0%B7%D0%B0_%D0%90%D0%BD%D1%82%D0%BE%D0%BD%D1%96%D0%B2%D0%BD%D0%B0_(1922).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-40.pdf",
+          "bytes": 886976,
+          "pages": 20,
+          "objects": 106,
+          "source": {
+            "title": "File:Alabama Baptist State Convention Annual Reports 1827 (IA alabamabaptistst1827alab).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Alabama_Baptist_State_Convention_Annual_Reports_1827_(IA_alabamabaptistst1827alab).pdf",
+            "license": "Public domain"
+          }
+        }
+      ],
+      "pages": 277,
+      "tools": {
+        "nori": {
+          "time_s": 0.03746177698485553,
+          "time_min_s": 0.036753884982317686,
+          "time_max_s": 0.03797645296435803,
+          "rss_bytes": 16379904,
+          "rss_max_bytes": 16461824,
+          "output_bytes": 32027432,
+          "pages": 277,
+          "check_ok": true
+        },
+        "nori -j8": {
+          "time_s": 0.027870221994817257,
+          "time_min_s": 0.025284309056587517,
+          "time_max_s": 0.02936658903490752,
+          "rss_bytes": 47759360,
+          "rss_max_bytes": 48226304,
+          "output_bytes": 32027432,
+          "pages": 277,
+          "check_ok": true
+        },
+        "qpdf": {
+          "time_s": 0.690305739059113,
+          "time_min_s": 0.6896785990102217,
+          "time_max_s": 0.7003681750502437,
+          "rss_bytes": 36810752,
+          "rss_max_bytes": 36937728,
+          "output_bytes": 31908935,
+          "pages": 277,
+          "check_ok": true
+        },
+        "lopdf": {
+          "time_s": 0.09442687104456127,
+          "time_min_s": 0.09372589294798672,
+          "time_max_s": 0.09632575092837214,
+          "rss_bytes": 102477824,
+          "rss_max_bytes": 102567936,
+          "output_bytes": 33705873,
+          "pages": 277,
+          "check_ok": true
+        }
+      }
+    }
+  }
+}

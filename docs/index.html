@@ -101,10 +101,10 @@
     .paste-sheet, .paste-strip { animation: none; }
   }
 
-  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 32px); margin: clamp(40px, 5vw, 64px) auto 0; padding-block: 0; list-style: none; }
+  .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 32px); margin: clamp(40px, 5vw, 64px) auto 0; padding-block: 0; list-style: none; }
   .cards li { position: relative; padding: 22px 24px 20px; background: var(--sheet); border-radius: 2px; box-shadow: var(--paper-shadow); }
   .cards li:nth-child(1) { transform: rotate(-1deg); }
-  .cards li:nth-child(3) { transform: rotate(1deg); }
+  .cards li:nth-child(2) { transform: rotate(1deg); }
   .cards li::before { content: ""; position: absolute; top: -8px; left: 50%; width: 36px; height: 14px; margin-left: -18px; background: var(--nori); opacity: 0.85; transform: rotate(-3deg); }
   .cards b { display: block; font-family: var(--code); font-weight: 700; font-size: 2.4rem; line-height: 1.1; color: var(--nori); }
   .cards span { display: block; margin-top: 6px; font-size: 0.875rem; color: var(--ink-soft); line-height: 1.6; }
@@ -138,6 +138,8 @@
   .modes button + button { border-left: 2px solid var(--ink); }
   .modes button[aria-pressed="true"] { background: var(--nori); color: var(--sheet); }
   .bench-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin: 48px 0 4px; }
+  .mode-groups { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .corpus-run { margin-top: 12px; }
   .bench-title { margin: 0 !important; }
   .bench-lede { font-size: 0.9375rem; color: var(--ink-soft); }
   .chart-sheet { padding: clamp(12px, 2vw, 24px); border: 1px solid var(--rule-light); border-radius: 2px; }
@@ -155,7 +157,7 @@
   .bar { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 12px; align-items: center; font-size: 0.8125rem; color: var(--ink-soft); }
   .bar b { color: var(--ink); font-family: var(--code); }
   .bar-fill { height: 12px; width: var(--w); min-width: 2px; background: var(--nori); }
-  .bar-norij6 .bar-fill { background: repeating-linear-gradient(90deg, var(--nori) 0 6px, transparent 6px 9px); }
+  .bar-norij .bar-fill { background: repeating-linear-gradient(90deg, var(--nori) 0 6px, transparent 6px 9px); }
   .bar-qpdf .bar-fill { background: var(--ink-soft); }
   .bar-lopdf .bar-fill { background: var(--ink-faint); }
   .bar-none b { color: var(--ink-faint); font-weight: 400; }
@@ -263,9 +265,8 @@
       </figure>
     </div>
     <ul class="wrap cards">
-      <li><b>8 MB</b><span>日本語の法律案 PDF を 2,000 ファイル（28,000 ページ）つないだときの最大メモリ。qpdf は 686 MB</span></li>
-      <li><b>5.9 倍</b><span>同じ結合で qpdf より速い。-j6 なら 9.7 倍</span></li>
-      <li><b>1 つ</b><span>外部コマンドに依存しない単体のバイナリ。MIT ライセンス</span></li>
+      <li><b>8 MB</b><span>日本語の法律案 PDF を 2,000 ファイル（28,000 ページ）つないだときの最大メモリ。qpdf は 686 MB（Mac）</span></li>
+      <li><b>5.9 倍</b><span>同じ結合で qpdf より速い（Linux では 8.3 倍）。-j6 なら 9.7 倍</span></li>
     </ul>
   </section>
 
@@ -299,7 +300,7 @@
   <section class="section" id="benchmark" aria-labelledby="benchmark-title">
     <div class="wrap">
       <h2 id="benchmark-title">qpdf と lopdf との比較</h2>
-      <p>Wikimedia Commons にある PDF を 10〜2,000 個コピーしてつなぎ、qpdf と、lopdf の README にある結合コードとで、実行時間と最大メモリを比べました。いずれもコマンドとして実行した 5 回の中央値です。グラフの上のボタンで、入力の PDF を切り替えられます。</p>
+      <p>Wikimedia Commons にある PDF を 10〜2,000 個コピーしてつなぎ、qpdf と、lopdf の README にある結合コードとで、実行時間と最大メモリを比べました。いずれもコマンドとして実行した 5 回の中央値で、Mac（Intel Core i5）と Linux（AMD Ryzen 7）の 2 台で測りました。グラフの上のボタンで、マシンと入力の PDF を切り替えられます。</p>
       <p>コピー元は、日本語 PDF のカテゴリから選んだ内閣官房の法律案の条文と、Commons 全体からランダムに取った 40 件の中から作りの違う 3 件です。どれもパブリックドメインか自由なライセンスで、リンク先からそのまま取得できます。</p>
       <div class="table-scroll">
         <table class="fixtures">
@@ -315,13 +316,13 @@
 
       <div class="bench-head">
         <h3 class="bench-title">最大メモリ使用量</h3>
-        <div class="modes" role="group" aria-label="入力の PDF" data-group="chart"><button type="button" data-fixture="ja-01" aria-pressed="true">日本の法律案</button><button type="button" data-fixture="public-17" aria-pressed="false">英国の法令</button><button type="button" data-fixture="public-13" aria-pressed="false">EU 官報</button><button type="button" data-fixture="public-24" aria-pressed="false">新聞</button></div>
+        <div class="mode-groups"><div class="modes modes-machine" role="group" aria-label="計測したマシン" data-group="chart"><button type="button" data-machine="macos" aria-pressed="true">Mac（Core i5）</button><button type="button" data-machine="linux" aria-pressed="false">Linux（Ryzen 7）</button></div><div class="modes" role="group" aria-label="入力の PDF" data-group="chart"><button type="button" data-fixture="ja-01" aria-pressed="true">日本の法律案</button><button type="button" data-fixture="public-17" aria-pressed="false">英国の法令</button><button type="button" data-fixture="public-13" aria-pressed="false">EU 官報</button><button type="button" data-fixture="public-24" aria-pressed="false">新聞</button></div></div>
       </div>
-      <p class="bench-lede">横軸はファイル数。nori の線は、入力が 200 倍になってもほとんど動きません。lopdf の線が途中で終わるのは、その先はメモリが計測機に収まらないためです。</p>
+      <p class="bench-lede">横軸はファイル数。nori の線は、入力が 200 倍になってもほとんど動きません。Mac で lopdf の線が途中で終わるのは、その先はメモリ 16 GB に収まらないためです。グラフの上のボタンで、計測した 2 台と入力の PDF を切り替えられます。</p>
       <div class="chart-sheet">
-      <figure class="chart-figure" data-fixture="ja-01">
-<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-ja-01-title">
-<title id="chart-ja-01-title">最大メモリ使用量: 法律案の新旧対照条文</title>
+      <figure class="chart-figure" data-fixture="ja-01" data-machine="macos">
+<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-macos-ja-01-title">
+<title id="chart-macos-ja-01-title">最大メモリ使用量: 法律案の新旧対照条文（Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8））</title>
 <line x1="72" y1="285.1" x2="490" y2="285.1" stroke="var(--rule-light)"/>
 <text x="62" y="289.1" text-anchor="end" class="tick">250 MB</text>
 <line x1="72" y1="242.3" x2="490" y2="242.3" stroke="var(--rule-light)"/>
@@ -367,11 +368,11 @@
 <text x="500.0" y="214.3" class="label" fill="var(--ink-soft)">qpdf 686.4 MB</text>
 <text x="500.0" y="70.8" class="label" fill="var(--ink-faint)">lopdf 1.52 GB</text>
 </svg>
-        <figcaption>ＭＳ明朝のサブセットを埋め込んだ、JUST PDF 製の条文の表。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（28,000 ページ）でも 8 MB です。</figcaption>
+        <figcaption>ＭＳ明朝のサブセットを埋め込んだ、JUST PDF 製の条文の表。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（28,000 ページ）でも 8.0 MB です。</figcaption>
       </figure>
-      <figure class="chart-figure" data-fixture="public-17" hidden>
-<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-public-17-title">
-<title id="chart-public-17-title">最大メモリ使用量: 英国の法令</title>
+      <figure class="chart-figure" data-fixture="public-17" data-machine="macos" hidden>
+<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-macos-public-17-title">
+<title id="chart-macos-public-17-title">最大メモリ使用量: 英国の法令（Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8））</title>
 <line x1="72" y1="228.0" x2="490" y2="228.0" stroke="var(--rule-light)"/>
 <text x="62" y="232.0" text-anchor="end" class="tick">250 MB</text>
 <line x1="72" y1="128.0" x2="490" y2="128.0" stroke="var(--rule-light)"/>
@@ -411,9 +412,9 @@
 </svg>
         <figcaption>文字だけの軽い PDF。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（8,000 ページ）でも 5.7 MB です。</figcaption>
       </figure>
-      <figure class="chart-figure" data-fixture="public-13" hidden>
-<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-public-13-title">
-<title id="chart-public-13-title">最大メモリ使用量: EU 官報</title>
+      <figure class="chart-figure" data-fixture="public-13" data-machine="macos" hidden>
+<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-macos-public-13-title">
+<title id="chart-macos-public-13-title">最大メモリ使用量: EU 官報（Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8））</title>
 <line x1="72" y1="228.0" x2="490" y2="228.0" stroke="var(--rule-light)"/>
 <text x="62" y="232.0" text-anchor="end" class="tick">1 GB</text>
 <line x1="72" y1="128.0" x2="490" y2="128.0" stroke="var(--rule-light)"/>
@@ -449,11 +450,11 @@
 <text x="500.0" y="308.0" class="label" fill="var(--nori)">nori -j6 36.7 MB</text>
 <text x="500.0" y="129.2" class="label" fill="var(--ink-soft)">qpdf 2.03 GB</text>
 </svg>
-        <figcaption>1 ページあたりのオブジェクトが多い PDF。qpdf は 2,000 ファイルで 2 GB に達し、nori は 16 MB です。lopdf は 100 ファイルで 410 MB だったので、その先は測っていません。</figcaption>
+        <figcaption>1 ページあたりのオブジェクトが多い PDF。2,000 ファイルで qpdf は 2.03 GB、lopdf は 100 ファイルで 409.6 MB に達し、nori は 16.3 MB です。</figcaption>
       </figure>
-      <figure class="chart-figure" data-fixture="public-24" hidden>
-<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-public-24-title">
-<title id="chart-public-24-title">最大メモリ使用量: 新聞のスキャン</title>
+      <figure class="chart-figure" data-fixture="public-24" data-machine="macos" hidden>
+<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-macos-public-24-title">
+<title id="chart-macos-public-24-title">最大メモリ使用量: 新聞のスキャン（Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8））</title>
 <line x1="72" y1="278.0" x2="490" y2="278.0" stroke="var(--rule-light)"/>
 <text x="62" y="282.0" text-anchor="end" class="tick">250 MB</text>
 <line x1="72" y1="228.0" x2="490" y2="228.0" stroke="var(--rule-light)"/>
@@ -496,21 +497,205 @@
 <text x="500.0" y="308.0" class="label" fill="var(--nori)">nori -j6 11.8 MB</text>
 <text x="500.0" y="290.0" class="label" fill="var(--ink-soft)">qpdf 56.7 MB</text>
 </svg>
-        <figcaption>1 ページが画像のスキャン。オブジェクトが少ないぶん qpdf のメモリも伸びにくいものの、2,000 ファイルで nori 5.4 MB に対して qpdf は 57 MB、lopdf は 1,000 ファイルで 1.3 GB でした。</figcaption>
+        <figcaption>1 ページが画像のスキャン。オブジェクトが少ないぶん qpdf のメモリも伸びにくいものの、2,000 ファイルで nori 5.4 MB に対して qpdf は 56.7 MB、lopdf は 1,000 ファイルで 1.26 GB でした。</figcaption>
+      </figure>
+      <figure class="chart-figure" data-fixture="ja-01" data-machine="linux" hidden>
+<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-linux-ja-01-title">
+<title id="chart-linux-ja-01-title">最大メモリ使用量: 法律案の新旧対照条文（Linux（AMD Ryzen 7 6800H 8 コア、GEEKOM A6、メモリ 32 GB、Omarchy 4.0.6））</title>
+<line x1="72" y1="278.0" x2="490" y2="278.0" stroke="var(--rule-light)"/>
+<text x="62" y="282.0" text-anchor="end" class="tick">250 MB</text>
+<line x1="72" y1="228.0" x2="490" y2="228.0" stroke="var(--rule-light)"/>
+<text x="62" y="232.0" text-anchor="end" class="tick">500 MB</text>
+<line x1="72" y1="178.0" x2="490" y2="178.0" stroke="var(--rule-light)"/>
+<text x="62" y="182.0" text-anchor="end" class="tick">750 MB</text>
+<line x1="72" y1="128.0" x2="490" y2="128.0" stroke="var(--rule-light)"/>
+<text x="62" y="132.0" text-anchor="end" class="tick">1000 MB</text>
+<line x1="72" y1="78.0" x2="490" y2="78.0" stroke="var(--rule-light)"/>
+<text x="62" y="82.0" text-anchor="end" class="tick">1250 MB</text>
+<line x1="72" y1="28.0" x2="490" y2="28.0" stroke="var(--rule-light)"/>
+<text x="62" y="32.0" text-anchor="end" class="tick">1500 MB</text>
+<line x1="72" y1="328" x2="490" y2="328" stroke="var(--rule)"/>
+<text x="72.0" y="352" text-anchor="middle" class="tick">10</text>
+<text x="211.3" y="352" text-anchor="middle" class="tick">100</text>
+<text x="350.7" y="352" text-anchor="middle" class="tick">1,000</text>
+<text x="490.0" y="352" text-anchor="middle" class="tick">2,000</text>
+<text x="281.0" y="374" text-anchor="middle" class="tick">ファイル</text>
+<polyline points="72.0,327.0 211.3,327.0 350.7,326.8 490.0,326.7" fill="none" stroke="var(--nori)" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="327.0" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="327.0" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="326.8" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="326.7" r="4" fill="var(--nori)"/>
+<polyline points="72.0,326.3 211.3,325.9 350.7,325.4 490.0,325.2" fill="none" stroke="var(--nori)" stroke-width="2" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.3" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="325.9" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="325.4" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="325.2" r="4" fill="var(--nori)"/>
+<polyline points="72.0,324.8 211.3,318.0 350.7,250.1 490.0,174.4" fill="none" stroke="var(--ink-soft)" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="324.8" r="4" fill="var(--ink-soft)"/>
+<circle cx="211.3" cy="318.0" r="4" fill="var(--ink-soft)"/>
+<circle cx="350.7" cy="250.1" r="4" fill="var(--ink-soft)"/>
+<circle cx="490.0" cy="174.4" r="4" fill="var(--ink-soft)"/>
+<polyline points="72.0,326.0 211.3,313.5 350.7,188.7 490.0,49.9" fill="none" stroke="var(--ink-faint)" stroke-width="2.5" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.0" r="4" fill="var(--ink-faint)"/>
+<circle cx="211.3" cy="313.5" r="4" fill="var(--ink-faint)"/>
+<circle cx="350.7" cy="188.7" r="4" fill="var(--ink-faint)"/>
+<circle cx="490.0" cy="49.9" r="4" fill="var(--ink-faint)"/>
+<text x="500.0" y="326.0" class="label" fill="var(--nori)" font-weight="700">nori 6.6 MB</text>
+<text x="500.0" y="308.0" class="label" fill="var(--nori)">nori -j8 14.2 MB</text>
+<text x="500.0" y="178.4" class="label" fill="var(--ink-soft)">qpdf 768.2 MB</text>
+<text x="500.0" y="53.9" class="label" fill="var(--ink-faint)">lopdf 1.39 GB</text>
+</svg>
+        <figcaption>ＭＳ明朝のサブセットを埋め込んだ、JUST PDF 製の条文の表。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（28,000 ページ）でも 6.6 MB です。</figcaption>
+      </figure>
+      <figure class="chart-figure" data-fixture="public-17" data-machine="linux" hidden>
+<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-linux-public-17-title">
+<title id="chart-linux-public-17-title">最大メモリ使用量: 英国の法令（Linux（AMD Ryzen 7 6800H 8 コア、GEEKOM A6、メモリ 32 GB、Omarchy 4.0.6））</title>
+<line x1="72" y1="228.0" x2="490" y2="228.0" stroke="var(--rule-light)"/>
+<text x="62" y="232.0" text-anchor="end" class="tick">250 MB</text>
+<line x1="72" y1="128.0" x2="490" y2="128.0" stroke="var(--rule-light)"/>
+<text x="62" y="132.0" text-anchor="end" class="tick">500 MB</text>
+<line x1="72" y1="28.0" x2="490" y2="28.0" stroke="var(--rule-light)"/>
+<text x="62" y="32.0" text-anchor="end" class="tick">750 MB</text>
+<line x1="72" y1="328" x2="490" y2="328" stroke="var(--rule)"/>
+<text x="72.0" y="352" text-anchor="middle" class="tick">10</text>
+<text x="211.3" y="352" text-anchor="middle" class="tick">100</text>
+<text x="350.7" y="352" text-anchor="middle" class="tick">1,000</text>
+<text x="490.0" y="352" text-anchor="middle" class="tick">2,000</text>
+<text x="281.0" y="374" text-anchor="middle" class="tick">ファイル</text>
+<polyline points="72.0,326.4 211.3,326.1 350.7,325.9 490.0,325.6" fill="none" stroke="var(--nori)" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.4" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="326.1" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="325.9" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="325.6" r="4" fill="var(--nori)"/>
+<polyline points="72.0,325.9 211.3,325.0 350.7,324.5 490.0,324.1" fill="none" stroke="var(--nori)" stroke-width="2" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="325.9" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="325.0" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="324.5" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="324.1" r="4" fill="var(--nori)"/>
+<polyline points="72.0,322.3 211.3,313.7 350.7,230.5 490.0,137.4" fill="none" stroke="var(--ink-soft)" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="322.3" r="4" fill="var(--ink-soft)"/>
+<circle cx="211.3" cy="313.7" r="4" fill="var(--ink-soft)"/>
+<circle cx="350.7" cy="230.5" r="4" fill="var(--ink-soft)"/>
+<circle cx="490.0" cy="137.4" r="4" fill="var(--ink-soft)"/>
+<polyline points="72.0,325.4 211.3,314.1 350.7,199.6 490.0,72.0" fill="none" stroke="var(--ink-faint)" stroke-width="2.5" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="325.4" r="4" fill="var(--ink-faint)"/>
+<circle cx="211.3" cy="314.1" r="4" fill="var(--ink-faint)"/>
+<circle cx="350.7" cy="199.6" r="4" fill="var(--ink-faint)"/>
+<circle cx="490.0" cy="72.0" r="4" fill="var(--ink-faint)"/>
+<text x="500.0" y="326.0" class="label" fill="var(--nori)" font-weight="700">nori 6.0 MB</text>
+<text x="500.0" y="308.0" class="label" fill="var(--nori)">nori -j8 9.6 MB</text>
+<text x="500.0" y="141.4" class="label" fill="var(--ink-soft)">qpdf 476.6 MB</text>
+<text x="500.0" y="76.0" class="label" fill="var(--ink-faint)">lopdf 640.1 MB</text>
+</svg>
+        <figcaption>文字だけの軽い PDF。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（8,000 ページ）でも 6.0 MB です。</figcaption>
+      </figure>
+      <figure class="chart-figure" data-fixture="public-13" data-machine="linux" hidden>
+<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-linux-public-13-title">
+<title id="chart-linux-public-13-title">最大メモリ使用量: EU 官報（Linux（AMD Ryzen 7 6800H 8 コア、GEEKOM A6、メモリ 32 GB、Omarchy 4.0.6））</title>
+<line x1="72" y1="290.5" x2="490" y2="290.5" stroke="var(--rule-light)"/>
+<text x="62" y="294.5" text-anchor="end" class="tick">1 GB</text>
+<line x1="72" y1="253.0" x2="490" y2="253.0" stroke="var(--rule-light)"/>
+<text x="62" y="257.0" text-anchor="end" class="tick">2 GB</text>
+<line x1="72" y1="215.5" x2="490" y2="215.5" stroke="var(--rule-light)"/>
+<text x="62" y="219.5" text-anchor="end" class="tick">3 GB</text>
+<line x1="72" y1="178.0" x2="490" y2="178.0" stroke="var(--rule-light)"/>
+<text x="62" y="182.0" text-anchor="end" class="tick">4 GB</text>
+<line x1="72" y1="140.5" x2="490" y2="140.5" stroke="var(--rule-light)"/>
+<text x="62" y="144.5" text-anchor="end" class="tick">5 GB</text>
+<line x1="72" y1="103.0" x2="490" y2="103.0" stroke="var(--rule-light)"/>
+<text x="62" y="107.0" text-anchor="end" class="tick">6 GB</text>
+<line x1="72" y1="65.5" x2="490" y2="65.5" stroke="var(--rule-light)"/>
+<text x="62" y="69.5" text-anchor="end" class="tick">7 GB</text>
+<line x1="72" y1="28.0" x2="490" y2="28.0" stroke="var(--rule-light)"/>
+<text x="62" y="32.0" text-anchor="end" class="tick">8 GB</text>
+<line x1="72" y1="328" x2="490" y2="328" stroke="var(--rule)"/>
+<text x="72.0" y="352" text-anchor="middle" class="tick">10</text>
+<text x="211.3" y="352" text-anchor="middle" class="tick">100</text>
+<text x="350.7" y="352" text-anchor="middle" class="tick">1,000</text>
+<text x="490.0" y="352" text-anchor="middle" class="tick">2,000</text>
+<text x="281.0" y="374" text-anchor="middle" class="tick">ファイル</text>
+<polyline points="72.0,327.7 211.3,327.7 350.7,327.7 490.0,327.6" fill="none" stroke="var(--nori)" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="327.7" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="327.7" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="327.7" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="327.6" r="4" fill="var(--nori)"/>
+<polyline points="72.0,327.1 211.3,326.8 350.7,326.5 490.0,326.4" fill="none" stroke="var(--nori)" stroke-width="2" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="327.1" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="326.8" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="326.5" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="326.4" r="4" fill="var(--nori)"/>
+<polyline points="72.0,327.1 211.3,323.3 350.7,284.6 490.0,241.6" fill="none" stroke="var(--ink-soft)" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="327.1" r="4" fill="var(--ink-soft)"/>
+<circle cx="211.3" cy="323.3" r="4" fill="var(--ink-soft)"/>
+<circle cx="350.7" cy="284.6" r="4" fill="var(--ink-soft)"/>
+<circle cx="490.0" cy="241.6" r="4" fill="var(--ink-soft)"/>
+<polyline points="72.0,326.5 211.3,314.1 350.7,190.2 490.0,52.5" fill="none" stroke="var(--ink-faint)" stroke-width="2.5" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.5" r="4" fill="var(--ink-faint)"/>
+<circle cx="211.3" cy="314.1" r="4" fill="var(--ink-faint)"/>
+<circle cx="350.7" cy="190.2" r="4" fill="var(--ink-faint)"/>
+<circle cx="490.0" cy="52.5" r="4" fill="var(--ink-faint)"/>
+<text x="500.0" y="326.0" class="label" fill="var(--nori)" font-weight="700">nori 9.7 MB</text>
+<text x="500.0" y="308.0" class="label" fill="var(--nori)">nori -j8 42.6 MB</text>
+<text x="500.0" y="245.6" class="label" fill="var(--ink-soft)">qpdf 2.30 GB</text>
+<text x="500.0" y="56.5" class="label" fill="var(--ink-faint)">lopdf 7.35 GB</text>
+</svg>
+        <figcaption>1 ページあたりのオブジェクトが多い PDF。2,000 ファイルで qpdf は 2.30 GB、lopdf は 7.35 GB に達し、nori は 9.7 MB です。</figcaption>
+      </figure>
+      <figure class="chart-figure" data-fixture="public-24" data-machine="linux" hidden>
+<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-linux-public-24-title">
+<title id="chart-linux-public-24-title">最大メモリ使用量: 新聞のスキャン（Linux（AMD Ryzen 7 6800H 8 コア、GEEKOM A6、メモリ 32 GB、Omarchy 4.0.6））</title>
+<line x1="72" y1="228.0" x2="490" y2="228.0" stroke="var(--rule-light)"/>
+<text x="62" y="232.0" text-anchor="end" class="tick">1 GB</text>
+<line x1="72" y1="128.0" x2="490" y2="128.0" stroke="var(--rule-light)"/>
+<text x="62" y="132.0" text-anchor="end" class="tick">2 GB</text>
+<line x1="72" y1="28.0" x2="490" y2="28.0" stroke="var(--rule-light)"/>
+<text x="62" y="32.0" text-anchor="end" class="tick">3 GB</text>
+<line x1="72" y1="328" x2="490" y2="328" stroke="var(--rule)"/>
+<text x="72.0" y="352" text-anchor="middle" class="tick">10</text>
+<text x="211.3" y="352" text-anchor="middle" class="tick">100</text>
+<text x="350.7" y="352" text-anchor="middle" class="tick">1,000</text>
+<text x="490.0" y="352" text-anchor="middle" class="tick">2,000</text>
+<text x="281.0" y="374" text-anchor="middle" class="tick">ファイル</text>
+<polyline points="72.0,327.4 211.3,327.4 350.7,327.4 490.0,327.3" fill="none" stroke="var(--nori)" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="327.4" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="327.4" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="327.4" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="327.3" r="4" fill="var(--nori)"/>
+<polyline points="72.0,326.7 211.3,325.9 350.7,325.2 490.0,325.1" fill="none" stroke="var(--nori)" stroke-width="2" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.7" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="325.9" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="325.2" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="325.1" r="4" fill="var(--nori)"/>
+<polyline points="72.0,326.7 211.3,326.4 350.7,323.9 490.0,321.0" fill="none" stroke="var(--ink-soft)" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.7" r="4" fill="var(--ink-soft)"/>
+<circle cx="211.3" cy="326.4" r="4" fill="var(--ink-soft)"/>
+<circle cx="350.7" cy="323.9" r="4" fill="var(--ink-soft)"/>
+<circle cx="490.0" cy="321.0" r="4" fill="var(--ink-soft)"/>
+<polyline points="72.0,326.4 211.3,315.1 350.7,190.0 490.0,71.0" fill="none" stroke="var(--ink-faint)" stroke-width="2.5" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.4" r="4" fill="var(--ink-faint)"/>
+<circle cx="211.3" cy="315.1" r="4" fill="var(--ink-faint)"/>
+<circle cx="350.7" cy="190.0" r="4" fill="var(--ink-faint)"/>
+<circle cx="490.0" cy="71.0" r="4" fill="var(--ink-faint)"/>
+<text x="500.0" y="326.0" class="label" fill="var(--nori)" font-weight="700">nori 6.9 MB</text>
+<text x="500.0" y="308.0" class="label" fill="var(--nori)">nori -j8 29.2 MB</text>
+<text x="500.0" y="290.0" class="label" fill="var(--ink-soft)">qpdf 69.8 MB</text>
+<text x="500.0" y="75.0" class="label" fill="var(--ink-faint)">lopdf 2.57 GB</text>
+</svg>
+        <figcaption>1 ページが画像のスキャン。オブジェクトが少ないぶん qpdf のメモリも伸びにくいものの、2,000 ファイルで nori 6.9 MB に対して qpdf は 69.8 MB、lopdf は 2.57 GB でした。</figcaption>
       </figure>
       </div>
 
       <div class="bench-head">
         <h3 class="bench-title">実行時間</h3>
-        <div class="modes" role="group" aria-label="入力の PDF（実行時間）" data-group="time"><button type="button" data-fixture="ja-01" aria-pressed="true">日本の法律案</button><button type="button" data-fixture="public-17" aria-pressed="false">英国の法令</button><button type="button" data-fixture="public-13" aria-pressed="false">EU 官報</button><button type="button" data-fixture="public-24" aria-pressed="false">新聞</button></div>
+        <div class="mode-groups"><div class="modes modes-machine" role="group" aria-label="計測したマシン" data-group="time"><button type="button" data-machine="macos" aria-pressed="true">Mac（Core i5）</button><button type="button" data-machine="linux" aria-pressed="false">Linux（Ryzen 7）</button></div><div class="modes" role="group" aria-label="入力の PDF（実行時間）" data-group="time"><button type="button" data-fixture="ja-01" aria-pressed="true">日本の法律案</button><button type="button" data-fixture="public-17" aria-pressed="false">英国の法令</button><button type="button" data-fixture="public-13" aria-pressed="false">EU 官報</button><button type="button" data-fixture="public-24" aria-pressed="false">新聞</button></div></div>
       </div>
       <p class="bench-lede">棒の長さは、ファイル数ごとにいちばん時間のかかったツールを基準にしています。右の数字は、nori が qpdf の何倍速かったか。</p>
-      <ul class="bench" data-fixture="ja-01">
+      <ul class="bench" data-fixture="ja-01" data-machine="macos">
         <li class="bench-row">
           <p class="bench-name"><b>10</b> ファイル<span>140 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>20 ms</b></span><div class="bar-fill" style="--w: 40.24%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>18 ms</b></span><div class="bar-fill" style="--w: 35.54%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>18 ms</b></span><div class="bar-fill" style="--w: 35.54%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>50 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>28 ms</b></span><div class="bar-fill" style="--w: 57.44%"></div></div>
           </div>
@@ -520,7 +705,7 @@
           <p class="bench-name"><b>100</b> ファイル<span>1,400 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>77 ms</b></span><div class="bar-fill" style="--w: 27.17%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>66 ms</b></span><div class="bar-fill" style="--w: 23.21%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>66 ms</b></span><div class="bar-fill" style="--w: 23.21%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>284 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>183 ms</b></span><div class="bar-fill" style="--w: 64.41%"></div></div>
           </div>
@@ -530,7 +715,7 @@
           <p class="bench-name"><b>1,000</b> ファイル<span>14,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>711 ms</b></span><div class="bar-fill" style="--w: 18.58%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>406 ms</b></span><div class="bar-fill" style="--w: 10.60%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>406 ms</b></span><div class="bar-fill" style="--w: 10.60%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>3.83 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>2.59 s</b></span><div class="bar-fill" style="--w: 67.76%"></div></div>
           </div>
@@ -540,19 +725,19 @@
           <p class="bench-name"><b>2,000</b> ファイル<span>28,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>1.28 s</b></span><div class="bar-fill" style="--w: 17.01%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>775 ms</b></span><div class="bar-fill" style="--w: 10.29%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>775 ms</b></span><div class="bar-fill" style="--w: 10.29%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>7.53 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>7.47 s</b></span><div class="bar-fill" style="--w: 99.28%"></div></div>
           </div>
           <p class="bench-ratio"><span class="visually-hidden">nori 1.28 s、nori -j6 775 ms、qpdf 7.53 s、lopdf 7.47 s. </span>5.9 倍<small>qpdf 比</small></p>
         </li>
       </ul>
-      <ul class="bench" data-fixture="public-17" hidden>
+      <ul class="bench" data-fixture="public-17" data-machine="macos" hidden>
         <li class="bench-row">
           <p class="bench-name"><b>10</b> ファイル<span>40 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>17 ms</b></span><div class="bar-fill" style="--w: 37.87%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>16 ms</b></span><div class="bar-fill" style="--w: 35.17%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>16 ms</b></span><div class="bar-fill" style="--w: 35.17%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>44 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>29 ms</b></span><div class="bar-fill" style="--w: 66.22%"></div></div>
           </div>
@@ -562,7 +747,7 @@
           <p class="bench-name"><b>100</b> ファイル<span>400 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>59 ms</b></span><div class="bar-fill" style="--w: 29.35%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>41 ms</b></span><div class="bar-fill" style="--w: 20.39%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>41 ms</b></span><div class="bar-fill" style="--w: 20.39%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>203 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>109 ms</b></span><div class="bar-fill" style="--w: 54.01%"></div></div>
           </div>
@@ -572,7 +757,7 @@
           <p class="bench-name"><b>1,000</b> ファイル<span>4,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>522 ms</b></span><div class="bar-fill" style="--w: 15.95%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>360 ms</b></span><div class="bar-fill" style="--w: 10.99%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>360 ms</b></span><div class="bar-fill" style="--w: 10.99%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>3.28 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>1.49 s</b></span><div class="bar-fill" style="--w: 45.45%"></div></div>
           </div>
@@ -582,19 +767,19 @@
           <p class="bench-name"><b>2,000</b> ファイル<span>8,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>1.12 s</b></span><div class="bar-fill" style="--w: 19.08%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>626 ms</b></span><div class="bar-fill" style="--w: 10.67%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>626 ms</b></span><div class="bar-fill" style="--w: 10.67%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>5.86 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>3.61 s</b></span><div class="bar-fill" style="--w: 61.55%"></div></div>
           </div>
           <p class="bench-ratio"><span class="visually-hidden">nori 1.12 s、nori -j6 626 ms、qpdf 5.86 s、lopdf 3.61 s. </span>5.2 倍<small>qpdf 比</small></p>
         </li>
       </ul>
-      <ul class="bench" data-fixture="public-13" hidden>
+      <ul class="bench" data-fixture="public-13" data-machine="macos" hidden>
         <li class="bench-row">
           <p class="bench-name"><b>10</b> ファイル<span>70 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>46 ms</b></span><div class="bar-fill" style="--w: 48.35%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>33 ms</b></span><div class="bar-fill" style="--w: 35.19%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>33 ms</b></span><div class="bar-fill" style="--w: 35.19%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>93 ms</b></span><div class="bar-fill" style="--w: 98.68%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>95 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -604,7 +789,7 @@
           <p class="bench-name"><b>100</b> ファイル<span>700 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>343 ms</b></span><div class="bar-fill" style="--w: 37.12%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>189 ms</b></span><div class="bar-fill" style="--w: 20.45%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>189 ms</b></span><div class="bar-fill" style="--w: 20.45%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>778 ms</b></span><div class="bar-fill" style="--w: 84.10%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>925 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -614,7 +799,7 @@
           <p class="bench-name"><b>1,000</b> ファイル<span>7,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>3.46 s</b></span><div class="bar-fill" style="--w: 40.26%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>2.03 s</b></span><div class="bar-fill" style="--w: 23.58%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>2.03 s</b></span><div class="bar-fill" style="--w: 23.58%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>8.59 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-none"><span>lopdf <b>計測せず</b></span><div></div></div>
           </div>
@@ -624,19 +809,19 @@
           <p class="bench-name"><b>2,000</b> ファイル<span>14,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>6.14 s</b></span><div class="bar-fill" style="--w: 34.22%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>3.96 s</b></span><div class="bar-fill" style="--w: 22.07%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>3.96 s</b></span><div class="bar-fill" style="--w: 22.07%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>17.95 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-none"><span>lopdf <b>計測せず</b></span><div></div></div>
           </div>
           <p class="bench-ratio"><span class="visually-hidden">nori 6.14 s、nori -j6 3.96 s、qpdf 17.95 s. </span>2.9 倍<small>qpdf 比</small></p>
         </li>
       </ul>
-      <ul class="bench" data-fixture="public-24" hidden>
+      <ul class="bench" data-fixture="public-24" data-machine="macos" hidden>
         <li class="bench-row">
           <p class="bench-name"><b>10</b> ファイル<span>10 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>21 ms</b></span><div class="bar-fill" style="--w: 66.97%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>19 ms</b></span><div class="bar-fill" style="--w: 60.28%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>19 ms</b></span><div class="bar-fill" style="--w: 60.28%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>31 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>26 ms</b></span><div class="bar-fill" style="--w: 83.67%"></div></div>
           </div>
@@ -646,7 +831,7 @@
           <p class="bench-name"><b>100</b> ファイル<span>100 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>70 ms</b></span><div class="bar-fill" style="--w: 52.37%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>61 ms</b></span><div class="bar-fill" style="--w: 45.37%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>61 ms</b></span><div class="bar-fill" style="--w: 45.37%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>104 ms</b></span><div class="bar-fill" style="--w: 78.27%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>133 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -656,7 +841,7 @@
           <p class="bench-name"><b>1,000</b> ファイル<span>1,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>715 ms</b></span><div class="bar-fill" style="--w: 44.19%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>661 ms</b></span><div class="bar-fill" style="--w: 40.87%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>661 ms</b></span><div class="bar-fill" style="--w: 40.87%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>1.16 s</b></span><div class="bar-fill" style="--w: 71.87%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>1.62 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -666,25 +851,193 @@
           <p class="bench-name"><b>2,000</b> ファイル<span>2,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>1.53 s</b></span><div class="bar-fill" style="--w: 58.90%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>1.41 s</b></span><div class="bar-fill" style="--w: 54.14%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>1.41 s</b></span><div class="bar-fill" style="--w: 54.14%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>2.60 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-none"><span>lopdf <b>計測せず</b></span><div></div></div>
           </div>
           <p class="bench-ratio"><span class="visually-hidden">nori 1.53 s、nori -j6 1.41 s、qpdf 2.60 s. </span>1.7 倍<small>qpdf 比</small></p>
         </li>
       </ul>
+      <ul class="bench" data-fixture="ja-01" data-machine="linux" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> ファイル<span>140 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>7 ms</b></span><div class="bar-fill" style="--w: 27.69%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>6 ms</b></span><div class="bar-fill" style="--w: 24.37%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>24 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>11 ms</b></span><div class="bar-fill" style="--w: 45.58%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 7 ms、nori -j8 6 ms、qpdf 24 ms、lopdf 11 ms. </span>3.6 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> ファイル<span>1,400 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>29 ms</b></span><div class="bar-fill" style="--w: 15.43%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>18 ms</b></span><div class="bar-fill" style="--w: 9.57%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>186 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>89 ms</b></span><div class="bar-fill" style="--w: 48.04%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 29 ms、nori -j8 18 ms、qpdf 186 ms、lopdf 89 ms. </span>6.5 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> ファイル<span>14,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>283 ms</b></span><div class="bar-fill" style="--w: 13.44%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>130 ms</b></span><div class="bar-fill" style="--w: 6.15%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>2.11 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>1.36 s</b></span><div class="bar-fill" style="--w: 64.29%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 283 ms、nori -j8 130 ms、qpdf 2.11 s、lopdf 1.36 s. </span>7.4 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> ファイル<span>28,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>503 ms</b></span><div class="bar-fill" style="--w: 11.96%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>258 ms</b></span><div class="bar-fill" style="--w: 6.13%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>4.20 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>3.48 s</b></span><div class="bar-fill" style="--w: 82.76%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 503 ms、nori -j8 258 ms、qpdf 4.20 s、lopdf 3.48 s. </span>8.4 倍<small>qpdf 比</small></p>
+        </li>
+      </ul>
+      <ul class="bench" data-fixture="public-17" data-machine="linux" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> ファイル<span>40 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>5 ms</b></span><div class="bar-fill" style="--w: 29.34%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>5 ms</b></span><div class="bar-fill" style="--w: 27.39%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>17 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>8 ms</b></span><div class="bar-fill" style="--w: 43.71%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 5 ms、nori -j8 5 ms、qpdf 17 ms、lopdf 8 ms. </span>3.4 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> ファイル<span>400 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>18 ms</b></span><div class="bar-fill" style="--w: 16.20%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>12 ms</b></span><div class="bar-fill" style="--w: 11.23%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>111 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>46 ms</b></span><div class="bar-fill" style="--w: 41.81%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 18 ms、nori -j8 12 ms、qpdf 111 ms、lopdf 46 ms. </span>6.2 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> ファイル<span>4,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>136 ms</b></span><div class="bar-fill" style="--w: 11.13%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>76 ms</b></span><div class="bar-fill" style="--w: 6.21%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>1.22 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>515 ms</b></span><div class="bar-fill" style="--w: 42.22%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 136 ms、nori -j8 76 ms、qpdf 1.22 s、lopdf 515 ms. </span>9.0 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> ファイル<span>8,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>279 ms</b></span><div class="bar-fill" style="--w: 11.43%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>148 ms</b></span><div class="bar-fill" style="--w: 6.06%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>2.44 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>1.19 s</b></span><div class="bar-fill" style="--w: 48.72%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 279 ms、nori -j8 148 ms、qpdf 2.44 s、lopdf 1.19 s. </span>8.7 倍<small>qpdf 比</small></p>
+        </li>
+      </ul>
+      <ul class="bench" data-fixture="public-13" data-machine="linux" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> ファイル<span>70 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>17 ms</b></span><div class="bar-fill" style="--w: 32.57%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>14 ms</b></span><div class="bar-fill" style="--w: 26.40%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>53 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>48 ms</b></span><div class="bar-fill" style="--w: 90.86%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 17 ms、nori -j8 14 ms、qpdf 53 ms、lopdf 48 ms. </span>3.1 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> ファイル<span>700 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>114 ms</b></span><div class="bar-fill" style="--w: 23.71%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>75 ms</b></span><div class="bar-fill" style="--w: 15.61%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>479 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>442 ms</b></span><div class="bar-fill" style="--w: 92.22%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 114 ms、nori -j8 75 ms、qpdf 479 ms、lopdf 442 ms. </span>4.2 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> ファイル<span>7,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>1.15 s</b></span><div class="bar-fill" style="--w: 23.08%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>637 ms</b></span><div class="bar-fill" style="--w: 12.80%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>4.98 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>4.31 s</b></span><div class="bar-fill" style="--w: 86.56%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 1.15 s、nori -j8 637 ms、qpdf 4.98 s、lopdf 4.31 s. </span>4.3 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> ファイル<span>14,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>2.25 s</b></span><div class="bar-fill" style="--w: 22.89%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>1.30 s</b></span><div class="bar-fill" style="--w: 13.29%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>9.82 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>9.11 s</b></span><div class="bar-fill" style="--w: 92.81%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 2.25 s、nori -j8 1.30 s、qpdf 9.82 s、lopdf 9.11 s. </span>4.4 倍<small>qpdf 比</small></p>
+        </li>
+      </ul>
+      <ul class="bench" data-fixture="public-24" data-machine="linux" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> ファイル<span>10 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>9 ms</b></span><div class="bar-fill" style="--w: 50.26%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>8 ms</b></span><div class="bar-fill" style="--w: 45.44%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>18 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>12 ms</b></span><div class="bar-fill" style="--w: 66.01%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 9 ms、nori -j8 8 ms、qpdf 18 ms、lopdf 12 ms. </span>2.0 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> ファイル<span>100 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>63 ms</b></span><div class="bar-fill" style="--w: 75.86%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>24 ms</b></span><div class="bar-fill" style="--w: 28.92%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>83 ms</b></span><div class="bar-fill" style="--w: 99.96%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>83 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 63 ms、nori -j8 24 ms、qpdf 83 ms、lopdf 83 ms. </span>1.3 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> ファイル<span>1,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>671 ms</b></span><div class="bar-fill" style="--w: 78.75%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>197 ms</b></span><div class="bar-fill" style="--w: 23.14%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>813 ms</b></span><div class="bar-fill" style="--w: 95.33%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>853 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 671 ms、nori -j8 197 ms、qpdf 813 ms、lopdf 853 ms. </span>1.2 倍<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> ファイル<span>2,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>1.37 s</b></span><div class="bar-fill" style="--w: 76.13%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>387 ms</b></span><div class="bar-fill" style="--w: 21.51%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>1.62 s</b></span><div class="bar-fill" style="--w: 90.15%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>1.80 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 1.37 s、nori -j8 387 ms、qpdf 1.62 s、lopdf 1.80 s. </span>1.2 倍<small>qpdf 比</small></p>
+        </li>
+      </ul>
 
       <div class="bench-head">
         <h3 class="bench-title">最大メモリ使用量</h3>
-        <div class="modes" role="group" aria-label="入力の PDF（メモリ使用量）" data-group="memory"><button type="button" data-fixture="ja-01" aria-pressed="true">日本の法律案</button><button type="button" data-fixture="public-17" aria-pressed="false">英国の法令</button><button type="button" data-fixture="public-13" aria-pressed="false">EU 官報</button><button type="button" data-fixture="public-24" aria-pressed="false">新聞</button></div>
+        <div class="mode-groups"><div class="modes modes-machine" role="group" aria-label="計測したマシン" data-group="memory"><button type="button" data-machine="macos" aria-pressed="true">Mac（Core i5）</button><button type="button" data-machine="linux" aria-pressed="false">Linux（Ryzen 7）</button></div><div class="modes" role="group" aria-label="入力の PDF（メモリ使用量）" data-group="memory"><button type="button" data-fixture="ja-01" aria-pressed="true">日本の法律案</button><button type="button" data-fixture="public-17" aria-pressed="false">英国の法令</button><button type="button" data-fixture="public-13" aria-pressed="false">EU 官報</button><button type="button" data-fixture="public-24" aria-pressed="false">新聞</button></div></div>
       </div>
       <p class="bench-lede">棒の長さは、ファイル数ごとにいちばんメモリを使ったツールを基準にしています。右の数字は、nori のメモリが qpdf の何分の一か。</p>
-      <ul class="bench" data-fixture="ja-01">
+      <ul class="bench" data-fixture="ja-01" data-machine="macos">
         <li class="bench-row">
           <p class="bench-name"><b>10</b> ファイル<span>140 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>2.8 MB</b></span><div class="bar-fill" style="--w: 32.96%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>6.4 MB</b></span><div class="bar-fill" style="--w: 75.36%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>6.4 MB</b></span><div class="bar-fill" style="--w: 75.36%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>7.1 MB</b></span><div class="bar-fill" style="--w: 82.87%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>8.5 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -694,7 +1047,7 @@
           <p class="bench-name"><b>100</b> ファイル<span>1,400 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>4.4 MB</b></span><div class="bar-fill" style="--w: 5.54%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>7.9 MB</b></span><div class="bar-fill" style="--w: 9.97%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>7.9 MB</b></span><div class="bar-fill" style="--w: 9.97%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>38.0 MB</b></span><div class="bar-fill" style="--w: 48.19%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>78.8 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -704,7 +1057,7 @@
           <p class="bench-name"><b>1,000</b> ファイル<span>14,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>5.7 MB</b></span><div class="bar-fill" style="--w: 0.74%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>10.2 MB</b></span><div class="bar-fill" style="--w: 1.32%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>10.2 MB</b></span><div class="bar-fill" style="--w: 1.32%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>344.5 MB</b></span><div class="bar-fill" style="--w: 44.54%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>773.4 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -714,19 +1067,19 @@
           <p class="bench-name"><b>2,000</b> ファイル<span>28,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>8.0 MB</b></span><div class="bar-fill" style="--w: 0.53%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>11.5 MB</b></span><div class="bar-fill" style="--w: 0.75%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>11.5 MB</b></span><div class="bar-fill" style="--w: 0.75%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>686.4 MB</b></span><div class="bar-fill" style="--w: 45.04%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>1.52 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
           <p class="bench-ratio"><span class="visually-hidden">nori 8.0 MB、nori -j6 11.5 MB、qpdf 686.4 MB、lopdf 1.52 GB. </span>1/86<small>qpdf 比</small></p>
         </li>
       </ul>
-      <ul class="bench" data-fixture="public-17" hidden>
+      <ul class="bench" data-fixture="public-17" data-machine="macos" hidden>
         <li class="bench-row">
           <p class="bench-name"><b>10</b> ファイル<span>40 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>1.8 MB</b></span><div class="bar-fill" style="--w: 33.03%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>3.6 MB</b></span><div class="bar-fill" style="--w: 67.50%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>3.6 MB</b></span><div class="bar-fill" style="--w: 67.50%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>5.4 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>4.5 MB</b></span><div class="bar-fill" style="--w: 82.99%"></div></div>
           </div>
@@ -736,7 +1089,7 @@
           <p class="bench-name"><b>100</b> ファイル<span>400 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>2.8 MB</b></span><div class="bar-fill" style="--w: 8.01%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>5.4 MB</b></span><div class="bar-fill" style="--w: 15.34%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>5.4 MB</b></span><div class="bar-fill" style="--w: 15.34%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>24.7 MB</b></span><div class="bar-fill" style="--w: 70.21%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>35.2 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -746,7 +1099,7 @@
           <p class="bench-name"><b>1,000</b> ファイル<span>4,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>4.6 MB</b></span><div class="bar-fill" style="--w: 1.30%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>7.5 MB</b></span><div class="bar-fill" style="--w: 2.15%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>7.5 MB</b></span><div class="bar-fill" style="--w: 2.15%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>212.8 MB</b></span><div class="bar-fill" style="--w: 60.87%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>349.7 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -756,19 +1109,19 @@
           <p class="bench-name"><b>2,000</b> ファイル<span>8,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>5.7 MB</b></span><div class="bar-fill" style="--w: 0.81%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>8.5 MB</b></span><div class="bar-fill" style="--w: 1.23%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>8.5 MB</b></span><div class="bar-fill" style="--w: 1.23%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>422.5 MB</b></span><div class="bar-fill" style="--w: 60.82%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>694.7 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
           <p class="bench-ratio"><span class="visually-hidden">nori 5.7 MB、nori -j6 8.5 MB、qpdf 422.5 MB、lopdf 694.7 MB. </span>1/75<small>qpdf 比</small></p>
         </li>
       </ul>
-      <ul class="bench" data-fixture="public-13" hidden>
+      <ul class="bench" data-fixture="public-13" data-machine="macos" hidden>
         <li class="bench-row">
           <p class="bench-name"><b>10</b> ファイル<span>70 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>5.0 MB</b></span><div class="bar-fill" style="--w: 11.90%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>23.5 MB</b></span><div class="bar-fill" style="--w: 55.49%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>23.5 MB</b></span><div class="bar-fill" style="--w: 55.49%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>14.0 MB</b></span><div class="bar-fill" style="--w: 33.17%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>42.3 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -778,7 +1131,7 @@
           <p class="bench-name"><b>100</b> ファイル<span>700 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>13.0 MB</b></span><div class="bar-fill" style="--w: 3.17%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>27.8 MB</b></span><div class="bar-fill" style="--w: 6.79%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>27.8 MB</b></span><div class="bar-fill" style="--w: 6.79%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>105.4 MB</b></span><div class="bar-fill" style="--w: 25.72%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>409.6 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -788,7 +1141,7 @@
           <p class="bench-name"><b>1,000</b> ファイル<span>7,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>14.8 MB</b></span><div class="bar-fill" style="--w: 1.46%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>33.4 MB</b></span><div class="bar-fill" style="--w: 3.29%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>33.4 MB</b></span><div class="bar-fill" style="--w: 3.29%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>1.02 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-none"><span>lopdf <b>計測せず</b></span><div></div></div>
           </div>
@@ -798,19 +1151,19 @@
           <p class="bench-name"><b>2,000</b> ファイル<span>14,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>16.3 MB</b></span><div class="bar-fill" style="--w: 0.80%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>36.7 MB</b></span><div class="bar-fill" style="--w: 1.81%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>36.7 MB</b></span><div class="bar-fill" style="--w: 1.81%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>2.03 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-none"><span>lopdf <b>計測せず</b></span><div></div></div>
           </div>
           <p class="bench-ratio"><span class="visually-hidden">nori 16.3 MB、nori -j6 36.7 MB、qpdf 2.03 GB. </span>1/125<small>qpdf 比</small></p>
         </li>
       </ul>
-      <ul class="bench" data-fixture="public-24" hidden>
+      <ul class="bench" data-fixture="public-24" data-machine="macos" hidden>
         <li class="bench-row">
           <p class="bench-name"><b>10</b> ファイル<span>10 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>3.6 MB</b></span><div class="bar-fill" style="--w: 25.76%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>11.4 MB</b></span><div class="bar-fill" style="--w: 81.37%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>11.4 MB</b></span><div class="bar-fill" style="--w: 81.37%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>4.9 MB</b></span><div class="bar-fill" style="--w: 34.80%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>14.0 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -820,7 +1173,7 @@
           <p class="bench-name"><b>100</b> ファイル<span>100 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>3.9 MB</b></span><div class="bar-fill" style="--w: 3.03%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>10.4 MB</b></span><div class="bar-fill" style="--w: 8.13%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>10.4 MB</b></span><div class="bar-fill" style="--w: 8.13%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>7.9 MB</b></span><div class="bar-fill" style="--w: 6.16%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>128.0 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -830,7 +1183,7 @@
           <p class="bench-name"><b>1,000</b> ファイル<span>1,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>4.6 MB</b></span><div class="bar-fill" style="--w: 0.37%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>11.7 MB</b></span><div class="bar-fill" style="--w: 0.92%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>11.7 MB</b></span><div class="bar-fill" style="--w: 0.92%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>30.6 MB</b></span><div class="bar-fill" style="--w: 2.42%"></div></div>
             <div class="bar bar-lopdf"><span>lopdf <b>1.26 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
           </div>
@@ -840,25 +1193,196 @@
           <p class="bench-name"><b>2,000</b> ファイル<span>2,000 ページ</span></p>
           <div class="bench-bars" aria-hidden="true">
             <div class="bar bar-nori"><span>nori <b>5.4 MB</b></span><div class="bar-fill" style="--w: 9.44%"></div></div>
-            <div class="bar bar-norij6"><span>nori -j6 <b>11.8 MB</b></span><div class="bar-fill" style="--w: 20.82%"></div></div>
+            <div class="bar bar-norij"><span>nori -j6 <b>11.8 MB</b></span><div class="bar-fill" style="--w: 20.82%"></div></div>
             <div class="bar bar-qpdf"><span>qpdf <b>56.7 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
             <div class="bar bar-none"><span>lopdf <b>計測せず</b></span><div></div></div>
           </div>
           <p class="bench-ratio"><span class="visually-hidden">nori 5.4 MB、nori -j6 11.8 MB、qpdf 56.7 MB. </span>1/11<small>qpdf 比</small></p>
         </li>
       </ul>
+      <ul class="bench" data-fixture="ja-01" data-machine="linux" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> ファイル<span>140 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>5.0 MB</b></span><div class="bar-fill" style="--w: 31.35%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>8.3 MB</b></span><div class="bar-fill" style="--w: 52.62%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>15.8 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>9.9 MB</b></span><div class="bar-fill" style="--w: 62.72%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 5.0 MB、nori -j8 8.3 MB、qpdf 15.8 MB、lopdf 9.9 MB. </span>31%<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> ファイル<span>1,400 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>5.1 MB</b></span><div class="bar-fill" style="--w: 7.11%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>10.4 MB</b></span><div class="bar-fill" style="--w: 14.43%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>50.1 MB</b></span><div class="bar-fill" style="--w: 69.30%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>72.3 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 5.1 MB、nori -j8 10.4 MB、qpdf 50.1 MB、lopdf 72.3 MB. </span>10%<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> ファイル<span>14,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>5.8 MB</b></span><div class="bar-fill" style="--w: 0.84%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>13.2 MB</b></span><div class="bar-fill" style="--w: 1.90%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>389.7 MB</b></span><div class="bar-fill" style="--w: 55.94%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>696.6 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 5.8 MB、nori -j8 13.2 MB、qpdf 389.7 MB、lopdf 696.6 MB. </span>1/67<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> ファイル<span>28,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>6.6 MB</b></span><div class="bar-fill" style="--w: 0.47%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>14.2 MB</b></span><div class="bar-fill" style="--w: 1.02%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>768.2 MB</b></span><div class="bar-fill" style="--w: 55.25%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>1.39 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 6.6 MB、nori -j8 14.2 MB、qpdf 768.2 MB、lopdf 1.39 GB. </span>1/117<small>qpdf 比</small></p>
+        </li>
+      </ul>
+      <ul class="bench" data-fixture="public-17" data-machine="linux" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> ファイル<span>40 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>4.0 MB</b></span><div class="bar-fill" style="--w: 27.71%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>5.4 MB</b></span><div class="bar-fill" style="--w: 37.50%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>14.3 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>6.4 MB</b></span><div class="bar-fill" style="--w: 44.83%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 4.0 MB、nori -j8 5.4 MB、qpdf 14.3 MB、lopdf 6.4 MB. </span>28%<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> ファイル<span>400 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>4.7 MB</b></span><div class="bar-fill" style="--w: 13.28%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>7.4 MB</b></span><div class="bar-fill" style="--w: 20.79%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>35.7 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>34.8 MB</b></span><div class="bar-fill" style="--w: 97.62%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 4.7 MB、nori -j8 7.4 MB、qpdf 35.7 MB、lopdf 34.8 MB. </span>13%<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> ファイル<span>4,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>5.3 MB</b></span><div class="bar-fill" style="--w: 1.66%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>8.6 MB</b></span><div class="bar-fill" style="--w: 2.69%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>243.9 MB</b></span><div class="bar-fill" style="--w: 75.98%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>321.0 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 5.3 MB、nori -j8 8.6 MB、qpdf 243.9 MB、lopdf 321.0 MB. </span>1/46<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> ファイル<span>8,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>6.0 MB</b></span><div class="bar-fill" style="--w: 0.94%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>9.6 MB</b></span><div class="bar-fill" style="--w: 1.50%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>476.6 MB</b></span><div class="bar-fill" style="--w: 74.45%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>640.1 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 6.0 MB、nori -j8 9.6 MB、qpdf 476.6 MB、lopdf 640.1 MB. </span>1/79<small>qpdf 比</small></p>
+        </li>
+      </ul>
+      <ul class="bench" data-fixture="public-13" data-machine="linux" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> ファイル<span>70 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>7.1 MB</b></span><div class="bar-fill" style="--w: 17.67%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>24.3 MB</b></span><div class="bar-fill" style="--w: 60.64%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>23.8 MB</b></span><div class="bar-fill" style="--w: 59.44%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>40.1 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 7.1 MB、nori -j8 24.3 MB、qpdf 23.8 MB、lopdf 40.1 MB. </span>30%<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> ファイル<span>700 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>7.6 MB</b></span><div class="bar-fill" style="--w: 2.05%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>32.9 MB</b></span><div class="bar-fill" style="--w: 8.90%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>126.6 MB</b></span><div class="bar-fill" style="--w: 34.23%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>369.8 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 7.6 MB、nori -j8 32.9 MB、qpdf 126.6 MB、lopdf 369.8 MB. </span>1/17<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> ファイル<span>7,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>9.0 MB</b></span><div class="bar-fill" style="--w: 0.24%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>40.5 MB</b></span><div class="bar-fill" style="--w: 1.10%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>1.16 GB</b></span><div class="bar-fill" style="--w: 31.47%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>3.67 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 9.0 MB、nori -j8 40.5 MB、qpdf 1.16 GB、lopdf 3.67 GB. </span>1/129<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> ファイル<span>14,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>9.7 MB</b></span><div class="bar-fill" style="--w: 0.13%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>42.6 MB</b></span><div class="bar-fill" style="--w: 0.58%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>2.30 GB</b></span><div class="bar-fill" style="--w: 31.35%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>7.35 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 9.7 MB、nori -j8 42.6 MB、qpdf 2.30 GB、lopdf 7.35 GB. </span>1/237<small>qpdf 比</small></p>
+        </li>
+      </ul>
+      <ul class="bench" data-fixture="public-24" data-machine="linux" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> ファイル<span>10 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>5.9 MB</b></span><div class="bar-fill" style="--w: 36.73%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>12.8 MB</b></span><div class="bar-fill" style="--w: 79.64%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>12.7 MB</b></span><div class="bar-fill" style="--w: 79.08%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>16.1 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 5.9 MB、nori -j8 12.8 MB、qpdf 12.7 MB、lopdf 16.1 MB. </span>46%<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> ファイル<span>100 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>5.9 MB</b></span><div class="bar-fill" style="--w: 4.60%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>20.9 MB</b></span><div class="bar-fill" style="--w: 16.18%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>15.7 MB</b></span><div class="bar-fill" style="--w: 12.15%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>128.9 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 5.9 MB、nori -j8 20.9 MB、qpdf 15.7 MB、lopdf 128.9 MB. </span>38%<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> ファイル<span>1,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>6.3 MB</b></span><div class="bar-fill" style="--w: 0.46%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>27.6 MB</b></span><div class="bar-fill" style="--w: 2.00%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>41.2 MB</b></span><div class="bar-fill" style="--w: 2.99%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>1.38 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 6.3 MB、nori -j8 27.6 MB、qpdf 41.2 MB、lopdf 1.38 GB. </span>15%<small>qpdf 比</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> ファイル<span>2,000 ページ</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>6.9 MB</b></span><div class="bar-fill" style="--w: 0.27%"></div></div>
+            <div class="bar bar-norij"><span>nori -j8 <b>29.2 MB</b></span><div class="bar-fill" style="--w: 1.13%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>69.8 MB</b></span><div class="bar-fill" style="--w: 2.72%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>2.57 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 6.9 MB、nori -j8 29.2 MB、qpdf 69.8 MB、lopdf 2.57 GB. </span>1/10<small>qpdf 比</small></p>
+        </li>
+      </ul>
 
       <ul class="bench-notes">
-        <li><strong>日本語の帳票に近い PDF で、速さもメモリも桁が違います</strong><span>内閣官房の法律案の条文（JUST PDF 製、ＭＳ明朝のサブセット埋め込み、14 ページ）を 2,000 ファイル（28,000 ページ）つなぐと、nori が 1.28 秒・8 MB、qpdf が 7.5 秒・686 MB、lopdf が 7.5 秒・1.5 GB でした。nori のメモリは 10 ファイルの 2.8 MB からほとんど増えていません。</span></li>
-        <li><strong>作り手の違う PDF でも傾向は同じです</strong><span>英国の法令（Ghostscript 製）では nori が qpdf の 5.2 倍速く、EU 官報（PDFlib 製、1 ファイル 478 オブジェクト）では 2.9 倍、<code>-j6</code> なら 4.5 倍です。メモリは 2,000 ファイルで nori 6〜16 MB、qpdf 423 MB〜2 GB でした。</span></li>
-        <li><strong>スキャンした画像の PDF では、時間の差は縮まります</strong><span>新聞のスキャンは 1 ページ 9 オブジェクトしかなく、処理の大半が画像データの書き写しです。2,000 ファイル（1.2 GB）で nori 1.53 秒、qpdf 2.60 秒と差は 1.7 倍にとどまりますが、メモリは nori 5.4 MB、qpdf 57 MB、lopdf は 1,000 ファイルで 1.3 GB でした。</span></li>
+        <li><strong>日本語の帳票に近い PDF で、速さもメモリも桁が違います</strong><span>内閣官房の法律案の条文（JUST PDF 製、ＭＳ明朝のサブセット埋め込み、14 ページ）を 2,000 ファイル（28,000 ページ）つなぐと、Mac では nori が 1.28 秒・8 MB、qpdf が 7.5 秒・686 MB、lopdf が 7.5 秒・1.5 GB でした。Linux では nori 0.50 秒・6.6 MB、qpdf 4.2 秒・768 MB、lopdf 3.5 秒・1.4 GB です。nori のメモリは 10 ファイルのとき（Mac 2.8 MB、Linux 5.0 MB）からほとんど増えていません。</span></li>
+        <li><strong>作り手の違う PDF でも傾向は同じです</strong><span>英国の法令（Ghostscript 製）では nori が qpdf の 5.2 倍（Linux では 8.7 倍）速く、EU 官報（PDFlib 製、1 ファイル 478 オブジェクト）では 2.9 倍（4.4 倍）、解析を先読みさせれば 4.5 倍（7.6 倍）です。メモリは 2,000 ファイルで nori 6〜16 MB、qpdf 423 MB〜2.3 GB でした。</span></li>
+        <li><strong>スキャンした画像の PDF では、時間の差は縮まります</strong><span>新聞のスキャンは 1 ページ 9 オブジェクトしかなく、処理の大半が画像データの書き写しです。2,000 ファイル（1.2 GB）で Mac では nori 1.53 秒、qpdf 2.60 秒と差は 1.7 倍、Linux では 1.37 秒と 1.62 秒で 1.2 倍にとどまります。メモリは nori 5〜7 MB、qpdf 57〜70 MB で、lopdf は Linux の 2,000 ファイルで 2.6 GB でした（Mac では 1,000 ファイルの 1.3 GB で打ち切っています）。</span></li>
+        <li><strong>2 台で傾向は同じです</strong><span>Ryzen 7 の Linux はどのツールも Mac より速く、nori と qpdf の差は、オブジェクトの多い PDF では Linux の方が開き、画像のスキャンでは縮まります。メモリの伸び方は 2 台でほぼ同じです。</span></li>
         <li><strong>lopdf が遅いのではなく、結合コードの作りの問題です</strong><span>nori 自身も入力の解析には lopdf を使っています。README の結合コードは全入力を 1 つの <code>Document</code> に集めて最後に保存するため、メモリが入力の合計に比例します。ページから参照されないオブジェクトも出力に残すので、出力が少し大きくなります。</span></li>
       </ul>
 
       <div class="bench-head">
         <h3 class="bench-title">日本語の PDF をまとめてつなぐ</h3>
+        <div class="modes modes-machine" role="group" aria-label="計測したマシン" data-group="corpus-ja"><button type="button" data-machine="macos" aria-pressed="true">Mac（Core i5）</button><button type="button" data-machine="linux" aria-pressed="false">Linux（Ryzen 7）</button></div>
       </div>
       <p class="bench-lede">Wikimedia Commons の日本語 PDF のカテゴリからランダムに選んだ 20 件（115 ページ、合計 8.9 MB）を、名前の順に 1 回でつなぎました。官庁の資料、法令、通知のスキャン、楽譜、Google ドキュメントの書き出しなど、作り手はさまざまです。</p>
+      <div class="corpus-run" data-machine="macos">
       <div class="table-scroll">
         <table class="corpus">
           <thead><tr><th></th><th>nori</th><th>nori -j6</th><th>qpdf</th><th>lopdf</th></tr></thead>
@@ -869,7 +1393,21 @@
           </tbody>
         </table>
       </div>
-      <p class="bench-lede">4 ツールとも 115 ページの出力を作り、qpdf の検査も通りました。nori は 56 ms と qpdf の 2 倍速く、メモリ 17 MB はいちばん大きい入力（2.6 MB のスキャン）を読むぶんが主です。件数が 20 と少ないので、qpdf との差は伸び方の計測ほど開いていません。</p>
+      <p class="bench-lede">4 ツールとも 115 ページの出力を作り、qpdf の検査も通りました。nori は 56 ms と qpdf の 2.1 倍速く、メモリ 17.1 MB はいちばん大きい入力（2.6 MB のスキャン）を読むぶんが主です。件数が 20 と少ないので、qpdf との差は伸び方の計測ほど開いていません。</p>
+      </div>
+      <div class="corpus-run" data-machine="linux" hidden>
+      <div class="table-scroll">
+        <table class="corpus">
+          <thead><tr><th></th><th>nori</th><th>nori -j8</th><th>qpdf</th><th>lopdf</th></tr></thead>
+          <tbody>
+            <tr><th>実行時間</th><td>24 ms</td><td>18 ms</td><td>53 ms</td><td>43 ms</td></tr>
+            <tr><th>最大メモリ使用量</th><td>12.8 MB</td><td>25.3 MB</td><td>18.7 MB</td><td>35.1 MB</td></tr>
+            <tr><th>出力サイズ</th><td>8.7 MB</td><td>8.7 MB</td><td>8.7 MB</td><td>8.9 MB</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bench-lede">4 ツールとも 115 ページの出力を作り、qpdf の検査も通りました。nori は 24 ms と qpdf の 2.2 倍速く、メモリ 12.8 MB はいちばん大きい入力（2.6 MB のスキャン）を読むぶんが主です。件数が 20 と少ないので、qpdf との差は伸び方の計測ほど開いていません。</p>
+      </div>
       <details class="method">
         <summary>つないだ PDF の一覧</summary>
         <div class="method-body">
@@ -900,8 +1438,10 @@
 
       <div class="bench-head">
         <h3 class="bench-title">世界中のばらばらな PDF をまとめてつなぐ</h3>
+        <div class="modes modes-machine" role="group" aria-label="計測したマシン" data-group="corpus-public"><button type="button" data-machine="macos" aria-pressed="true">Mac（Core i5）</button><button type="button" data-machine="linux" aria-pressed="false">Linux（Ryzen 7）</button></div>
       </div>
       <p class="bench-lede">Commons 全体からランダムに選んだ 40 件（277 ページ、合計 33.8 MB）を、名前の順に 1 回でつなぎました。EU 官報、英国の法令、19 世紀の新聞やノートのスキャン、Internet Archive の書籍など、言語も年代もばらばらです。</p>
+      <div class="corpus-run" data-machine="macos">
       <div class="table-scroll">
         <table class="corpus">
           <thead><tr><th></th><th>nori</th><th>nori -j6</th><th>qpdf</th><th>lopdf</th></tr></thead>
@@ -912,7 +1452,21 @@
           </tbody>
         </table>
       </div>
-      <p class="bench-lede">4 ツールとも 277 ページの出力を作り、qpdf の検査も通りました。nori は 88 ms と、qpdf の 16 倍速く、lopdf の 2 倍速い結果です。メモリは 21 MB で、いちばん大きい入力（2.9 MB）を読むぶんが主です。</p>
+      <p class="bench-lede">4 ツールとも 277 ページの出力を作り、qpdf の検査も通りました。nori は 88 ms と、qpdf の 16 倍速く、lopdf の 1.9 倍速い結果です。メモリは 21.3 MB で、いちばん大きい入力（2.9 MB）を読むぶんが主です。</p>
+      </div>
+      <div class="corpus-run" data-machine="linux" hidden>
+      <div class="table-scroll">
+        <table class="corpus">
+          <thead><tr><th></th><th>nori</th><th>nori -j8</th><th>qpdf</th><th>lopdf</th></tr></thead>
+          <tbody>
+            <tr><th>実行時間</th><td>37 ms</td><td>28 ms</td><td>690 ms</td><td>94 ms</td></tr>
+            <tr><th>最大メモリ使用量</th><td>16.4 MB</td><td>47.8 MB</td><td>36.8 MB</td><td>102.5 MB</td></tr>
+            <tr><th>出力サイズ</th><td>32.0 MB</td><td>32.0 MB</td><td>31.9 MB</td><td>33.7 MB</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bench-lede">4 ツールとも 277 ページの出力を作り、qpdf の検査も通りました。nori は 37 ms と、qpdf の 18 倍速く、lopdf の 2.5 倍速い結果です。メモリは 16.4 MB で、いちばん大きい入力（2.9 MB）を読むぶんが主です。</p>
+      </div>
       <details class="method">
         <summary>つないだ PDF の一覧</summary>
         <div class="method-body">
@@ -964,7 +1518,7 @@
       <details class="method">
         <summary>計測方法</summary>
         <div class="method-body">
-          <p>Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8）で、nori 0.1.0、qpdf 12.4.2、lopdf 0.47.0 を比べました。伸び方の計測では入力を指定した数だけコピーし、各ツールをコマンドとして 1 回ウォームアップしてから 5 回実行し、時間とメモリ（最大常駐メモリ）を <code>/usr/bin/time</code> で取得しています。出力は qpdf でページ数と <code>--check</code> を確かめました。</p>
+          <p>2 台で計測しました。Mac は Intel Core i5-8500B（6 コア、メモリ 16 GB、macOS 15.8）、Linux は AMD Ryzen 7 6800H（8 コア 16 スレッド、GEEKOM A6、メモリ 32 GB、Omarchy 4.0.6、Arch Linux ベース）です。どちらも nori 0.1.0、qpdf 12.4.2、lopdf 0.47.0 です。伸び方の計測では入力を指定した数だけコピーし、各ツールをコマンドとして 1 回ウォームアップしてから 5 回実行し、時間とメモリ（最大常駐メモリ）を <code>/usr/bin/time</code> で取得しています。出力は qpdf でページ数と <code>--check</code> を確かめました。入力の PDF は 2 台で同じものを使いましたが、数値は環境によって変わります。</p>
           <div class="cmd"><pre><code>nori -o output.pdf input-00001.pdf input-00002.pdf ...
 nori -j 6 -o output.pdf input-00001.pdf input-00002.pdf ...
 
@@ -1066,13 +1620,20 @@ end</code></pre><button class="copy" type="button">コピー</button></div>
 </footer>
 <script>
 (() => {
-  // Input PDF toggles: every group switches together.
-  const buttons = document.querySelectorAll("button[data-fixture]");
-  buttons.forEach((button) => {
+  // Input PDF and machine toggles: every group switches together.
+  const state = { fixture: document.querySelector("button[data-fixture]").dataset.fixture, machine: "macos" };
+  const apply = () => {
+    document.querySelectorAll("button[data-fixture]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.fixture === state.fixture)));
+    document.querySelectorAll("button[data-machine]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.machine === state.machine)));
+    document.querySelectorAll("[data-machine]:not(button)").forEach((el) => {
+      el.hidden = el.dataset.machine !== state.machine || ("fixture" in el.dataset && el.dataset.fixture !== state.fixture);
+    });
+  };
+  document.querySelectorAll("button[data-fixture], button[data-machine]").forEach((button) => {
     button.addEventListener("click", () => {
-      const key = button.dataset.fixture;
-      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.fixture === key)));
-      document.querySelectorAll(".bench[data-fixture], .chart-figure[data-fixture]").forEach((el) => { el.hidden = el.dataset.fixture !== key; });
+      if (button.dataset.fixture) state.fixture = button.dataset.fixture;
+      if (button.dataset.machine) state.machine = button.dataset.machine;
+      apply();
     });
   });
   // Copy buttons.
