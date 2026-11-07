@@ -10,7 +10,8 @@ import pathlib
 HERE = pathlib.Path(__file__).resolve().parent
 RESULTS = HERE.parent / "bench" / "results-macos.json"
 TOOLS = ["nori", "nori -j6", "qpdf", "lopdf"]
-FIXTURES = {"statement-libreoffice.pdf": "libreoffice", "statement-chrome.pdf": "chrome"}
+# Order on the page; each is a file fetch.py downloads from Wikimedia Commons.
+FIXTURES = ["public-17.pdf", "public-13.pdf", "public-24.pdf"]
 
 T = {
     "ja": {
@@ -21,12 +22,24 @@ T = {
         "install_button": "インストール", "github_button": "GitHub でソースを見る",
         "chart_title": "最大メモリ使用量",
         "chart_lede": "14 ページの PDF を 10〜2,000 個つないだときの最大 RSS。横軸はファイル数です。",
-        "fixture_label": {"libreoffice": "LibreOffice で作った PDF", "chrome": "Chrome で作った PDF"},
-        "fixture_short": {"libreoffice": "LibreOffice 版", "chrome": "Chrome 版"},
-        "chart_caption": {
-            "libreoffice": "オブジェクトの少ない PDF（14 ページ、58 オブジェクト）。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイルでも 5.9 MB です。",
-            "chrome": "オブジェクトの多い PDF（14 ページ、3,002 オブジェクト）。qpdf は 1,000 ファイルで 5 GB、lopdf は 100 ファイルで 2.6 GB に達したので、その先は測っていません。nori は 2,000 ファイルで 83 MB です。",
+        "fixture_label": {"public-17.pdf": "英国の法令", "public-13.pdf": "EU 官報", "public-24.pdf": "新聞のスキャン"},
+        "fixture_short": {"public-17.pdf": "法令", "public-13.pdf": "EU 官報", "public-24.pdf": "新聞"},
+        "fixture_desc": {
+            "public-17.pdf": "The Organic Products (Amendment) Regulations 2015。Ghostscript で作られた、文字だけの軽い PDF",
+            "public-13.pdf": "Official Journal C 2023/1032（スロバキア語版）。PDFlib で作られた、1 ページあたりのオブジェクトが多い PDF",
+            "public-24.pdf": "The New Orleans Bee、1900 年 10 月の 1 面。1 ページがまるごと画像のスキャン",
         },
+        "chart_caption": {
+            "public-17.pdf": "CAPTION_17",
+            "public-13.pdf": "CAPTION_13",
+            "public-24.pdf": "CAPTION_24",
+        },
+        "fixture_col": "PDF", "fixture_desc_col": "どんな PDF か", "pages_col": "ページ", "objects_col": "オブジェクト", "size_col": "サイズ",
+        "objects": "オブジェクト", "output_title": "出力サイズ",
+        "corpus_title": "ばらばらな PDF を 1 回でつなぐ",
+        "corpus_lede": "Wikimedia Commons からランダムに選んだ {files} 件（{pages} ページ、合計 {size}）を、名前の順に 1 回でつなぎました。官報、法令、新聞やノートのスキャン、Internet Archive の書籍など、作り手も年代もばらばらです。",
+        "corpus_note": "CORPUS_NOTE",
+        "corpus_files": "つないだ PDF の一覧",
         "not_measured": "計測せず",
         "how_title": "読んだそばから書き、捨てる",
         "how_p1": "PDF の結合ツールの多くは、まず全部の入力を読み込み、1 つの文書にまとめてから、最後に書き出します。扱いやすい作りですが、メモリは入力の合計に比例して増えます。qpdf も、lopdf の README にある結合コードも、この形です。",
@@ -41,8 +54,8 @@ T = {
             ("解析は先読みできます", "<code>-j 6</code> のように指定すると、6 つの入力を別スレッドで同時に解析します。オブジェクトの多い入力では時間が半分になり、メモリは解析中の入力の分だけ増えます。"),
         ],
         "bench_title": "qpdf と lopdf との比較",
-        "bench_p1": "同じ 14 ページの PDF を 10〜2,000 個コピーしてつなぎ、qpdf と、lopdf の README にある結合コードとで、実行時間と最大メモリを比べました。いずれもコマンドとして実行した 5 回の中央値です。グラフの上のボタンで、入力の PDF を切り替えられます。",
-        "bench_p2": "入力は、同じ HTML を LibreOffice と Google Chrome で PDF にしたものです。ページ数は同じ 14 ページですが、LibreOffice 版はフォントをサブセットで埋め込んだ 58 オブジェクト、Chrome 版はグリフを 1 つずつストリームで持つ Type3 フォントで 3,002 オブジェクトと、作りがまったく違います。",
+        "bench_p1": "Wikimedia Commons からランダムに選んだ PDF を 10〜2,000 個コピーしてつなぎ、qpdf と、lopdf の README にある結合コードとで、実行時間と最大メモリを比べました。いずれもコマンドとして実行した 5 回の中央値です。グラフの上のボタンで、入力の PDF を切り替えられます。",
+        "bench_p2": "コピー元は、ランダムに取った 40 件の中から、作りの違う 3 件を選びました。どれもパブリックドメインか自由なライセンスで、リンク先からそのまま取得できます。",
         "time_title": "実行時間", "memory_title": "最大メモリ使用量",
         "bench_lede_time": "棒の長さは、ファイル数ごとにいちばん時間のかかったツールを基準にしています。右の数字は、nori が qpdf の何倍速かったか。",
         "bench_lede_memory": "棒の長さは、ファイル数ごとにいちばんメモリを使ったツールを基準にしています。右の数字は、nori のメモリが qpdf の何分の一か。",
@@ -108,12 +121,24 @@ end""",
         "install_button": "Install", "github_button": "Source on GitHub",
         "chart_title": "Peak memory",
         "chart_lede": "Peak RSS when merging 10 to 2,000 copies of a 14-page PDF. The x axis is the number of files.",
-        "fixture_label": {"libreoffice": "PDF made by LibreOffice", "chrome": "PDF made by Chrome"},
-        "fixture_short": {"libreoffice": "LibreOffice", "chrome": "Chrome"},
-        "chart_caption": {
-            "libreoffice": "A PDF with few objects (14 pages, 58 objects). qpdf and lopdf grow with the number of inputs; nori is at 5.9 MB even for 2,000 files.",
-            "chrome": "A PDF with many objects (14 pages, 3,002 objects). qpdf reached 5 GB at 1,000 files and lopdf 2.6 GB at 100, so larger counts were not run. nori is at 83 MB for 2,000 files.",
+        "fixture_label": {"public-17.pdf": "UK regulation", "public-13.pdf": "EU Official Journal", "public-24.pdf": "scanned newspaper"},
+        "fixture_short": {"public-17.pdf": "Regulation", "public-13.pdf": "Journal", "public-24.pdf": "Newspaper"},
+        "fixture_desc": {
+            "public-17.pdf": "The Organic Products (Amendment) Regulations 2015. Text only, made with Ghostscript; a light PDF",
+            "public-13.pdf": "Official Journal C 2023/1032, Slovak edition. Made with PDFlib, with many objects per page",
+            "public-24.pdf": "The New Orleans Bee, front page, October 1900. A scan: each page is one image",
         },
+        "chart_caption": {
+            "public-17.pdf": "CAPTION_17",
+            "public-13.pdf": "CAPTION_13",
+            "public-24.pdf": "CAPTION_24",
+        },
+        "fixture_col": "PDF", "fixture_desc_col": "What it is", "pages_col": "Pages", "objects_col": "Objects", "size_col": "Size",
+        "objects": "objects", "output_title": "Output size",
+        "corpus_title": "Merging PDFs of every make, once",
+        "corpus_lede": "{files} PDFs picked at random from Wikimedia Commons ({pages} pages, {size} in all) merged in one go, in name order: official journals, regulations, scanned newspapers and notebooks, Internet Archive books, from many producers and decades.",
+        "corpus_note": "CORPUS_NOTE",
+        "corpus_files": "The PDFs that were merged",
         "not_measured": "not run",
         "how_title": "Write as you read, then let go",
         "how_p1": "Most PDF merge tools load every input first, gather them into one document, and write it out at the end. It is a convenient design, but memory grows with the total input. qpdf works this way, and so does the merge code in the lopdf README.",
@@ -128,8 +153,8 @@ end""",
             ("Parsing can run ahead", "With <code>-j 6</code>, six inputs are parsed at once on separate threads. On inputs with many objects this halves the time; memory grows by the inputs being parsed."),
         ],
         "bench_title": "Compared with qpdf and lopdf",
-        "bench_p1": "The same 14-page PDF was copied 10 to 2,000 times and merged with nori, with qpdf, and with the merge code from the lopdf README. All were run as commands; the values are the median of 5 runs. The buttons above each chart switch the input PDF.",
-        "bench_p2": "The inputs are the same HTML rendered to PDF by LibreOffice and by Google Chrome. Both have 14 pages but are built very differently: the LibreOffice one has 58 objects with embedded font subsets, the Chrome one has 3,002 objects with Type3 fonts that keep every glyph in its own stream.",
+        "bench_p1": "PDFs picked at random from Wikimedia Commons were copied 10 to 2,000 times and merged with nori, with qpdf, and with the merge code from the lopdf README. All were run as commands; the values are the median of 5 runs. The buttons above each chart switch the input PDF.",
+        "bench_p2": "The three were chosen from 40 random files for how differently they are built. All are public domain or freely licensed and can be fetched from the links as they are.",
         "time_title": "Time", "memory_title": "Peak memory",
         "bench_lede_time": "Bars are relative to the slowest tool at each file count. The number on the right is how many times faster nori was than qpdf.",
         "bench_lede_memory": "Bars are relative to the tool using the most memory at each file count. The number on the right is nori's memory as a fraction of qpdf's.",
@@ -200,17 +225,21 @@ def fmt_size(b):
 
 def load():
     results = json.loads(RESULTS.read_text())
-    data = {}
+    data = {"fixtures": {}, "corpus": results.get("corpus")}
     for fixture in results["fixtures"]:
-        key = FIXTURES[fixture["name"]]
-        data[key] = {"pages": fixture["pages"], "objects": fixture["objects"], "bytes": fixture["bytes"],
-                     "cases": {c["count"]: c for c in fixture["cases"]}}
+        data["fixtures"][fixture["name"]] = {
+            "pages": fixture["pages"], "objects": fixture["objects"], "bytes": fixture["bytes"],
+            "source": fixture.get("source") or {}, "cases": {c["count"]: c for c in fixture["cases"]}}
     return data
+
+
+def key_of(name):
+    return name.removesuffix(".pdf")
 
 
 def chart(data, key, t):
     """SVG line chart of peak memory against file count, one line per tool."""
-    cases = data[key]["cases"]
+    cases = data["fixtures"][key]["cases"]
     counts = sorted(cases)
     w, h = 640, 380
     left, right, top, bottom = 72, 150, 28, 52
@@ -220,8 +249,8 @@ def chart(data, key, t):
     ymax = (int(ymax / step) + 1) * step
     xs = {c: left + pw * i / (len(counts) - 1) for i, c in enumerate(counts)}
     y = lambda v: top + ph - ph * v / ymax
-    out = [f'<svg class="chart" viewBox="0 0 {w} {h}" role="img" aria-labelledby="chart-{key}-title">',
-           f'<title id="chart-{key}-title">{t["chart_title"]}: {t["fixture_label"][key]}</title>']
+    out = [f'<svg class="chart" viewBox="0 0 {w} {h}" role="img" aria-labelledby="chart-{key_of(key)}-title">',
+           f'<title id="chart-{key_of(key)}-title">{t["chart_title"]}: {t["fixture_label"][key]}</title>']
     tick = step
     while tick <= ymax:
         yy = y(tick)
@@ -268,7 +297,7 @@ def chart(data, key, t):
 
 
 def bench_rows(data, key, metric, t):
-    cases = data[key]["cases"]
+    cases = data["fixtures"][key]["cases"]
     rows = []
     for count in sorted(cases):
         case = cases[count]
@@ -310,15 +339,63 @@ def bench_rows(data, key, metric, t):
 
 def fixture_buttons(t, group, aria):
     return (f'<div class="modes" role="group" aria-label="{aria}" data-group="{group}">'
-            + "".join(f'<button type="button" data-fixture="{k}" aria-pressed="{"true" if k == "libreoffice" else "false"}">{t["fixture_short"][k]}</button>' for k in ["libreoffice", "chrome"])
+            + "".join(f'<button type="button" data-fixture="{key_of(k)}" aria-pressed="{"true" if i == 0 else "false"}">{t["fixture_short"][k]}</button>' for i, k in enumerate(FIXTURES))
             + "</div>")
+
+
+def fixture_table(data, t):
+    """One row per benchmark PDF: what it is, where it comes from, how it is built."""
+    rows = []
+    for name in FIXTURES:
+        f = data["fixtures"][name]
+        src = f["source"]
+        link = f'<a href="{src["page"]}" target="_blank" rel="noopener">{t["fixture_label"][name]}</a>' if src else t["fixture_label"][name]
+        rows.append(f'          <tr><td>{link}</td><td>{t["fixture_desc"][name]}</td><td>{f["pages"]}</td><td>{f["objects"]:,}</td><td>{fmt_size(f["bytes"])}</td></tr>')
+    return "\n".join(rows)
+
+
+def corpus_block(data, t):
+    corpus = data["corpus"]
+    if not corpus:
+        return ""
+    cells = []
+    for metric, fmt in [("time_s", lambda v: fmt_time(v, t["lang"])), ("rss_bytes", fmt_size), ("output_bytes", fmt_size)]:
+        cells.append("".join(f'<td>{fmt(corpus["tools"][n][metric]) if n in corpus["tools"] and metric in corpus["tools"][n] else "-"}</td>' for n in TOOLS))
+    files = "\n".join(
+        f'            <li><a href="{f["source"]["page"]}" target="_blank" rel="noopener">{f["source"]["title"].removeprefix("File:")}</a><span>{f["pages"]} {t["pages"]} · {f["objects"]:,} {t["objects"]} · {fmt_size(f["bytes"])} · {f["source"]["license"]}</span></li>'
+        for f in corpus["files"] if f.get("source"))
+    total_bytes = sum(f["bytes"] for f in corpus["files"])
+    return f'''      <div class="bench-head">
+        <h3 class="bench-title">{t["corpus_title"]}</h3>
+      </div>
+      <p class="bench-lede">{t["corpus_lede"].format(files=len(corpus["files"]), pages=f"{corpus['pages']:,}", size=fmt_size(total_bytes))}</p>
+      <div class="table-scroll">
+        <table class="corpus">
+          <thead><tr><th></th>{"".join(f"<th>{n}</th>" for n in TOOLS)}</tr></thead>
+          <tbody>
+            <tr><th>{t["time_title"]}</th>{cells[0]}</tr>
+            <tr><th>{t["memory_title"]}</th>{cells[1]}</tr>
+            <tr><th>{t["output_title"]}</th>{cells[2]}</tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bench-lede">{t["corpus_note"]}</p>
+      <details class="method">
+        <summary>{t["corpus_files"]}</summary>
+        <div class="method-body">
+          <ol class="corpus-files">
+{files}
+          </ol>
+        </div>
+      </details>
+'''
 
 
 def page(data, t):
     site = "https://champierre.github.io/nori/"
     nav = "\n".join(f'      <a href="{href}">{label}</a>' for href, label in t["nav"])
     h1 = "".join(f"<span>{line}</span>" for line in t["h1"])
-    charts = "\n".join(f'      <figure class="chart-figure" data-fixture="{k}"{"" if k == "libreoffice" else " hidden"}>\n{chart(data, k, t)}\n        <figcaption>{t["chart_caption"][k]}</figcaption>\n      </figure>' for k in ["libreoffice", "chrome"])
+    charts = "\n".join(f'      <figure class="chart-figure" data-fixture="{key_of(k)}"{"" if i == 0 else " hidden"}>\n{chart(data, k, t)}\n        <figcaption>{t["chart_caption"][k]}</figcaption>\n      </figure>' for i, k in enumerate(FIXTURES))
     sheets = "\n".join(f'          <span class="paste-sheet" style="--i: {i}"></span>' for i in range(8))
     cards = "\n".join(f"      <li><b>{big}</b><span>{small}</span></li>" for big, small in t["cards"])
     flow = lambda steps: "".join(f"<li>{s}</li>" for s in steps)
@@ -326,7 +403,7 @@ def page(data, t):
     notes = "\n".join(f"        <li><strong>{title}</strong><span>{body}</span></li>" for title, body in t["notes"])
     lists = {}
     for metric in ["time_s", "rss_bytes"]:
-        lists[metric] = "\n".join(f'      <ul class="bench" data-fixture="{k}"{"" if k == "libreoffice" else " hidden"}>\n{bench_rows(data, k, metric, t)}\n      </ul>' for k in ["libreoffice", "chrome"])
+        lists[metric] = "\n".join(f'      <ul class="bench" data-fixture="{key_of(k)}"{"" if i == 0 else " hidden"}>\n{bench_rows(data, k, metric, t)}\n      </ul>' for i, k in enumerate(FIXTURES))
     scope = lambda items: "\n".join(f"            <li>{i}</li>" for i in items)
     return f'''<!doctype html>
 <html lang="{t["lang"]}">
@@ -383,7 +460,6 @@ def page(data, t):
         <div class="paste-stage" aria-hidden="true">
           <div class="paste-strip"></div>
 {sheets}
-          <span class="paste-arrow">▶</span>
           <div class="paste-gauge"><span>{t["paste_memory"]}</span><i></i><b>5.9 MB</b><em>{t["paste_memory_note"]}</em></div>
         </div>
         <figcaption id="paste-caption">{t["paste_caption"]}</figcaption>
@@ -424,6 +500,14 @@ def page(data, t):
       <h2 id="benchmark-title">{t["bench_title"]}</h2>
       <p>{t["bench_p1"]}</p>
       <p>{t["bench_p2"]}</p>
+      <div class="table-scroll">
+        <table class="fixtures">
+          <thead><tr><th>{t["fixture_col"]}</th><th>{t["fixture_desc_col"]}</th><th>{t["pages_col"]}</th><th>{t["objects_col"]}</th><th>{t["size_col"]}</th></tr></thead>
+          <tbody>
+{fixture_table(data, t)}
+          </tbody>
+        </table>
+      </div>
 
       <div class="bench-head">
         <h3 class="bench-title">{t["chart_title"]}</h3>
@@ -452,6 +536,7 @@ def page(data, t):
 {notes}
       </ul>
 
+{corpus_block(data, t)}
       <details class="method">
         <summary>{t["method_summary"]}</summary>
         <div class="method-body">
@@ -616,8 +701,7 @@ CSS = """  /* Kraft paper, white sheets, sumi ink, and one color: the red of a t
   /* Sheets fly in one by one and stick to a strip of paste; the memory gauge below never changes. */
   .paste { margin: 0; padding: clamp(16px, 2.5vw, 28px); background: var(--sheet); border-radius: 3px; box-shadow: var(--paper-shadow); }
   .paste-stage { position: relative; height: 230px; overflow: hidden; }
-  .paste-strip { position: absolute; left: 0; bottom: 84px; height: 8px; width: 100%; background: var(--nori); transform-origin: left; animation: strip 9.6s linear infinite; }
-  .paste-arrow { position: absolute; right: 2px; bottom: 76px; color: var(--nori); font-size: 1rem; line-height: 1; }
+  .paste-strip { position: absolute; left: 0; bottom: 84px; height: 8px; width: 100%; background: linear-gradient(90deg, var(--nori) 0 88%, transparent); transform-origin: left; animation: strip 9.6s linear infinite; }
   .paste-sheet { position: absolute; left: calc(14px + var(--i) * 11.4%); bottom: 92px; width: 9.5%; min-width: 34px; height: 64px; background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 2px; box-shadow: 2px 3px 0 rgba(31, 26, 20, 0.12);
     background-image: linear-gradient(var(--ink-faint), var(--ink-faint)), linear-gradient(var(--ink-faint), var(--ink-faint)), linear-gradient(var(--ink-faint), var(--ink-faint));
     background-size: 60% 1.5px, 70% 1.5px, 50% 1.5px; background-position: 20% 30%, 20% 50%, 20% 70%; background-repeat: no-repeat;
@@ -712,6 +796,16 @@ CSS = """  /* Kraft paper, white sheets, sumi ink, and one color: the red of a t
   .bench-notes li { display: grid; gap: 2px; padding-block: 16px; border-top: 1px solid var(--rule-light); font-size: 0.9375rem; }
   .bench-notes strong { color: var(--ink); }
   .bench-notes span { color: var(--ink-soft); }
+  .table-scroll { overflow-x: auto; margin: 8px 0 16px; }
+  .fixtures, .corpus { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+  .fixtures th, .fixtures td, .corpus th, .corpus td { padding: 8px 12px; border-bottom: 1px solid var(--rule-light); text-align: left; vertical-align: top; }
+  .fixtures th, .corpus thead th { font-size: 0.8125rem; color: var(--ink-soft); font-weight: 400; }
+  .fixtures td:nth-child(n+3), .fixtures th:nth-child(n+3), .corpus td { text-align: right; font-family: var(--code); white-space: nowrap; }
+  .corpus tbody th { white-space: nowrap; }
+  .corpus td:nth-child(2), .corpus td:nth-child(3) { color: var(--nori); font-weight: 700; }
+  .corpus-files { margin: 0; padding-left: 1.6em; font-size: 0.875rem; }
+  .corpus-files li { padding-block: 3px; }
+  .corpus-files span { display: block; color: var(--ink-faint); font-size: 0.8125rem; }
   .method { margin-top: 32px; border-top: 2px solid var(--ink); }
   .method summary { padding-block: 12px; font-weight: 700; cursor: pointer; }
   .method-body { padding-bottom: 8px; font-size: 0.9375rem; }

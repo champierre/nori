@@ -71,8 +71,7 @@
   /* Sheets fly in one by one and stick to a strip of paste; the memory gauge below never changes. */
   .paste { margin: 0; padding: clamp(16px, 2.5vw, 28px); background: var(--sheet); border-radius: 3px; box-shadow: var(--paper-shadow); }
   .paste-stage { position: relative; height: 230px; overflow: hidden; }
-  .paste-strip { position: absolute; left: 0; bottom: 84px; height: 8px; width: 100%; background: var(--nori); transform-origin: left; animation: strip 9.6s linear infinite; }
-  .paste-arrow { position: absolute; right: 2px; bottom: 76px; color: var(--nori); font-size: 1rem; line-height: 1; }
+  .paste-strip { position: absolute; left: 0; bottom: 84px; height: 8px; width: 100%; background: linear-gradient(90deg, var(--nori) 0 88%, transparent); transform-origin: left; animation: strip 9.6s linear infinite; }
   .paste-sheet { position: absolute; left: calc(14px + var(--i) * 11.4%); bottom: 92px; width: 9.5%; min-width: 34px; height: 64px; background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 2px; box-shadow: 2px 3px 0 rgba(31, 26, 20, 0.12);
     background-image: linear-gradient(var(--ink-faint), var(--ink-faint)), linear-gradient(var(--ink-faint), var(--ink-faint)), linear-gradient(var(--ink-faint), var(--ink-faint));
     background-size: 60% 1.5px, 70% 1.5px, 50% 1.5px; background-position: 20% 30%, 20% 50%, 20% 70%; background-repeat: no-repeat;
@@ -246,7 +245,6 @@
           <span class="paste-sheet" style="--i: 5"></span>
           <span class="paste-sheet" style="--i: 6"></span>
           <span class="paste-sheet" style="--i: 7"></span>
-          <span class="paste-arrow">▶</span>
           <div class="paste-gauge"><span>メモリ</span><i></i><b>5.9 MB</b><em>枚数が増えても変わらない</em></div>
         </div>
         <figcaption id="paste-caption">入力を 1 枚ずつ読み、要るものを書き足してから捨てる。だから貼る枚数が増えても、手元に持つのは 1 枚分。</figcaption>
