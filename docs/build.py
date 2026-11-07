@@ -15,13 +15,10 @@ FIXTURES = {"statement-libreoffice.pdf": "libreoffice", "statement-chrome.pdf": 
 T = {
     "ja": {
         "lang": "ja", "dir": "", "alt_href": "en/", "alt_label": "English", "alt_lang": "en",
-        "title": "nori | 何千の PDF を、メモリを増やさずに、ひとつに",
-        "description": "nori は複数の PDF を 1 つにつなぐ Rust 製のコマンドです。入力を 1 ファイルずつ読んで書き出すので、メモリ使用量は入力の数に関係なく一定。qpdf より速く、lopdf より小さなメモリで動きます。MIT ライセンス。",
+        "title": "nori | 何千枚の PDF を、一枚に貼り合わせる",
+        "description": "nori は複数の PDF を 1 つにつなぐ Rust 製のコマンドです。入力を 1 枚ずつ読んで貼り足すので、メモリ使用量は入力の数に関係なく一定。2,000 ファイルでも 6 MB。qpdf より速く動きます。MIT ライセンス。",
         "nav": [("#top", "nori とは"), ("#how", "しくみ"), ("#benchmark", "qpdf・lopdf との比較"), ("#install", "インストール"), ("#usage", "使い方")],
-        "h1": ["何千の PDF を、", "メモリを増やさずに、", "ひとつに。"],
-        "lede": "nori は複数の PDF を 1 つにつなぐコマンドです。入力を 1 ファイルずつ読み、そのページに要るものだけを出力に書き足してから次のファイルを開きます。だから、メモリ使用量は入力の数に関係なく、いちばん大きい入力 1 つ分にとどまります。",
         "install_button": "インストール", "github_button": "GitHub でソースを見る",
-        "facts": ["2,000 ファイル・28,000 ページを 6 MB のメモリでつなぎます", "qpdf の 7〜24 倍速く、-j で解析を並列にするとさらに半分の時間", "外部コマンドに依存しない単体のバイナリ。MIT ライセンス"],
         "chart_title": "最大メモリ使用量",
         "chart_lede": "14 ページの PDF を 10〜2,000 個つないだときの最大 RSS。横軸はファイル数です。",
         "fixture_label": {"libreoffice": "LibreOffice で作った PDF", "chrome": "Chrome で作った PDF"},
@@ -96,16 +93,19 @@ end""",
         "footer_license": "MIT License", "footer_github": "GitHub",
         "aria_nav": "サイト内", "aria_fixture": "入力の PDF", "aria_fixture_time": "入力の PDF（実行時間）", "aria_fixture_memory": "入力の PDF（メモリ使用量）",
         "brand_aria": "nori トップ",
+        "h1": ["何千枚の PDF を、", "一枚に貼り合わせる。"],
+        "lede": "nori は複数の PDF を 1 つにつなぐコマンドです。入力を 1 枚ずつ読み、そのページに要るものだけを出力に貼り足してから、次の 1 枚を開きます。だから、メモリ使用量は入力の数に関係なく、いちばん大きい入力 1 つ分にとどまります。",
+        "paste_memory": "メモリ", "paste_memory_note": "枚数が増えても変わらない",
+        "paste_caption": "入力を 1 枚ずつ読み、要るものを書き足してから捨てる。だから貼る枚数が増えても、手元に持つのは 1 枚分。",
+        "cards": [("6 MB", "2,000 ファイル・28,000 ページをつないだときの最大メモリ"), ("24 倍", "qpdf より速い（オブジェクトの少ない PDF を 2,000 ファイル）"), ("1 つ", "外部コマンドに依存しない単体のバイナリ。MIT ライセンス")],
+        "chart_section_lede": "横軸はファイル数。nori の線は、入力が 200 倍になってもほとんど動きません。",
     },
     "en": {
         "lang": "en", "dir": "en/", "alt_href": "../", "alt_label": "日本語", "alt_lang": "ja",
-        "title": "nori | Merge thousands of PDFs without growing memory",
-        "description": "nori is a Rust command that merges PDF files into one. It reads inputs one at a time and writes as it goes, so memory stays constant however many files you merge. Faster than qpdf, far lighter than lopdf. MIT license.",
+        "title": "nori | Thousands of PDFs, pasted into one",
+        "description": "nori is a Rust command that merges PDF files into one. It reads inputs one at a time and pastes as it goes, so memory stays constant however many files you merge: 6 MB for 2,000 files. Faster than qpdf. MIT license.",
         "nav": [("#top", "About"), ("#how", "How it works"), ("#benchmark", "vs qpdf and lopdf"), ("#install", "Install"), ("#usage", "Usage")],
-        "h1": ["Thousands of PDFs,", "one output,", "constant memory."],
-        "lede": "nori merges PDF files into one. It reads each input, writes what its pages need to the output, and drops it before opening the next. Memory use therefore stays around the size of the largest single input, however many files you merge.",
         "install_button": "Install", "github_button": "Source on GitHub",
-        "facts": ["Merges 2,000 files, 28,000 pages, in 6 MB of memory", "7 to 24 times faster than qpdf; -j halves the time again", "A single binary with no external commands. MIT license"],
         "chart_title": "Peak memory",
         "chart_lede": "Peak RSS when merging 10 to 2,000 copies of a 14-page PDF. The x axis is the number of files.",
         "fixture_label": {"libreoffice": "PDF made by LibreOffice", "chrome": "PDF made by Chrome"},
@@ -180,6 +180,12 @@ end""",
         "footer_license": "MIT License", "footer_github": "GitHub",
         "aria_nav": "Site", "aria_fixture": "Input PDF", "aria_fixture_time": "Input PDF (time)", "aria_fixture_memory": "Input PDF (memory)",
         "brand_aria": "nori home",
+        "h1": ["Thousands of PDFs,", "pasted into one."],
+        "lede": "nori merges PDF files into one. It reads one input, pastes what its pages need onto the output, and only then opens the next. Memory use therefore stays around the size of the largest single input, however many files you merge.",
+        "paste_memory": "memory", "paste_memory_note": "does not grow with the sheets",
+        "paste_caption": "One sheet at a time: read it, paste what its pages need, let it go. However many sheets, only one is in hand.",
+        "cards": [("6 MB", "peak memory merging 2,000 files, 28,000 pages"), ("24×", "faster than qpdf (2,000 files of a PDF with few objects)"), ("1", "single binary, no external commands. MIT license")],
+        "chart_section_lede": "The x axis is the number of files. nori's line barely moves while the input grows 200-fold.",
     },
 }
 
@@ -220,15 +226,15 @@ def chart(data, key, t):
     while tick <= ymax:
         yy = y(tick)
         label = f"{tick / 1e9:g} GB" if step >= 1e9 else f"{tick / 1e6:g} MB"
-        out.append(f'<line x1="{left}" y1="{yy:.1f}" x2="{left + pw}" y2="{yy:.1f}" stroke="var(--sei)"/>')
+        out.append(f'<line x1="{left}" y1="{yy:.1f}" x2="{left + pw}" y2="{yy:.1f}" stroke="var(--rule-light)"/>')
         out.append(f'<text x="{left - 10}" y="{yy + 4:.1f}" text-anchor="end" class="tick">{label}</text>')
         tick += step
-    out.append(f'<line x1="{left}" y1="{top + ph}" x2="{left + pw}" y2="{top + ph}" stroke="var(--tan)"/>')
+    out.append(f'<line x1="{left}" y1="{top + ph}" x2="{left + pw}" y2="{top + ph}" stroke="var(--rule)"/>')
     for c in counts:
         out.append(f'<text x="{xs[c]:.1f}" y="{top + ph + 24}" text-anchor="middle" class="tick">{c:,}</text>')
     out.append(f'<text x="{left + pw / 2:.1f}" y="{h - 6}" text-anchor="middle" class="tick">{t["files"]}</text>')
-    styles = {"nori": ("var(--sho)", "3.5", ""), "nori -j6": ("var(--sho)", "2", "6 5"),
-              "qpdf": ("var(--ju)", "2.5", ""), "lopdf": ("var(--tan)", "2.5", "6 5")}
+    styles = {"nori": ("var(--nori)", "3.5", ""), "nori -j6": ("var(--nori)", "2", "6 5"),
+              "qpdf": ("var(--ink-soft)", "2.5", ""), "lopdf": ("var(--ink-faint)", "2.5", "6 5")}
     labels = []
     for tool in TOOLS:
         points = [(c, cases[c]["tools"][tool]["rss_bytes"]) for c in counts
@@ -312,8 +318,9 @@ def page(data, t):
     site = "https://champierre.github.io/nori/"
     nav = "\n".join(f'      <a href="{href}">{label}</a>' for href, label in t["nav"])
     h1 = "".join(f"<span>{line}</span>" for line in t["h1"])
-    facts = "\n".join(f"          <li>{f}</li>" for f in t["facts"])
     charts = "\n".join(f'      <figure class="chart-figure" data-fixture="{k}"{"" if k == "libreoffice" else " hidden"}>\n{chart(data, k, t)}\n        <figcaption>{t["chart_caption"][k]}</figcaption>\n      </figure>' for k in ["libreoffice", "chrome"])
+    sheets = "\n".join(f'          <span class="paste-sheet" style="--i: {i}"></span>' for i in range(8))
+    cards = "\n".join(f"      <li><b>{big}</b><span>{small}</span></li>" for big, small in t["cards"])
     flow = lambda steps: "".join(f"<li>{s}</li>" for s in steps)
     points = "\n".join(f"        <li><strong>{title}</strong><span>{body}</span></li>" for title, body in t["how_points"])
     notes = "\n".join(f"        <li><strong>{title}</strong><span>{body}</span></li>" for title, body in t["notes"])
@@ -337,10 +344,10 @@ def page(data, t):
 <link rel="alternate" hreflang="ja" href="{site}">
 <link rel="alternate" hreflang="en" href="{site}en/">
 <link rel="alternate" hreflang="x-default" href="{site}">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' fill='none' stroke='%23000' stroke-width='4'/%3E%3Crect x='9' y='9' width='14' height='5' fill='%23000'/%3E%3Crect x='9' y='18' width='14' height='5' fill='%23000'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='3' fill='%23D9472B'/%3E%3Crect x='8' y='9' width='16' height='4' fill='%23fff'/%3E%3Crect x='8' y='19' width='16' height='4' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=BIZ+UDGothic&family=BIZ+UDPGothic:wght@400;700&family=Shippori+Mincho+B1:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 {CSS}
 </style>
@@ -362,28 +369,29 @@ def page(data, t):
 
 <main>
   <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
         <h1 id="hero-title">{h1}</h1>
         <p class="lede">{t["lede"]}</p>
         <div class="actions">
           <a class="button button-primary" href="#install">{t["install_button"]}</a>
           <a class="button" href="https://github.com/champierre/nori" target="_blank" rel="noopener">{t["github_button"]}</a>
         </div>
-        <ul class="facts">
-{facts}
-        </ul>
       </div>
 
-      <div class="hero-chart">
-        <div class="bench-head">
-          <h2 class="chart-title">{t["chart_title"]}</h2>
-          {fixture_buttons(t, "hero", t["aria_fixture"])}
+      <figure class="paste" aria-labelledby="paste-caption">
+        <div class="paste-stage" aria-hidden="true">
+          <div class="paste-strip"></div>
+{sheets}
+          <span class="paste-arrow">▶</span>
+          <div class="paste-gauge"><span>{t["paste_memory"]}</span><i></i><b>5.9 MB</b><em>{t["paste_memory_note"]}</em></div>
         </div>
-        <p class="chart-lede">{t["chart_lede"]}</p>
-{charts}
-      </div>
+        <figcaption id="paste-caption">{t["paste_caption"]}</figcaption>
+      </figure>
     </div>
+    <ul class="wrap cards">
+{cards}
+    </ul>
   </section>
 
   <section class="section" id="how" aria-labelledby="how-title">
@@ -416,6 +424,15 @@ def page(data, t):
       <h2 id="benchmark-title">{t["bench_title"]}</h2>
       <p>{t["bench_p1"]}</p>
       <p>{t["bench_p2"]}</p>
+
+      <div class="bench-head">
+        <h3 class="bench-title">{t["chart_title"]}</h3>
+        {fixture_buttons(t, "chart", t["aria_fixture"])}
+      </div>
+      <p class="bench-lede">{t["chart_section_lede"]}</p>
+      <div class="chart-sheet">
+{charts}
+      </div>
 
       <div class="bench-head">
         <h3 class="bench-title">{t["time_title"]}</h3>
@@ -547,23 +564,27 @@ nori --version</code></pre><button class="copy" type="button">{t["copy"]}</butto
 '''
 
 
-CSS = """  /* Paper and ink, the same family as sumi: no color of its own. */
+CSS = """  /* Kraft paper, white sheets, sumi ink, and one color: the red of a tube of paste. */
   :root {
-    --kami: #f2f2f2;
-    --shiro: #ffffff;
-    --sho: #000000;
-    --no: #2b2b2b;
-    --ju: #575757;
-    --tan: #9b9b9b;
-    --sei: #d4d4d4;
-    --mincho: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
-    --gothic: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+    --kraft: #E9DFC9;
+    --kraft-dark: #D9CBAE;
+    --sheet: #FFFDF8;
+    --ink: #1F1A14;
+    --ink-soft: #5A5146;
+    --ink-faint: #9A8F7E;
+    --rule: #C9BBA0;
+    --rule-light: #E6DCC8;
+    --nori: #D9472B;
+    --nori-dark: #B8371F;
+    --nori-pale: #F5D6CD;
+    --gothic: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
     --code: "BIZ UDGothic", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
     --gutter: clamp(16px, 4vw, 48px);
+    --paper-shadow: 0 1px 0 var(--rule), 0 6px 14px rgba(31, 26, 20, 0.08);
   }
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-  body { margin: 0; background: var(--kami); color: var(--no); font-family: var(--gothic); font-size: 1.0625rem; line-height: 1.9; }
+  body { margin: 0; background: var(--kraft); color: var(--ink); font-family: var(--gothic); font-size: 1.0625rem; line-height: 1.9; }
   a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
   a:hover { text-decoration-thickness: 2px; }
   p { margin: 0 0 1em; }
@@ -571,116 +592,160 @@ CSS = """  /* Paper and ink, the same family as sumi: no color of its own. */
   .wrap { max-width: 1180px; margin-inline: auto; padding-inline: var(--gutter); }
   .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  .seal { display: inline-grid; place-items: center; width: 2.4rem; height: 2.4rem; border: 3px solid var(--sho); font-family: var(--mincho); font-weight: 800; font-size: 1.35rem; line-height: 1; color: var(--sho); }
-  .site-header { padding-block: 20px; border-bottom: 1px solid var(--sei); background: var(--shiro); }
+  .seal { display: inline-grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 3px; background: var(--nori); font-weight: 900; font-size: 1.3rem; line-height: 1; color: var(--sheet); transform: rotate(-4deg); }
+  .site-header { padding-block: 20px; }
   .site-header .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; }
-  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--sho); }
-  .brand-name { font-family: var(--code); font-size: 1.25rem; letter-spacing: 0.02em; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-name { font-family: var(--code); font-size: 1.25rem; font-weight: 700; letter-spacing: 0.02em; }
   .site-nav { display: flex; flex-wrap: wrap; gap: clamp(12px, 3vw, 28px); font-size: 0.9375rem; margin-inline-start: auto; }
   .site-nav a { text-decoration: none; }
-  .site-nav a:hover { text-decoration: underline; }
-  .lang-switch { flex: none; padding: 2px 10px; border: 1px solid var(--tan); font-size: 0.875rem; text-decoration: none; color: var(--ju); }
+  .site-nav a:hover { text-decoration: underline; text-decoration-color: var(--nori); }
+  .lang-switch { flex: none; padding: 2px 10px; border: 1px solid var(--ink-faint); border-radius: 2px; font-size: 0.875rem; text-decoration: none; color: var(--ink-soft); }
 
-  .hero { padding-block: clamp(24px, 5vw, 64px) clamp(56px, 8vw, 104px); }
-  .hero .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
-  .hero h1 { margin: 0 0 28px; font-family: var(--mincho); font-weight: 800; font-size: clamp(1.85rem, 3.4vw, 3.2rem); line-height: 1.38; letter-spacing: 0.01em; color: var(--sho); font-feature-settings: "palt" 1; }
+  .hero { padding-block: clamp(24px, 5vw, 64px) clamp(40px, 6vw, 72px); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .hero h1 { margin: 0 0 24px; font-weight: 900; font-size: clamp(1.8rem, 3.1vw, 3rem); line-height: 1.3; letter-spacing: 0.01em; color: var(--ink); font-feature-settings: "palt" 1; }
   .hero h1 span { display: block; white-space: nowrap; }
   .lede { margin: 0 0 32px; max-width: 30em; }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; }
-  .button { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 22px; border: 2px solid var(--sho); font-weight: 700; text-decoration: none; color: var(--sho); background: transparent; }
-  .button:hover { text-decoration: none; background: var(--shiro); }
-  .button-primary { background: var(--sho); color: var(--shiro); }
-  .button-primary:hover { background: var(--no); border-color: var(--no); }
-  .facts { margin: 36px 0 0; padding: 0; list-style: none; font-size: 0.9375rem; color: var(--ju); }
-  .facts li { padding-block: 8px; border-top: 1px solid var(--sei); }
-  .facts li:last-child { border-bottom: 1px solid var(--sei); }
+  .button { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 22px; border: 2px solid var(--ink); border-radius: 3px; font-weight: 700; text-decoration: none; color: var(--ink); background: transparent; }
+  .button:hover { text-decoration: none; background: var(--sheet); }
+  .button-primary { background: var(--nori); border-color: var(--nori); color: var(--sheet); }
+  .button-primary:hover { background: var(--nori-dark); border-color: var(--nori-dark); }
 
-  .hero-chart { background: var(--shiro); border: 1px solid var(--sei); padding: clamp(16px, 2.5vw, 28px); }
-  .chart-title { margin: 0; font-size: 1.0625rem; font-weight: 700; color: var(--sho); }
-  .chart-lede { margin: 6px 0 12px; font-size: 0.875rem; color: var(--ju); }
-  .chart-figure { margin: 0; }
-  .chart { display: block; width: 100%; height: auto; }
-  .chart .tick { font-family: var(--code); font-size: 12px; fill: var(--ju); }
-  .chart .label { font-family: var(--code); font-size: 13px; }
-  .chart-figure figcaption { margin-top: 10px; font-size: 0.875rem; color: var(--ju); line-height: 1.7; }
+  /* Sheets fly in one by one and stick to a strip of paste; the memory gauge below never changes. */
+  .paste { margin: 0; padding: clamp(16px, 2.5vw, 28px); background: var(--sheet); border-radius: 3px; box-shadow: var(--paper-shadow); }
+  .paste-stage { position: relative; height: 230px; overflow: hidden; }
+  .paste-strip { position: absolute; left: 0; bottom: 84px; height: 8px; width: 100%; background: var(--nori); transform-origin: left; animation: strip 9.6s linear infinite; }
+  .paste-arrow { position: absolute; right: 2px; bottom: 76px; color: var(--nori); font-size: 1rem; line-height: 1; }
+  .paste-sheet { position: absolute; left: calc(14px + var(--i) * 11.4%); bottom: 92px; width: 9.5%; min-width: 34px; height: 64px; background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 2px; box-shadow: 2px 3px 0 rgba(31, 26, 20, 0.12);
+    background-image: linear-gradient(var(--ink-faint), var(--ink-faint)), linear-gradient(var(--ink-faint), var(--ink-faint)), linear-gradient(var(--ink-faint), var(--ink-faint));
+    background-size: 60% 1.5px, 70% 1.5px, 50% 1.5px; background-position: 20% 30%, 20% 50%, 20% 70%; background-repeat: no-repeat;
+    animation: sheet 9.6s ease-out infinite; animation-delay: calc(var(--i) * 0.9s); }
+  @keyframes sheet {
+    0% { transform: translate(260px, -140px) rotate(12deg); opacity: 0; }
+    3% { opacity: 1; }
+    8% { transform: translate(0, 0) rotate(0deg); }
+    9.5% { transform: translate(0, 2px) scale(1.03, 0.97); }
+    11% { transform: translate(0, 0); }
+    88% { transform: translate(0, 0); opacity: 1; }
+    94% { opacity: 0; }
+    100% { transform: translate(260px, -140px) rotate(12deg); opacity: 0; }
+  }
+  @keyframes strip {
+    0% { transform: scaleX(0.06); }
+    70% { transform: scaleX(1); }
+    92% { transform: scaleX(1); }
+    100% { transform: scaleX(0.06); }
+  }
+  .paste-gauge { position: absolute; left: 0; bottom: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.8125rem; color: var(--ink-soft); }
+  .paste-gauge i { display: block; width: 44px; height: 12px; background: var(--nori); }
+  .paste-gauge b { font-family: var(--code); color: var(--ink); }
+  .paste-gauge em { font-style: normal; color: var(--ink-faint); }
+  .paste figcaption { margin-top: 12px; font-size: 0.875rem; color: var(--ink-soft); line-height: 1.7; }
+  @media (prefers-reduced-motion: reduce) {
+    .paste-sheet, .paste-strip { animation: none; }
+  }
 
-  .section { padding-block: clamp(56px, 8vw, 104px); border-top: 1px solid var(--sei); }
-  .section h2 { margin: 0 0 20px; font-family: var(--mincho); font-weight: 800; font-size: clamp(1.5rem, 2.6vw, 2.2rem); line-height: 1.4; color: var(--sho); font-feature-settings: "palt" 1; word-break: keep-all; overflow-wrap: anywhere; }
-  .section h3 { margin: 0 0 12px; font-size: 1.125rem; color: var(--sho); }
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 32px); margin: clamp(40px, 5vw, 64px) auto 0; padding-block: 0; list-style: none; }
+  .cards li { position: relative; padding: 22px 24px 20px; background: var(--sheet); border-radius: 2px; box-shadow: var(--paper-shadow); }
+  .cards li:nth-child(1) { transform: rotate(-1deg); }
+  .cards li:nth-child(3) { transform: rotate(1deg); }
+  .cards li::before { content: ""; position: absolute; top: -8px; left: 50%; width: 36px; height: 14px; margin-left: -18px; background: var(--nori); opacity: 0.85; transform: rotate(-3deg); }
+  .cards b { display: block; font-family: var(--code); font-weight: 700; font-size: 2.4rem; line-height: 1.1; color: var(--nori); }
+  .cards span { display: block; margin-top: 6px; font-size: 0.875rem; color: var(--ink-soft); line-height: 1.6; }
+
+  /* Each section is a sheet pasted onto the kraft paper, with a dab of paste at the corner. */
+  .section { position: relative; max-width: 1180px; margin: clamp(24px, 3vw, 40px) auto; padding-block: clamp(40px, 6vw, 80px); background: var(--sheet); border-radius: 3px; box-shadow: var(--paper-shadow); }
+  .section::before { content: ""; position: absolute; top: -6px; left: 36px; width: 46px; height: 16px; background: var(--nori); opacity: 0.85; transform: rotate(-2deg); }
+  .section h2 { margin: 0 0 20px; font-weight: 900; font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1.4; color: var(--ink); font-feature-settings: "palt" 1; word-break: keep-all; overflow-wrap: anywhere; }
+  .section h3 { margin: 0 0 12px; font-size: 1.125rem; color: var(--ink); }
   .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
 
   .flows { display: grid; gap: 16px; }
-  .flow { padding: 18px 20px; border: 1px solid var(--sei); background: var(--shiro); }
-  .flow-nori { border: 2px solid var(--sho); }
-  .flow-title { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin: 0 0 10px; font-weight: 700; color: var(--sho); }
-  .flow-title span { font-weight: 400; font-size: 0.875rem; color: var(--ju); }
+  .flow { padding: 18px 20px; border: 1px solid var(--rule); border-radius: 2px; background: var(--kraft); }
+  .flow-nori { border: 2px solid var(--nori); background: var(--sheet); }
+  .flow-title { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin: 0 0 10px; font-weight: 700; color: var(--ink); }
+  .flow-nori .flow-title { color: var(--nori); }
+  .flow-title span { font-weight: 400; font-size: 0.875rem; color: var(--ink-soft); }
   .flow-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding: 0; list-style: none; font-size: 0.9375rem; }
-  .flow-steps li { padding: 6px 12px; border: 1px solid var(--tan); background: var(--kami); }
-  .flow-steps li + li::before { content: "→"; position: relative; left: -12px; margin-right: -6px; color: var(--tan); }
-  .flow-all .flow-steps li:first-child { border-width: 1px 1px 1px 10px; }
-  .flow-loop li:last-child::after { content: " ↺"; color: var(--tan); }
+  .flow-steps li { padding: 6px 12px; border: 1px solid var(--ink-faint); border-radius: 2px; background: var(--sheet); }
+  .flow-steps li + li::before { content: "→"; position: relative; left: -12px; margin-right: -6px; color: var(--ink-faint); }
+  .flow-all .flow-steps li:first-child { border-width: 1px 1px 1px 10px; border-left-color: var(--ink-faint); }
+  .flow-loop li:last-child::after { content: " ↺"; color: var(--nori); }
   .points { margin: 28px 0 0; padding: 0; list-style: none; }
-  .points li { display: grid; gap: 2px; padding-block: 14px; border-top: 1px solid var(--sei); font-size: 0.9375rem; }
-  .points li:last-child { border-bottom: 1px solid var(--sei); }
-  .points strong { color: var(--sho); }
-  .points span { color: var(--ju); }
+  .points li { display: grid; gap: 2px; padding-block: 14px; border-top: 1px solid var(--rule-light); font-size: 0.9375rem; }
+  .points li:last-child { border-bottom: 1px solid var(--rule-light); }
+  .points strong { color: var(--ink); }
+  .points span { color: var(--ink-soft); }
 
-  .modes { display: inline-flex; border: 2px solid var(--sho); }
-  .modes button { padding: 6px 14px; border: 0; background: var(--shiro); color: var(--sho); font: inherit; font-size: 0.875rem; cursor: pointer; }
-  .modes button + button { border-left: 2px solid var(--sho); }
-  .modes button[aria-pressed="true"] { background: var(--sho); color: var(--shiro); }
+  .modes { display: inline-flex; border: 2px solid var(--ink); border-radius: 3px; overflow: hidden; }
+  .modes button { padding: 6px 14px; border: 0; background: var(--sheet); color: var(--ink); font: inherit; font-size: 0.875rem; cursor: pointer; }
+  .modes button + button { border-left: 2px solid var(--ink); }
+  .modes button[aria-pressed="true"] { background: var(--nori); color: var(--sheet); }
   .bench-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin: 48px 0 4px; }
-  .hero-chart .bench-head { margin: 0; }
   .bench-title { margin: 0 !important; }
-  .bench-lede { font-size: 0.9375rem; color: var(--ju); }
-  .bench { margin: 16px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--sei); }
-  .bench-row { display: grid; grid-template-columns: 9em minmax(0, 1fr) 8em; gap: 12px 24px; align-items: center; padding-block: 16px; border-bottom: 1px solid var(--sei); }
-  .bench-name { margin: 0; font-size: 1rem; color: var(--sho); }
-  .bench-name b { font-size: 1.25rem; }
-  .bench-name span { display: block; font-size: 0.8125rem; color: var(--ju); }
+  .bench-lede { font-size: 0.9375rem; color: var(--ink-soft); }
+  .chart-sheet { padding: clamp(12px, 2vw, 24px); border: 1px solid var(--rule-light); border-radius: 2px; }
+  .chart-figure { margin: 0; }
+  .chart { display: block; width: 100%; max-width: 760px; height: auto; margin-inline: auto; }
+  .chart .tick { font-family: var(--code); font-size: 12px; fill: var(--ink-soft); }
+  .chart .label { font-family: var(--code); font-size: 13px; }
+  .chart-figure figcaption { margin-top: 10px; font-size: 0.875rem; color: var(--ink-soft); line-height: 1.7; }
+  .bench { margin: 16px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--rule-light); }
+  .bench-row { display: grid; grid-template-columns: 9em minmax(0, 1fr) 8em; gap: 12px 24px; align-items: center; padding-block: 16px; border-bottom: 1px solid var(--rule-light); }
+  .bench-name { margin: 0; font-size: 1rem; color: var(--ink); }
+  .bench-name b { font-family: var(--code); font-size: 1.25rem; }
+  .bench-name span { display: block; font-size: 0.8125rem; color: var(--ink-soft); }
   .bench-bars { display: grid; gap: 6px; }
-  .bar { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 12px; align-items: center; font-size: 0.8125rem; color: var(--ju); }
-  .bar b { color: var(--sho); font-family: var(--code); }
-  .bar-fill { height: 12px; width: var(--w); min-width: 2px; background: var(--sho); }
-  .bar-norij6 .bar-fill { background: repeating-linear-gradient(90deg, var(--sho) 0 6px, transparent 6px 9px); }
-  .bar-qpdf .bar-fill { background: var(--ju); }
-  .bar-lopdf .bar-fill { background: var(--tan); }
-  .bar-none b { color: var(--tan); font-weight: 400; }
-  .bench-ratio { margin: 0; font-family: var(--mincho); font-weight: 800; font-size: 1.6rem; line-height: 1.2; color: var(--sho); text-align: right; }
-  .bench-ratio small { display: block; font-family: var(--gothic); font-weight: 400; font-size: 0.75rem; color: var(--ju); }
+  .bar { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 12px; align-items: center; font-size: 0.8125rem; color: var(--ink-soft); }
+  .bar b { color: var(--ink); font-family: var(--code); }
+  .bar-fill { height: 12px; width: var(--w); min-width: 2px; background: var(--nori); }
+  .bar-norij6 .bar-fill { background: repeating-linear-gradient(90deg, var(--nori) 0 6px, transparent 6px 9px); }
+  .bar-qpdf .bar-fill { background: var(--ink-soft); }
+  .bar-lopdf .bar-fill { background: var(--ink-faint); }
+  .bar-none b { color: var(--ink-faint); font-weight: 400; }
+  .bench-ratio { margin: 0; font-family: var(--code); font-weight: 700; font-size: 1.7rem; line-height: 1.2; color: var(--nori); text-align: right; }
+  .bench-ratio small { display: block; font-family: var(--gothic); font-weight: 400; font-size: 0.75rem; color: var(--ink-soft); }
   .bench-ratio-none small { font-size: 0.8125rem; }
   .bench-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(32px, 5vw, 72px); margin: 40px 0 0; padding: 0; list-style: none; }
-  .bench-notes li { display: grid; gap: 2px; padding-block: 16px; border-top: 1px solid var(--sei); font-size: 0.9375rem; }
-  .bench-notes strong { color: var(--sho); }
-  .bench-notes span { color: var(--ju); }
-  .method { margin-top: 32px; border-top: 2px solid var(--sho); }
+  .bench-notes li { display: grid; gap: 2px; padding-block: 16px; border-top: 1px solid var(--rule-light); font-size: 0.9375rem; }
+  .bench-notes strong { color: var(--ink); }
+  .bench-notes span { color: var(--ink-soft); }
+  .method { margin-top: 32px; border-top: 2px solid var(--ink); }
   .method summary { padding-block: 12px; font-weight: 700; cursor: pointer; }
   .method-body { padding-bottom: 8px; font-size: 0.9375rem; }
 
   .scope { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 5vw, 72px); margin-top: 8px; }
   .scope ul { margin: 0; padding-left: 1.2em; }
   .scope li { padding-block: 4px; }
+  .scope li::marker { color: var(--nori); }
 
-  .cmd { position: relative; margin: 0 0 16px; background: var(--sho); color: var(--shiro); }
+  .cmd { position: relative; margin: 0 0 16px; background: var(--ink); color: var(--sheet); border-radius: 3px; }
   .cmd pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-family: var(--code); font-size: 0.9375rem; line-height: 1.7; }
   .cmd code { font-size: inherit; }
-  .cmd .comment { color: var(--tan); }
-  .copy { position: absolute; top: 8px; right: 8px; padding: 4px 10px; border: 1px solid var(--tan); background: transparent; color: var(--shiro); font: inherit; font-size: 0.75rem; cursor: pointer; }
-  .copy:hover { background: var(--no); }
+  .cmd .comment { color: var(--rule); }
+  .copy { position: absolute; top: 8px; right: 8px; padding: 4px 10px; border: 1px solid var(--ink-faint); border-radius: 2px; background: transparent; color: var(--sheet); font: inherit; font-size: 0.75rem; cursor: pointer; }
+  .copy:hover { background: var(--ink-soft); }
   .usage { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
 
-  .site-footer { padding-block: 56px 72px; border-top: 1px solid var(--sei); font-size: 0.9375rem; color: var(--ju); }
+  .site-footer { padding-block: 40px 72px; font-size: 0.9375rem; color: var(--ink-soft); }
   .site-footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
   .footer-links { display: flex; flex-wrap: wrap; gap: 24px; }
 
+  @media (max-width: 1200px) {
+    .section { margin-inline: var(--gutter); }
+  }
   @media (max-width: 900px) {
-    .hero .wrap, .split, .bench-notes, .scope { grid-template-columns: minmax(0, 1fr); }
+    .hero-grid, .split, .bench-notes, .scope { grid-template-columns: minmax(0, 1fr); }
+    .cards { grid-template-columns: minmax(0, 1fr); }
     .bench-row { grid-template-columns: minmax(0, 1fr); }
     .bench-ratio { text-align: left; }
     .site-nav { margin-inline-start: 0; }
   }
   @media (max-width: 560px) {
     .bar { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    .paste-stage { height: 200px; }
   }"""
 
 
