@@ -123,11 +123,53 @@ Output size
 | 1,000 | 1,000 | 610.7 MB | 610.7 MB | 610.8 MB | 610.9 MB |
 | 2,000 | 2,000 | 1.22 GB | 1.22 GB | 1.22 GB | - |
 
+### Japanese PDFs, merged once
+
+20 files picked at random from Commons’ "Japanese-language PDF files" category (115 pages, 8.9 MB in all: government papers, laws, scanned notices, sheet music, Google Docs exports) merged in one go. All four tools produced a 115-page output that passes qpdf's check. The list is in `bench/public-pdfs-ja.json`.
+
+| | nori | nori -j6 | qpdf | lopdf |
+|---|---:|---:|---:|---:|
+| Time | 56 ms | 43 ms | 118 ms | 87 ms |
+| Peak memory | 17.1 MB | 21.7 MB | 14.7 MB | 39.7 MB |
+| Output size | 8.7 MB | 8.7 MB | 8.7 MB | 8.9 MB |
+
+### A Japanese government bill copied 10 to 2,000 times
+
+[Comparison table of a bill on smartphone software competition](https://commons.wikimedia.org/wiki/File:スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案_新旧対照条文.pdf) (Cabinet Secretariat, CC BY 4.0): 14 pages, 65 objects, 140 KB, made with JUST PDF 4 with MS Mincho subsets embedded. The closest of the inputs to a CJK business form.
+
+Time
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 20 ms | 18 ms | 50 ms | 28 ms |
+| 100 | 1,400 | 77 ms | 66 ms | 284 ms | 183 ms |
+| 1,000 | 14,000 | 711 ms | 406 ms | 3.83 s | 2.59 s |
+| 2,000 | 28,000 | 1.28 s | 775 ms | 7.53 s | 7.47 s |
+
+Peak memory
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 2.8 MB | 6.4 MB | 7.1 MB | 8.5 MB |
+| 100 | 1,400 | 4.4 MB | 7.9 MB | 38.0 MB | 78.8 MB |
+| 1,000 | 14,000 | 5.7 MB | 10.2 MB | 344.5 MB | 773.4 MB |
+| 2,000 | 28,000 | 8.0 MB | 11.5 MB | 686.4 MB | 1.52 GB |
+
+Output size
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 1.3 MB | 1.3 MB | 1.3 MB | 1.3 MB |
+| 100 | 1,400 | 13.5 MB | 13.5 MB | 13.5 MB | 13.4 MB |
+| 1,000 | 14,000 | 135.0 MB | 135.0 MB | 135.0 MB | 134.4 MB |
+| 2,000 | 28,000 | 270.0 MB | 270.0 MB | 270.0 MB | 268.9 MB |
+
 ### What the numbers say
 
 - With few objects per file, both speed and memory differ by orders of magnitude. Merging 2,000 copies of the regulation (8,000 pages) took nori 1.12 s and 5.7 MB, qpdf 5.9 s and 423 MB, lopdf 3.6 s and 695 MB. nori's memory barely moved from the 1.8 MB it used for 10 files
 - With many objects per file, memory still stays flat. The journal has 478 objects per file and takes longer to parse, yet nori is 2.9 times faster than qpdf, 4.5 times with `-j6`. At 2,000 files nori used 16 MB and qpdf 2 GB
 - With scanned images, the gap in time narrows. The newspaper has 9 objects per page, so merging is mostly copying image data. For 2,000 files (1.2 GB) nori took 1.53 s and qpdf 2.60 s, 1.7 times apart, but memory was 5.4 MB for nori, 57 MB for qpdf and 1.3 GB for lopdf at 1,000 files
+- CJK documents behave the same. The Japanese bill merged 2,000 times (28,000 pages) took nori 1.28 s and 8 MB, qpdf 7.5 s and 686 MB, lopdf 7.5 s and 1.5 GB
 - lopdf is not slow; the merge code is the problem. nori itself parses inputs with lopdf. The README's merge code gathers every input into one `Document` and saves at the end, so memory grows with the total input, and objects no page refers to stay in the output, which makes it a little larger
 - Outputs are about the same size from every tool, all pass `qpdf --check`, and all have the expected page count
 
@@ -213,15 +255,21 @@ end
 - `--fixture`: one PDF is copied 10 to 2,000 times and merged, to show how time and memory grow with the number of files
 - `--corpus`: every PDF in a directory is merged once, all together, to show that real-world files of every make come through
 
-The inputs are PDFs picked at random from Wikimedia Commons. `bench/fetch.py select` asks CirrusSearch for PDFs in random order (`srsort=random`), keeps 40 that are at most 3 MB and 60 pages, and writes their titles, URLs and licenses to `bench/public-pdfs.json`. `bench/fetch.py fetch` downloads that list into `bench/inputs/public/` (the PDFs themselves are not in the repository). For the scaling runs, three of the 40 were chosen for how differently they are built.
+The inputs are PDFs picked at random from Wikimedia Commons. `bench/fetch.py select` asks CirrusSearch for PDFs in random order (`srsort=random`), keeps those at most 3 MB and 60 pages, and writes their titles, URLs and licenses to a JSON list. `bench/fetch.py fetch` downloads a list into `bench/inputs/` (the PDFs themselves are not in the repository). There are two lists.
+
+- `bench/public-pdfs.json`: 40 files from all of Commons. Three of them, chosen for how differently they are built, are used for the scaling runs
+- `bench/public-pdfs-ja.json`: 20 files from the "Japanese-language PDF files" category. The first (a Japanese government bill, pinned with `--include`) is used for a scaling run
 
 ```bash
 cargo build --release --workspace
 python3 bench/fetch.py fetch
+python3 bench/fetch.py fetch --name ja
 python3 bench/bench.py --corpus bench/inputs/public
 python3 bench/bench.py --fixture bench/inputs/public/public-17.pdf
 python3 bench/bench.py --fixture bench/inputs/public/public-13.pdf --max-count lopdf=100
 python3 bench/bench.py --fixture bench/inputs/public/public-24.pdf --max-count lopdf=1000
+python3 bench/bench.py --corpus bench/inputs/ja
+python3 bench/bench.py --fixture bench/inputs/ja/ja-01.pdf
 ```
 
 - qpdf is run as `qpdf --warning-exit-0 --empty --pages <inputs>... -- <output>`

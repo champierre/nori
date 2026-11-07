@@ -10,8 +10,13 @@ import pathlib
 HERE = pathlib.Path(__file__).resolve().parent
 RESULTS = HERE.parent / "bench" / "results-macos.json"
 TOOLS = ["nori", "nori -j6", "qpdf", "lopdf"]
-# Order on the page; each is a file fetch.py downloads from Wikimedia Commons.
-FIXTURES = ["public-17.pdf", "public-13.pdf", "public-24.pdf"]
+# Order on the page, per language; each is a file fetch.py downloads from Wikimedia Commons.
+# The Japanese page leads with the Japanese government PDF, the English page with the others.
+FIXTURES = {
+    "ja": ["ja-01.pdf", "public-17.pdf", "public-13.pdf", "public-24.pdf"],
+    "en": ["public-17.pdf", "public-13.pdf", "public-24.pdf", "ja-01.pdf"],
+}
+CORPORA = {"ja": ["ja", "public"], "en": ["public", "ja"]}
 
 T = {
     "ja": {
@@ -22,23 +27,31 @@ T = {
         "install_button": "インストール", "github_button": "GitHub でソースを見る",
         "chart_title": "最大メモリ使用量",
         "chart_lede": "14 ページの PDF を 10〜2,000 個つないだときの最大 RSS。横軸はファイル数です。",
-        "fixture_label": {"public-17.pdf": "英国の法令", "public-13.pdf": "EU 官報", "public-24.pdf": "新聞のスキャン"},
-        "fixture_short": {"public-17.pdf": "法令", "public-13.pdf": "EU 官報", "public-24.pdf": "新聞"},
+        "fixture_label": {"ja-01.pdf": "法律案の新旧対照条文", "public-17.pdf": "英国の法令", "public-13.pdf": "EU 官報", "public-24.pdf": "新聞のスキャン"},
+        "fixture_short": {"ja-01.pdf": "日本の法律案", "public-17.pdf": "英国の法令", "public-13.pdf": "EU 官報", "public-24.pdf": "新聞"},
         "fixture_desc": {
+            "ja-01.pdf": "スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案の新旧対照条文（内閣官房）。日本語フォントを埋め込んだ、表組みの電子生成 PDF",
             "public-17.pdf": "The Organic Products (Amendment) Regulations 2015。Ghostscript で作られた、文字だけの軽い PDF",
             "public-13.pdf": "Official Journal C 2023/1032（スロバキア語版）。PDFlib で作られた、1 ページあたりのオブジェクトが多い PDF",
             "public-24.pdf": "The New Orleans Bee、1900 年 10 月の 1 面。1 ページがまるごと画像のスキャン",
         },
         "chart_caption": {
+            "ja-01.pdf": "ＭＳ明朝のサブセットを埋め込んだ、JUST PDF 製の条文の表。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（28,000 ページ）でも 8 MB です。",
             "public-17.pdf": "文字だけの軽い PDF。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（8,000 ページ）でも 5.7 MB です。",
             "public-13.pdf": "1 ページあたりのオブジェクトが多い PDF。qpdf は 2,000 ファイルで 2 GB に達し、nori は 16 MB です。lopdf は 100 ファイルで 410 MB だったので、その先は測っていません。",
             "public-24.pdf": "1 ページが画像のスキャン。オブジェクトが少ないぶん qpdf のメモリも伸びにくいものの、2,000 ファイルで nori 5.4 MB に対して qpdf は 57 MB、lopdf は 1,000 ファイルで 1.3 GB でした。",
         },
         "fixture_col": "PDF", "fixture_desc_col": "どんな PDF か", "pages_col": "ページ", "objects_col": "オブジェクト", "size_col": "サイズ",
         "objects": "オブジェクト", "output_title": "出力サイズ",
-        "corpus_title": "ばらばらな PDF を 1 回でつなぐ",
-        "corpus_lede": "Wikimedia Commons からランダムに選んだ {files} 件（{pages} ページ、合計 {size}）を、名前の順に 1 回でつなぎました。官報、法令、新聞やノートのスキャン、Internet Archive の書籍など、作り手も年代もばらばらです。",
-        "corpus_note": "4 ツールとも 277 ページの出力を作り、qpdf の検査も通りました。nori は 88 ms と、qpdf の 16 倍速く、lopdf の 2 倍速い結果です。メモリは 21 MB で、いちばん大きい入力（2.9 MB）を読むぶんが主です。",
+        "corpus_title": {"ja": "日本語の PDF をまとめてつなぐ", "public": "世界中のばらばらな PDF をまとめてつなぐ"},
+        "corpus_lede": {
+            "ja": "Wikimedia Commons の日本語 PDF のカテゴリからランダムに選んだ {files} 件（{pages} ページ、合計 {size}）を、名前の順に 1 回でつなぎました。官庁の資料、法令、通知のスキャン、楽譜、Google ドキュメントの書き出しなど、作り手はさまざまです。",
+            "public": "Commons 全体からランダムに選んだ {files} 件（{pages} ページ、合計 {size}）を、名前の順に 1 回でつなぎました。EU 官報、英国の法令、19 世紀の新聞やノートのスキャン、Internet Archive の書籍など、言語も年代もばらばらです。",
+        },
+        "corpus_note": {
+            "ja": "4 ツールとも 115 ページの出力を作り、qpdf の検査も通りました。nori は 56 ms と qpdf の 2 倍速く、メモリ 17 MB はいちばん大きい入力（2.6 MB のスキャン）を読むぶんが主です。件数が 20 と少ないので、qpdf との差は伸び方の計測ほど開いていません。",
+            "public": "4 ツールとも 277 ページの出力を作り、qpdf の検査も通りました。nori は 88 ms と、qpdf の 16 倍速く、lopdf の 2 倍速い結果です。メモリは 21 MB で、いちばん大きい入力（2.9 MB）を読むぶんが主です。",
+        },
         "corpus_files": "つないだ PDF の一覧",
         "not_measured": "計測せず",
         "how_title": "読んだそばから書き、捨てる",
@@ -54,8 +67,8 @@ T = {
             ("解析は先読みできます", "<code>-j 6</code> のように指定すると、6 つの入力を別スレッドで同時に解析します。オブジェクトの多い入力では時間が半分になり、メモリは解析中の入力の分だけ増えます。"),
         ],
         "bench_title": "qpdf と lopdf との比較",
-        "bench_p1": "Wikimedia Commons からランダムに選んだ PDF を 10〜2,000 個コピーしてつなぎ、qpdf と、lopdf の README にある結合コードとで、実行時間と最大メモリを比べました。いずれもコマンドとして実行した 5 回の中央値です。グラフの上のボタンで、入力の PDF を切り替えられます。",
-        "bench_p2": "コピー元は、ランダムに取った 40 件の中から、作りの違う 3 件を選びました。どれもパブリックドメインか自由なライセンスで、リンク先からそのまま取得できます。",
+        "bench_p1": "Wikimedia Commons にある PDF を 10〜2,000 個コピーしてつなぎ、qpdf と、lopdf の README にある結合コードとで、実行時間と最大メモリを比べました。いずれもコマンドとして実行した 5 回の中央値です。グラフの上のボタンで、入力の PDF を切り替えられます。",
+        "bench_p2": "コピー元は、日本語 PDF のカテゴリから選んだ内閣官房の法律案の条文と、Commons 全体からランダムに取った 40 件の中から作りの違う 3 件です。どれもパブリックドメインか自由なライセンスで、リンク先からそのまま取得できます。",
         "time_title": "実行時間", "memory_title": "最大メモリ使用量",
         "bench_lede_time": "棒の長さは、ファイル数ごとにいちばん時間のかかったツールを基準にしています。右の数字は、nori が qpdf の何倍速かったか。",
         "bench_lede_memory": "棒の長さは、ファイル数ごとにいちばんメモリを使ったツールを基準にしています。右の数字は、nori のメモリが qpdf の何分の一か。",
@@ -63,8 +76,8 @@ T = {
         "ratio_time": "倍", "ratio_time_small": "qpdf 比", "ratio_memory_small": "qpdf 比",
         "ratio_none": "qpdf は計測せず",
         "notes": [
-            ("オブジェクトの少ない PDF では、速さもメモリも桁が違います", "英国の法令を 2,000 ファイル（8,000 ページ）つなぐと、nori が 1.12 秒・5.7 MB、qpdf が 5.9 秒・423 MB、lopdf が 3.6 秒・695 MB でした。nori のメモリは 10 ファイルの 1.8 MB からほとんど増えていません。"),
-            ("オブジェクトの多い PDF でも、メモリは一定のままです", "EU 官報は 1 ファイル 478 オブジェクトあり、解析に時間がかかります。それでも nori は qpdf の 2.9 倍速く、<code>-j6</code> なら 4.5 倍です。メモリは 2,000 ファイルで nori 16 MB、qpdf 2 GB でした。"),
+            ("日本語の帳票に近い PDF で、速さもメモリも桁が違います", "内閣官房の法律案の条文（JUST PDF 製、ＭＳ明朝のサブセット埋め込み、14 ページ）を 2,000 ファイル（28,000 ページ）つなぐと、nori が 1.28 秒・8 MB、qpdf が 7.5 秒・686 MB、lopdf が 7.5 秒・1.5 GB でした。nori のメモリは 10 ファイルの 2.8 MB からほとんど増えていません。"),
+            ("作り手の違う PDF でも傾向は同じです", "英国の法令（Ghostscript 製）では nori が qpdf の 5.2 倍速く、EU 官報（PDFlib 製、1 ファイル 478 オブジェクト）では 2.9 倍、<code>-j6</code> なら 4.5 倍です。メモリは 2,000 ファイルで nori 6〜16 MB、qpdf 423 MB〜2 GB でした。"),
             ("スキャンした画像の PDF では、時間の差は縮まります", "新聞のスキャンは 1 ページ 9 オブジェクトしかなく、処理の大半が画像データの書き写しです。2,000 ファイル（1.2 GB）で nori 1.53 秒、qpdf 2.60 秒と差は 1.7 倍にとどまりますが、メモリは nori 5.4 MB、qpdf 57 MB、lopdf は 1,000 ファイルで 1.3 GB でした。"),
             ("lopdf が遅いのではなく、結合コードの作りの問題です", "nori 自身も入力の解析には lopdf を使っています。README の結合コードは全入力を 1 つの <code>Document</code> に集めて最後に保存するため、メモリが入力の合計に比例します。ページから参照されないオブジェクトも出力に残すので、出力が少し大きくなります。"),
         ],
@@ -108,9 +121,9 @@ end""",
         "brand_aria": "nori トップ",
         "h1": ["何千枚の PDF を、", "一枚に貼り合わせる。"],
         "lede": "nori は複数の PDF を 1 つにつなぐコマンドです。入力を 1 枚ずつ読み、そのページに要るものだけを出力に貼り足してから、次の 1 枚を開きます。だから、メモリ使用量は入力の数に関係なく、いちばん大きい入力 1 つ分にとどまります。",
-        "paste_memory": "メモリ", "paste_memory_note": "枚数が増えても変わらない",
+        "paste_memory": "メモリ", "paste_memory_value": "8.0 MB", "paste_memory_note": "2,000 枚でもこのまま",
         "paste_caption": "入力を 1 枚ずつ読み、要るものを書き足してから捨てる。だから貼る枚数が増えても、手元に持つのは 1 枚分。",
-        "cards": [("6 MB", "2,000 ファイルをつないでも、メモリはこれだけ（3 種類の PDF で 5.4〜16 MB）"), ("16 倍", "qpdf より速い（Wikimedia Commons のランダムな 40 件を 1 回でつなぐ）"), ("1 つ", "外部コマンドに依存しない単体のバイナリ。MIT ライセンス")],
+        "cards": [("8 MB", "日本語の法律案 PDF を 2,000 ファイル（28,000 ページ）つないだときの最大メモリ。qpdf は 686 MB"), ("5.9 倍", "同じ結合で qpdf より速い。-j6 なら 9.7 倍"), ("1 つ", "外部コマンドに依存しない単体のバイナリ。MIT ライセンス")],
         "chart_section_lede": "横軸はファイル数。nori の線は、入力が 200 倍になってもほとんど動きません。lopdf の線が途中で終わるのは、その先はメモリが計測機に収まらないためです。",
     },
     "en": {
@@ -121,23 +134,31 @@ end""",
         "install_button": "Install", "github_button": "Source on GitHub",
         "chart_title": "Peak memory",
         "chart_lede": "Peak RSS when merging 10 to 2,000 copies of a 14-page PDF. The x axis is the number of files.",
-        "fixture_label": {"public-17.pdf": "UK regulation", "public-13.pdf": "EU Official Journal", "public-24.pdf": "scanned newspaper"},
-        "fixture_short": {"public-17.pdf": "Regulation", "public-13.pdf": "Journal", "public-24.pdf": "Newspaper"},
+        "fixture_label": {"public-17.pdf": "UK regulation", "public-13.pdf": "EU Official Journal", "public-24.pdf": "scanned newspaper", "ja-01.pdf": "Japanese bill"},
+        "fixture_short": {"public-17.pdf": "Regulation", "public-13.pdf": "Journal", "public-24.pdf": "Newspaper", "ja-01.pdf": "Japanese bill"},
         "fixture_desc": {
+            "ja-01.pdf": "Comparison table of a Japanese bill on smartphone software competition (Cabinet Secretariat). Born-digital tables with embedded Japanese fonts",
             "public-17.pdf": "The Organic Products (Amendment) Regulations 2015. Text only, made with Ghostscript; a light PDF",
             "public-13.pdf": "Official Journal C 2023/1032, Slovak edition. Made with PDFlib, with many objects per page",
             "public-24.pdf": "The New Orleans Bee, front page, October 1900. A scan: each page is one image",
         },
         "chart_caption": {
+            "ja-01.pdf": "Tables of a bill, made with JUST PDF and carrying MS Mincho subsets. qpdf and lopdf grow with the number of inputs; nori is at 8 MB for 2,000 files (28,000 pages).",
             "public-17.pdf": "A light, text-only PDF. qpdf and lopdf grow with the number of inputs; nori is at 5.7 MB even for 2,000 files (8,000 pages).",
             "public-13.pdf": "A PDF with many objects per page. qpdf reaches 2 GB at 2,000 files; nori uses 16 MB. lopdf was at 410 MB for 100 files, so larger counts were not run.",
             "public-24.pdf": "A scan with one image per page. With so few objects even qpdf's memory grows slowly, yet at 2,000 files nori used 5.4 MB against qpdf's 57 MB, and lopdf 1.3 GB at 1,000.",
         },
         "fixture_col": "PDF", "fixture_desc_col": "What it is", "pages_col": "Pages", "objects_col": "Objects", "size_col": "Size",
         "objects": "objects", "output_title": "Output size",
-        "corpus_title": "Merging PDFs of every make, once",
-        "corpus_lede": "{files} PDFs picked at random from Wikimedia Commons ({pages} pages, {size} in all) merged in one go, in name order: official journals, regulations, scanned newspapers and notebooks, Internet Archive books, from many producers and decades.",
-        "corpus_note": "All four tools produced a 277-page output that passes qpdf's check. nori took 88 ms, 16 times faster than qpdf and twice as fast as lopdf, in 21 MB of memory, most of it for reading the largest input (2.9 MB).",
+        "corpus_title": {"public": "PDFs of every make from all over Commons, merged once", "ja": "Japanese PDFs, merged once"},
+        "corpus_lede": {
+            "public": "{files} PDFs picked at random from all of Wikimedia Commons ({pages} pages, {size} in all) merged in one go, in name order: official journals, regulations, scanned newspapers and notebooks, Internet Archive books, from many producers, languages and decades.",
+            "ja": "{files} PDFs picked at random from Commons\u2019 Japanese-language category ({pages} pages, {size} in all) merged in one go: government papers, laws, scanned notices, sheet music, Google Docs exports, from many producers.",
+        },
+        "corpus_note": {
+            "public": "All four tools produced a 277-page output that passes qpdf's check. nori took 88 ms, 16 times faster than qpdf and twice as fast as lopdf, in 21 MB of memory, most of it for reading the largest input (2.9 MB).",
+            "ja": "All four tools produced a 115-page output that passes qpdf's check. nori took 56 ms, twice as fast as qpdf, in 17 MB, most of it for reading the largest input (a 2.6 MB scan). With only 20 files the gap to qpdf is smaller than in the scaling runs.",
+        },
         "corpus_files": "The PDFs that were merged",
         "not_measured": "not run",
         "how_title": "Write as you read, then let go",
@@ -154,7 +175,7 @@ end""",
         ],
         "bench_title": "Compared with qpdf and lopdf",
         "bench_p1": "PDFs picked at random from Wikimedia Commons were copied 10 to 2,000 times and merged with nori, with qpdf, and with the merge code from the lopdf README. All were run as commands; the values are the median of 5 runs. The buttons above each chart switch the input PDF.",
-        "bench_p2": "The three were chosen from 40 random files for how differently they are built. All are public domain or freely licensed and can be fetched from the links as they are.",
+        "bench_p2": "Three were chosen from 40 random files for how differently they are built, plus a Japanese government bill from Commons\u2019 Japanese-language category. All are public domain or freely licensed and can be fetched from the links as they are.",
         "time_title": "Time", "memory_title": "Peak memory",
         "bench_lede_time": "Bars are relative to the slowest tool at each file count. The number on the right is how many times faster nori was than qpdf.",
         "bench_lede_memory": "Bars are relative to the tool using the most memory at each file count. The number on the right is nori's memory as a fraction of qpdf's.",
@@ -165,6 +186,7 @@ end""",
             ("With few objects per file, both speed and memory differ by orders of magnitude", "Merging 2,000 copies of the UK regulation (8,000 pages) took nori 1.12 s and 5.7 MB, qpdf 5.9 s and 423 MB, lopdf 3.6 s and 695 MB. nori's memory barely moved from the 1.8 MB it used for 10 files."),
             ("With many objects per file, memory still stays flat", "The EU journal has 478 objects per file and takes longer to parse. nori is still 2.9 times faster than qpdf, 4.5 times with <code>-j6</code>. At 2,000 files nori used 16 MB and qpdf 2 GB."),
             ("With scanned images, the gap in time narrows", "The scanned newspaper has 9 objects per page, so merging is mostly copying image data. For 2,000 files (1.2 GB) nori took 1.53 s and qpdf 2.60 s, only 1.7 times apart, but memory was 5.4 MB for nori, 57 MB for qpdf and 1.3 GB for lopdf at 1,000 files."),
+            ("CJK documents behave the same", "The Japanese bill (made with JUST PDF, with MS Mincho subsets embedded, 14 pages) merged 2,000 times (28,000 pages) took nori 1.28 s and 8 MB, qpdf 7.5 s and 686 MB, lopdf 7.5 s and 1.5 GB."),
             ("lopdf is not slow; the merge code is the problem", "nori itself parses inputs with lopdf. The README's merge code gathers every input into one <code>Document</code> and saves at the end, so memory grows with the total input. Objects no page refers to stay in the output, which makes it a little larger."),
         ],
         "method_summary": "How it was measured",
@@ -207,7 +229,7 @@ end""",
         "brand_aria": "nori home",
         "h1": ["Thousands of PDFs,", "pasted into one."],
         "lede": "nori merges PDF files into one. It reads one input, pastes what its pages need onto the output, and only then opens the next. Memory use therefore stays around the size of the largest single input, however many files you merge.",
-        "paste_memory": "memory", "paste_memory_note": "does not grow with the sheets",
+        "paste_memory": "memory", "paste_memory_value": "5.7 MB", "paste_memory_note": "still this at 2,000 sheets",
         "paste_caption": "One sheet at a time: read it, paste what its pages need, let it go. However many sheets, only one is in hand.",
         "cards": [("6 MB", "peak memory for 2,000 files (5.4 to 16 MB across three kinds of PDF)"), ("16×", "faster than qpdf merging 40 random PDFs from Wikimedia Commons"), ("1", "single binary, no external commands. MIT license")],
         "chart_section_lede": "The x axis is the number of files. nori's line barely moves while the input grows 200-fold. lopdf's line stops where the next step would not fit in the machine's memory.",
@@ -227,7 +249,7 @@ def fmt_size(b):
 
 def load():
     results = json.loads(RESULTS.read_text())
-    data = {"fixtures": {}, "corpus": results.get("corpus")}
+    data = {"fixtures": {}, "corpora": results.get("corpora", {})}
     for fixture in results["fixtures"]:
         data["fixtures"][fixture["name"]] = {
             "pages": fixture["pages"], "objects": fixture["objects"], "bytes": fixture["bytes"],
@@ -341,14 +363,14 @@ def bench_rows(data, key, metric, t):
 
 def fixture_buttons(t, group, aria):
     return (f'<div class="modes" role="group" aria-label="{aria}" data-group="{group}">'
-            + "".join(f'<button type="button" data-fixture="{key_of(k)}" aria-pressed="{"true" if i == 0 else "false"}">{t["fixture_short"][k]}</button>' for i, k in enumerate(FIXTURES))
+            + "".join(f'<button type="button" data-fixture="{key_of(k)}" aria-pressed="{"true" if i == 0 else "false"}">{t["fixture_short"][k]}</button>' for i, k in enumerate(FIXTURES[t["lang"]]))
             + "</div>")
 
 
 def fixture_table(data, t):
     """One row per benchmark PDF: what it is, where it comes from, how it is built."""
     rows = []
-    for name in FIXTURES:
+    for name in FIXTURES[t["lang"]]:
         f = data["fixtures"][name]
         src = f["source"]
         link = f'<a href="{src["page"]}" target="_blank" rel="noopener">{t["fixture_label"][name]}</a>' if src else t["fixture_label"][name]
@@ -356,21 +378,21 @@ def fixture_table(data, t):
     return "\n".join(rows)
 
 
-def corpus_block(data, t):
-    corpus = data["corpus"]
+def corpus_block(data, t, key):
+    corpus = data["corpora"].get(key)
     if not corpus:
         return ""
     cells = []
     for metric, fmt in [("time_s", lambda v: fmt_time(v, t["lang"])), ("rss_bytes", fmt_size), ("output_bytes", fmt_size)]:
         cells.append("".join(f'<td>{fmt(corpus["tools"][n][metric]) if n in corpus["tools"] and metric in corpus["tools"][n] else "-"}</td>' for n in TOOLS))
     files = "\n".join(
-        f'            <li><a href="{f["source"]["page"]}" target="_blank" rel="noopener">{f["source"]["title"].removeprefix("File:")}</a><span>{f["pages"]} {t["pages"]} · {f["objects"]:,} {t["objects"]} · {fmt_size(f["bytes"])} · {f["source"]["license"]}</span></li>'
+        f'            <li><a href="{f["source"]["page"]}" target="_blank" rel="noopener">{f["source"]["title"].removeprefix("File:").removesuffix(".pdf")}</a><span>{f["pages"]} {t["pages"]} · {f["objects"]:,} {t["objects"]} · {fmt_size(f["bytes"])} · {f["source"]["license"]}</span></li>'
         for f in corpus["files"] if f.get("source"))
     total_bytes = sum(f["bytes"] for f in corpus["files"])
     return f'''      <div class="bench-head">
-        <h3 class="bench-title">{t["corpus_title"]}</h3>
+        <h3 class="bench-title">{t["corpus_title"][key]}</h3>
       </div>
-      <p class="bench-lede">{t["corpus_lede"].format(files=len(corpus["files"]), pages=f"{corpus['pages']:,}", size=fmt_size(total_bytes))}</p>
+      <p class="bench-lede">{t["corpus_lede"][key].format(files=len(corpus["files"]), pages=f"{corpus['pages']:,}", size=fmt_size(total_bytes))}</p>
       <div class="table-scroll">
         <table class="corpus">
           <thead><tr><th></th>{"".join(f"<th>{n}</th>" for n in TOOLS)}</tr></thead>
@@ -381,7 +403,7 @@ def corpus_block(data, t):
           </tbody>
         </table>
       </div>
-      <p class="bench-lede">{t["corpus_note"]}</p>
+      <p class="bench-lede">{t["corpus_note"][key]}</p>
       <details class="method">
         <summary>{t["corpus_files"]}</summary>
         <div class="method-body">
@@ -397,7 +419,7 @@ def page(data, t):
     site = "https://champierre.github.io/nori/"
     nav = "\n".join(f'      <a href="{href}">{label}</a>' for href, label in t["nav"])
     h1 = "".join(f"<span>{line}</span>" for line in t["h1"])
-    charts = "\n".join(f'      <figure class="chart-figure" data-fixture="{key_of(k)}"{"" if i == 0 else " hidden"}>\n{chart(data, k, t)}\n        <figcaption>{t["chart_caption"][k]}</figcaption>\n      </figure>' for i, k in enumerate(FIXTURES))
+    charts = "\n".join(f'      <figure class="chart-figure" data-fixture="{key_of(k)}"{"" if i == 0 else " hidden"}>\n{chart(data, k, t)}\n        <figcaption>{t["chart_caption"][k]}</figcaption>\n      </figure>' for i, k in enumerate(FIXTURES[t["lang"]]))
     sheets = "\n".join(f'          <span class="paste-sheet" style="--i: {i}"></span>' for i in range(8))
     cards = "\n".join(f"      <li><b>{big}</b><span>{small}</span></li>" for big, small in t["cards"])
     flow = lambda steps: "".join(f"<li>{s}</li>" for s in steps)
@@ -405,7 +427,8 @@ def page(data, t):
     notes = "\n".join(f"        <li><strong>{title}</strong><span>{body}</span></li>" for title, body in t["notes"])
     lists = {}
     for metric in ["time_s", "rss_bytes"]:
-        lists[metric] = "\n".join(f'      <ul class="bench" data-fixture="{key_of(k)}"{"" if i == 0 else " hidden"}>\n{bench_rows(data, k, metric, t)}\n      </ul>' for i, k in enumerate(FIXTURES))
+        lists[metric] = "\n".join(f'      <ul class="bench" data-fixture="{key_of(k)}"{"" if i == 0 else " hidden"}>\n{bench_rows(data, k, metric, t)}\n      </ul>' for i, k in enumerate(FIXTURES[t["lang"]]))
+    corpora = "\n".join(corpus_block(data, t, key) for key in CORPORA[t["lang"]])
     scope = lambda items: "\n".join(f"            <li>{i}</li>" for i in items)
     return f'''<!doctype html>
 <html lang="{t["lang"]}">
@@ -462,7 +485,7 @@ def page(data, t):
         <div class="paste-stage" aria-hidden="true">
           <div class="paste-strip"></div>
 {sheets}
-          <div class="paste-gauge"><span>{t["paste_memory"]}</span><i></i><b>5.9 MB</b><em>{t["paste_memory_note"]}</em></div>
+          <div class="paste-gauge"><span>{t["paste_memory"]}</span><i></i><b>{t["paste_memory_value"]}</b><em>{t["paste_memory_note"]}</em></div>
         </div>
         <figcaption id="paste-caption">{t["paste_caption"]}</figcaption>
       </figure>
@@ -538,7 +561,7 @@ def page(data, t):
 {notes}
       </ul>
 
-{corpus_block(data, t)}
+{corpora}
       <details class="method">
         <summary>{t["method_summary"]}</summary>
         <div class="method-body">

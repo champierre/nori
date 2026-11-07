@@ -16,9 +16,50 @@ Wikimedia Commons からランダムに選んだ PDF をつなぎ、[qpdf](https
 
 計測環境は Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8）、qpdf 12.4.2、lopdf 0.47.0、nori 0.1.0 です。値は 5 回の中央値、メモリは最大 RSS です。`nori -j6` は 6 スレッドで解析を先行させた場合です。`-` は、その先を測るとメモリがマシンに収まらないため打ち切った箇所です。
 
-### ばらばらな 40 件を 1 回でつなぐ
+### 日本語の PDF をまとめてつなぐ
 
-ランダムに選んだ 40 件（277 ページ、合計 33.8 MB。官報、法令、新聞やノートのスキャン、Internet Archive の書籍など）を名前の順に 1 回でつなぎました。4 ツールとも 277 ページの出力を作り、qpdf の検査も通っています。一覧は `bench/public-pdfs.json` にあります。
+Commons の「Japanese-language PDF files」カテゴリからランダムに選んだ 20 件（115 ページ、合計 8.9 MB。官庁の資料、法令、通知のスキャン、楽譜、Google ドキュメントの書き出しなど）を名前の順に 1 回でつなぎました。4 ツールとも 115 ページの出力を作り、qpdf の検査も通っています。一覧は `bench/public-pdfs-ja.json` にあります。
+
+| | nori | nori -j6 | qpdf | lopdf |
+|---|---:|---:|---:|---:|
+| 実行時間 | 56 ms | 43 ms | 118 ms | 87 ms |
+| 最大メモリ | 17.1 MB | 21.7 MB | 14.7 MB | 39.7 MB |
+| 出力サイズ | 8.7 MB | 8.7 MB | 8.7 MB | 8.9 MB |
+
+### 日本語の法律案を 10〜2,000 個つなぐ
+
+[スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案 新旧対照条文](https://commons.wikimedia.org/wiki/File:スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案_新旧対照条文.pdf)（内閣官房、CC BY 4.0）。JUST PDF 4 で作られ、ＭＳ明朝のサブセットを埋め込んだ 14 ページ・65 オブジェクト・140 KB の条文の表で、日本語の帳票にいちばん近い入力です。
+
+Time
+
+| ファイル数 | ページ数 | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 20 ms | 18 ms | 50 ms | 28 ms |
+| 100 | 1,400 | 77 ms | 66 ms | 284 ms | 183 ms |
+| 1,000 | 14,000 | 711 ms | 406 ms | 3.83 s | 2.59 s |
+| 2,000 | 28,000 | 1.28 s | 775 ms | 7.53 s | 7.47 s |
+
+最大メモリ
+
+| ファイル数 | ページ数 | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 2.8 MB | 6.4 MB | 7.1 MB | 8.5 MB |
+| 100 | 1,400 | 4.4 MB | 7.9 MB | 38.0 MB | 78.8 MB |
+| 1,000 | 14,000 | 5.7 MB | 10.2 MB | 344.5 MB | 773.4 MB |
+| 2,000 | 28,000 | 8.0 MB | 11.5 MB | 686.4 MB | 1.52 GB |
+
+出力サイズ
+
+| ファイル数 | ページ数 | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 140 | 1.3 MB | 1.3 MB | 1.3 MB | 1.3 MB |
+| 100 | 1,400 | 13.5 MB | 13.5 MB | 13.5 MB | 13.4 MB |
+| 1,000 | 14,000 | 135.0 MB | 135.0 MB | 135.0 MB | 134.4 MB |
+| 2,000 | 28,000 | 270.0 MB | 270.0 MB | 270.0 MB | 268.9 MB |
+
+### 世界中のばらばらな PDF をまとめてつなぐ
+
+Commons 全体からランダムに選んだ 40 件（277 ページ、合計 33.8 MB。官報、法令、新聞やノートのスキャン、Internet Archive の書籍など）を名前の順に 1 回でつなぎました。4 ツールとも 277 ページの出力を作り、qpdf の検査も通っています。一覧は `bench/public-pdfs.json` にあります。
 
 | | nori | nori -j6 | qpdf | lopdf |
 |---|---:|---:|---:|---:|
@@ -26,7 +67,7 @@ Wikimedia Commons からランダムに選んだ PDF をつなぎ、[qpdf](https
 | 最大メモリ | 21.3 MB | 36.8 MB | 30.3 MB | 111.2 MB |
 | 出力サイズ | 32.0 MB | 32.0 MB | 31.9 MB | 33.7 MB |
 
-### 1 つの PDF を 10〜2,000 個つなぐ
+### 作り手の違う PDF を 10〜2,000 個つなぐ
 
 40 件の中から、作りの違う 3 件を選んでコピーしました。
 
@@ -125,9 +166,10 @@ Time
 
 ### 読み取れること
 
-- オブジェクトの少ない PDF では、速さもメモリも桁が違います。法令を 2,000 ファイル（8,000 ページ）つなぐと、nori が 1.12 秒・5.7 MB、qpdf が 5.9 秒・423 MB、lopdf が 3.6 秒・695 MB でした。nori のメモリは 10 ファイルの 1.8 MB からほとんど増えていません
-- オブジェクトの多い PDF でも、メモリは一定のままです。EU 官報は 1 ファイル 478 オブジェクトあり解析に時間がかかりますが、それでも nori は qpdf の 2.9 倍速く、`-j6` なら 4.5 倍です。メモリは 2,000 ファイルで nori 16 MB、qpdf 2 GB でした
+- 日本語の帳票に近い PDF で、速さもメモリも桁が違います。法律案の条文を 2,000 ファイル（28,000 ページ）つなぐと、nori が 1.28 秒・8 MB、qpdf が 7.5 秒・686 MB、lopdf が 7.5 秒・1.5 GB でした。nori のメモリは 10 ファイルの 2.8 MB からほとんど増えていません
+- 作り手の違う PDF でも傾向は同じです。英国の法令（Ghostscript 製）では nori が qpdf の 5.2 倍速く、EU 官報（PDFlib 製、1 ファイル 478 オブジェクト）では 2.9 倍、`-j6` なら 4.5 倍です。メモリは 2,000 ファイルで nori 6〜16 MB、qpdf 423 MB〜2 GB でした
 - スキャンした画像の PDF では、時間の差は縮まります。新聞は 1 ページ 9 オブジェクトしかなく、処理の大半が画像データの書き写しです。2,000 ファイル（1.2 GB）で nori 1.53 秒、qpdf 2.60 秒と差は 1.7 倍ですが、メモリは nori 5.4 MB、qpdf 57 MB、lopdf は 1,000 ファイルで 1.3 GB でした
+- 件数が少ないと差は小さくなります。日本語 20 件や全体 40 件を 1 回つなぐだけなら、nori は qpdf の 2〜16 倍速いものの、メモリは入力 1 つ分がそのまま出るので qpdf と同程度です
 - lopdf が遅いのではなく、結合コードの作りの問題です。nori 自身も入力の解析には lopdf を使っています。README の結合コードは全入力を 1 つの `Document` に集めて最後に保存するため、メモリが入力の合計に比例します。ページから参照されないオブジェクトも出力に残すので、出力が少し大きくなります
 - 出力はどのツールもほぼ同じ大きさで、すべて `qpdf --check` を通り、ページ数も一致しています
 
@@ -213,11 +255,17 @@ end
 - `--fixture`: 1 つの PDF を 10〜2,000 個コピーしてつなぎ、ファイル数に対する伸び方を見る
 - `--corpus`: ディレクトリにある PDF を全部まとめて 1 回つなぎ、作り手のばらばらな実在の PDF を取りこぼさないかを見る
 
-入力は Wikimedia Commons からランダムに選んだ PDF です。`bench/fetch.py select` が CirrusSearch の `srsort=random` で PDF を引き、3 MB・60 ページ以下のものを 40 件選んで `bench/public-pdfs.json` に題名・URL・ライセンスを書き出します。`bench/fetch.py fetch` がその一覧を `bench/inputs/public/` にダウンロードします（PDF 自体はリポジトリに入れません）。伸び方の計測には、その 40 件の中から作りの違う 3 件を選びました。
+入力は Wikimedia Commons からランダムに選んだ PDF です。`bench/fetch.py select` が CirrusSearch の `srsort=random` で PDF を引き、3 MB・60 ページ以下のものを選んで、題名・URL・ライセンスを JSON に書き出します。`bench/fetch.py fetch` がその一覧を `bench/inputs/` にダウンロードします（PDF 自体はリポジトリに入れません）。一覧は 2 つあります。
+
+- `bench/public-pdfs-ja.json`: 「Japanese-language PDF files」カテゴリから 20 件。先頭の 1 件（内閣官房の法律案の新旧対照条文）は `--include` で固定し、伸び方の計測に使います
+- `bench/public-pdfs.json`: Commons 全体から 40 件。伸び方の計測には、この中から作りの違う 3 件を選びました
 
 ```bash
 cargo build --release --workspace
+python3 bench/fetch.py fetch --name ja
 python3 bench/fetch.py fetch
+python3 bench/bench.py --corpus bench/inputs/ja
+python3 bench/bench.py --fixture bench/inputs/ja/ja-01.pdf
 python3 bench/bench.py --corpus bench/inputs/public
 python3 bench/bench.py --fixture bench/inputs/public/public-17.pdf
 python3 bench/bench.py --fixture bench/inputs/public/public-13.pdf --max-count lopdf=100

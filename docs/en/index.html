@@ -257,7 +257,7 @@
           <span class="paste-sheet" style="--i: 5"></span>
           <span class="paste-sheet" style="--i: 6"></span>
           <span class="paste-sheet" style="--i: 7"></span>
-          <div class="paste-gauge"><span>memory</span><i></i><b>5.9 MB</b><em>does not grow with the sheets</em></div>
+          <div class="paste-gauge"><span>memory</span><i></i><b>5.7 MB</b><em>still this at 2,000 sheets</em></div>
         </div>
         <figcaption id="paste-caption">One sheet at a time: read it, paste what its pages need, let it go. However many sheets, only one is in hand.</figcaption>
       </figure>
@@ -300,7 +300,7 @@
     <div class="wrap">
       <h2 id="benchmark-title">Compared with qpdf and lopdf</h2>
       <p>PDFs picked at random from Wikimedia Commons were copied 10 to 2,000 times and merged with nori, with qpdf, and with the merge code from the lopdf README. All were run as commands; the values are the median of 5 runs. The buttons above each chart switch the input PDF.</p>
-      <p>The three were chosen from 40 random files for how differently they are built. All are public domain or freely licensed and can be fetched from the links as they are.</p>
+      <p>Three were chosen from 40 random files for how differently they are built, plus a Japanese government bill from Commons’ Japanese-language category. All are public domain or freely licensed and can be fetched from the links as they are.</p>
       <div class="table-scroll">
         <table class="fixtures">
           <thead><tr><th>PDF</th><th>What it is</th><th>Pages</th><th>Objects</th><th>Size</th></tr></thead>
@@ -308,13 +308,14 @@
           <tr><td><a href="https://commons.wikimedia.org/wiki/File:The_Organic_Products_(Amendment)_Regulations_2015_(UKSI_2015-1669_qp).pdf" target="_blank" rel="noopener">UK regulation</a></td><td>The Organic Products (Amendment) Regulations 2015. Text only, made with Ghostscript; a light PDF</td><td>4</td><td>36</td><td>39 KB</td></tr>
           <tr><td><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202301032_of_2023_-_SK_Slovak.pdf" target="_blank" rel="noopener">EU Official Journal</a></td><td>Official Journal C 2023/1032, Slovak edition. Made with PDFlib, with many objects per page</td><td>7</td><td>478</td><td>545 KB</td></tr>
           <tr><td><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_October_0074.pdf" target="_blank" rel="noopener">scanned newspaper</a></td><td>The New Orleans Bee, front page, October 1900. A scan: each page is one image</td><td>1</td><td>9</td><td>611 KB</td></tr>
+          <tr><td><a href="https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E5%88%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E7%89%B9%E5%AE%9A%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E4%BF%82%E3%82%8B%E7%AB%B6%E4%BA%89%E3%81%AE%E4%BF%83%E9%80%B2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E6%A1%88_%E6%96%B0%E6%97%A7%E5%AF%BE%E7%85%A7%E6%9D%A1%E6%96%87.pdf" target="_blank" rel="noopener">Japanese bill</a></td><td>Comparison table of a Japanese bill on smartphone software competition (Cabinet Secretariat). Born-digital tables with embedded Japanese fonts</td><td>14</td><td>65</td><td>135 KB</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="bench-head">
         <h3 class="bench-title">Peak memory</h3>
-        <div class="modes" role="group" aria-label="Input PDF" data-group="chart"><button type="button" data-fixture="public-17" aria-pressed="true">Regulation</button><button type="button" data-fixture="public-13" aria-pressed="false">Journal</button><button type="button" data-fixture="public-24" aria-pressed="false">Newspaper</button></div>
+        <div class="modes" role="group" aria-label="Input PDF" data-group="chart"><button type="button" data-fixture="public-17" aria-pressed="true">Regulation</button><button type="button" data-fixture="public-13" aria-pressed="false">Journal</button><button type="button" data-fixture="public-24" aria-pressed="false">Newspaper</button><button type="button" data-fixture="ja-01" aria-pressed="false">Japanese bill</button></div>
       </div>
       <p class="bench-lede">The x axis is the number of files. nori's line barely moves while the input grows 200-fold. lopdf's line stops where the next step would not fit in the machine's memory.</p>
       <div class="chart-sheet">
@@ -447,11 +448,61 @@
 </svg>
         <figcaption>A scan with one image per page. With so few objects even qpdf's memory grows slowly, yet at 2,000 files nori used 5.4 MB against qpdf's 57 MB, and lopdf 1.3 GB at 1,000.</figcaption>
       </figure>
+      <figure class="chart-figure" data-fixture="ja-01" hidden>
+<svg class="chart" viewBox="0 0 640 380" role="img" aria-labelledby="chart-ja-01-title">
+<title id="chart-ja-01-title">Peak memory: Japanese bill</title>
+<line x1="72" y1="285.1" x2="490" y2="285.1" stroke="var(--rule-light)"/>
+<text x="62" y="289.1" text-anchor="end" class="tick">250 MB</text>
+<line x1="72" y1="242.3" x2="490" y2="242.3" stroke="var(--rule-light)"/>
+<text x="62" y="246.3" text-anchor="end" class="tick">500 MB</text>
+<line x1="72" y1="199.4" x2="490" y2="199.4" stroke="var(--rule-light)"/>
+<text x="62" y="203.4" text-anchor="end" class="tick">750 MB</text>
+<line x1="72" y1="156.6" x2="490" y2="156.6" stroke="var(--rule-light)"/>
+<text x="62" y="160.6" text-anchor="end" class="tick">1000 MB</text>
+<line x1="72" y1="113.7" x2="490" y2="113.7" stroke="var(--rule-light)"/>
+<text x="62" y="117.7" text-anchor="end" class="tick">1250 MB</text>
+<line x1="72" y1="70.9" x2="490" y2="70.9" stroke="var(--rule-light)"/>
+<text x="62" y="74.9" text-anchor="end" class="tick">1500 MB</text>
+<line x1="72" y1="28.0" x2="490" y2="28.0" stroke="var(--rule-light)"/>
+<text x="62" y="32.0" text-anchor="end" class="tick">1750 MB</text>
+<line x1="72" y1="328" x2="490" y2="328" stroke="var(--rule)"/>
+<text x="72.0" y="352" text-anchor="middle" class="tick">10</text>
+<text x="211.3" y="352" text-anchor="middle" class="tick">100</text>
+<text x="350.7" y="352" text-anchor="middle" class="tick">1,000</text>
+<text x="490.0" y="352" text-anchor="middle" class="tick">2,000</text>
+<text x="281.0" y="374" text-anchor="middle" class="tick">files</text>
+<polyline points="72.0,327.5 211.3,327.3 350.7,327.0 490.0,326.6" fill="none" stroke="var(--nori)" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="327.5" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="327.3" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="327.0" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="326.6" r="4" fill="var(--nori)"/>
+<polyline points="72.0,326.9 211.3,326.7 350.7,326.3 490.0,326.0" fill="none" stroke="var(--nori)" stroke-width="2" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.9" r="4" fill="var(--nori)"/>
+<circle cx="211.3" cy="326.7" r="4" fill="var(--nori)"/>
+<circle cx="350.7" cy="326.3" r="4" fill="var(--nori)"/>
+<circle cx="490.0" cy="326.0" r="4" fill="var(--nori)"/>
+<polyline points="72.0,326.8 211.3,321.5 350.7,268.9 490.0,210.3" fill="none" stroke="var(--ink-soft)" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.8" r="4" fill="var(--ink-soft)"/>
+<circle cx="211.3" cy="321.5" r="4" fill="var(--ink-soft)"/>
+<circle cx="350.7" cy="268.9" r="4" fill="var(--ink-soft)"/>
+<circle cx="490.0" cy="210.3" r="4" fill="var(--ink-soft)"/>
+<polyline points="72.0,326.5 211.3,314.5 350.7,195.4 490.0,66.8" fill="none" stroke="var(--ink-faint)" stroke-width="2.5" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<circle cx="72.0" cy="326.5" r="4" fill="var(--ink-faint)"/>
+<circle cx="211.3" cy="314.5" r="4" fill="var(--ink-faint)"/>
+<circle cx="350.7" cy="195.4" r="4" fill="var(--ink-faint)"/>
+<circle cx="490.0" cy="66.8" r="4" fill="var(--ink-faint)"/>
+<text x="500.0" y="326.0" class="label" fill="var(--nori)" font-weight="700">nori 8.0 MB</text>
+<text x="500.0" y="308.0" class="label" fill="var(--nori)">nori -j6 11.5 MB</text>
+<text x="500.0" y="214.3" class="label" fill="var(--ink-soft)">qpdf 686.4 MB</text>
+<text x="500.0" y="70.8" class="label" fill="var(--ink-faint)">lopdf 1.52 GB</text>
+</svg>
+        <figcaption>Tables of a bill, made with JUST PDF and carrying MS Mincho subsets. qpdf and lopdf grow with the number of inputs; nori is at 8 MB for 2,000 files (28,000 pages).</figcaption>
+      </figure>
       </div>
 
       <div class="bench-head">
         <h3 class="bench-title">Time</h3>
-        <div class="modes" role="group" aria-label="Input PDF (time)" data-group="time"><button type="button" data-fixture="public-17" aria-pressed="true">Regulation</button><button type="button" data-fixture="public-13" aria-pressed="false">Journal</button><button type="button" data-fixture="public-24" aria-pressed="false">Newspaper</button></div>
+        <div class="modes" role="group" aria-label="Input PDF (time)" data-group="time"><button type="button" data-fixture="public-17" aria-pressed="true">Regulation</button><button type="button" data-fixture="public-13" aria-pressed="false">Journal</button><button type="button" data-fixture="public-24" aria-pressed="false">Newspaper</button><button type="button" data-fixture="ja-01" aria-pressed="false">Japanese bill</button></div>
       </div>
       <p class="bench-lede">Bars are relative to the slowest tool at each file count. The number on the right is how many times faster nori was than qpdf.</p>
       <ul class="bench" data-fixture="public-17">
@@ -580,10 +631,52 @@
           <p class="bench-ratio"><span class="visually-hidden">nori 1.53 s, nori -j6 1.41 s, qpdf 2.60 s. </span>1.7×<small>vs qpdf</small></p>
         </li>
       </ul>
+      <ul class="bench" data-fixture="ja-01" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> files<span>140 pages</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>20 ms</b></span><div class="bar-fill" style="--w: 40.24%"></div></div>
+            <div class="bar bar-norij6"><span>nori -j6 <b>18 ms</b></span><div class="bar-fill" style="--w: 35.54%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>50 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>28 ms</b></span><div class="bar-fill" style="--w: 57.44%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 20 ms, nori -j6 18 ms, qpdf 50 ms, lopdf 28 ms. </span>2.5×<small>vs qpdf</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> files<span>1,400 pages</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>77 ms</b></span><div class="bar-fill" style="--w: 27.17%"></div></div>
+            <div class="bar bar-norij6"><span>nori -j6 <b>66 ms</b></span><div class="bar-fill" style="--w: 23.21%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>284 ms</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>183 ms</b></span><div class="bar-fill" style="--w: 64.41%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 77 ms, nori -j6 66 ms, qpdf 284 ms, lopdf 183 ms. </span>3.7×<small>vs qpdf</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> files<span>14,000 pages</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>711 ms</b></span><div class="bar-fill" style="--w: 18.58%"></div></div>
+            <div class="bar bar-norij6"><span>nori -j6 <b>406 ms</b></span><div class="bar-fill" style="--w: 10.60%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>3.83 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>2.59 s</b></span><div class="bar-fill" style="--w: 67.76%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 711 ms, nori -j6 406 ms, qpdf 3.83 s, lopdf 2.59 s. </span>5.4×<small>vs qpdf</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> files<span>28,000 pages</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>1.28 s</b></span><div class="bar-fill" style="--w: 17.01%"></div></div>
+            <div class="bar bar-norij6"><span>nori -j6 <b>775 ms</b></span><div class="bar-fill" style="--w: 10.29%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>7.53 s</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>7.47 s</b></span><div class="bar-fill" style="--w: 99.28%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 1.28 s, nori -j6 775 ms, qpdf 7.53 s, lopdf 7.47 s. </span>5.9×<small>vs qpdf</small></p>
+        </li>
+      </ul>
 
       <div class="bench-head">
         <h3 class="bench-title">Peak memory</h3>
-        <div class="modes" role="group" aria-label="Input PDF (memory)" data-group="memory"><button type="button" data-fixture="public-17" aria-pressed="true">Regulation</button><button type="button" data-fixture="public-13" aria-pressed="false">Journal</button><button type="button" data-fixture="public-24" aria-pressed="false">Newspaper</button></div>
+        <div class="modes" role="group" aria-label="Input PDF (memory)" data-group="memory"><button type="button" data-fixture="public-17" aria-pressed="true">Regulation</button><button type="button" data-fixture="public-13" aria-pressed="false">Journal</button><button type="button" data-fixture="public-24" aria-pressed="false">Newspaper</button><button type="button" data-fixture="ja-01" aria-pressed="false">Japanese bill</button></div>
       </div>
       <p class="bench-lede">Bars are relative to the tool using the most memory at each file count. The number on the right is nori's memory as a fraction of qpdf's.</p>
       <ul class="bench" data-fixture="public-17">
@@ -712,18 +805,61 @@
           <p class="bench-ratio"><span class="visually-hidden">nori 5.4 MB, nori -j6 11.8 MB, qpdf 56.7 MB. </span>1/11<small>of qpdf</small></p>
         </li>
       </ul>
+      <ul class="bench" data-fixture="ja-01" hidden>
+        <li class="bench-row">
+          <p class="bench-name"><b>10</b> files<span>140 pages</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>2.8 MB</b></span><div class="bar-fill" style="--w: 32.96%"></div></div>
+            <div class="bar bar-norij6"><span>nori -j6 <b>6.4 MB</b></span><div class="bar-fill" style="--w: 75.36%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>7.1 MB</b></span><div class="bar-fill" style="--w: 82.87%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>8.5 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 2.8 MB, nori -j6 6.4 MB, qpdf 7.1 MB, lopdf 8.5 MB. </span>40%<small>of qpdf</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>100</b> files<span>1,400 pages</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>4.4 MB</b></span><div class="bar-fill" style="--w: 5.54%"></div></div>
+            <div class="bar bar-norij6"><span>nori -j6 <b>7.9 MB</b></span><div class="bar-fill" style="--w: 9.97%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>38.0 MB</b></span><div class="bar-fill" style="--w: 48.19%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>78.8 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 4.4 MB, nori -j6 7.9 MB, qpdf 38.0 MB, lopdf 78.8 MB. </span>11%<small>of qpdf</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>1,000</b> files<span>14,000 pages</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>5.7 MB</b></span><div class="bar-fill" style="--w: 0.74%"></div></div>
+            <div class="bar bar-norij6"><span>nori -j6 <b>10.2 MB</b></span><div class="bar-fill" style="--w: 1.32%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>344.5 MB</b></span><div class="bar-fill" style="--w: 44.54%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>773.4 MB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 5.7 MB, nori -j6 10.2 MB, qpdf 344.5 MB, lopdf 773.4 MB. </span>1/60<small>of qpdf</small></p>
+        </li>
+        <li class="bench-row">
+          <p class="bench-name"><b>2,000</b> files<span>28,000 pages</span></p>
+          <div class="bench-bars" aria-hidden="true">
+            <div class="bar bar-nori"><span>nori <b>8.0 MB</b></span><div class="bar-fill" style="--w: 0.53%"></div></div>
+            <div class="bar bar-norij6"><span>nori -j6 <b>11.5 MB</b></span><div class="bar-fill" style="--w: 0.75%"></div></div>
+            <div class="bar bar-qpdf"><span>qpdf <b>686.4 MB</b></span><div class="bar-fill" style="--w: 45.04%"></div></div>
+            <div class="bar bar-lopdf"><span>lopdf <b>1.52 GB</b></span><div class="bar-fill" style="--w: 100.00%"></div></div>
+          </div>
+          <p class="bench-ratio"><span class="visually-hidden">nori 8.0 MB, nori -j6 11.5 MB, qpdf 686.4 MB, lopdf 1.52 GB. </span>1/86<small>of qpdf</small></p>
+        </li>
+      </ul>
 
       <ul class="bench-notes">
         <li><strong>With few objects per file, both speed and memory differ by orders of magnitude</strong><span>Merging 2,000 copies of the UK regulation (8,000 pages) took nori 1.12 s and 5.7 MB, qpdf 5.9 s and 423 MB, lopdf 3.6 s and 695 MB. nori's memory barely moved from the 1.8 MB it used for 10 files.</span></li>
         <li><strong>With many objects per file, memory still stays flat</strong><span>The EU journal has 478 objects per file and takes longer to parse. nori is still 2.9 times faster than qpdf, 4.5 times with <code>-j6</code>. At 2,000 files nori used 16 MB and qpdf 2 GB.</span></li>
         <li><strong>With scanned images, the gap in time narrows</strong><span>The scanned newspaper has 9 objects per page, so merging is mostly copying image data. For 2,000 files (1.2 GB) nori took 1.53 s and qpdf 2.60 s, only 1.7 times apart, but memory was 5.4 MB for nori, 57 MB for qpdf and 1.3 GB for lopdf at 1,000 files.</span></li>
+        <li><strong>CJK documents behave the same</strong><span>The Japanese bill (made with JUST PDF, with MS Mincho subsets embedded, 14 pages) merged 2,000 times (28,000 pages) took nori 1.28 s and 8 MB, qpdf 7.5 s and 686 MB, lopdf 7.5 s and 1.5 GB.</span></li>
         <li><strong>lopdf is not slow; the merge code is the problem</strong><span>nori itself parses inputs with lopdf. The README's merge code gathers every input into one <code>Document</code> and saves at the end, so memory grows with the total input. Objects no page refers to stay in the output, which makes it a little larger.</span></li>
       </ul>
 
       <div class="bench-head">
-        <h3 class="bench-title">Merging PDFs of every make, once</h3>
+        <h3 class="bench-title">PDFs of every make from all over Commons, merged once</h3>
       </div>
-      <p class="bench-lede">40 PDFs picked at random from Wikimedia Commons (277 pages, 33.8 MB in all) merged in one go, in name order: official journals, regulations, scanned newspapers and notebooks, Internet Archive books, from many producers and decades.</p>
+      <p class="bench-lede">40 PDFs picked at random from all of Wikimedia Commons (277 pages, 33.8 MB in all) merged in one go, in name order: official journals, regulations, scanned newspapers and notebooks, Internet Archive books, from many producers, languages and decades.</p>
       <div class="table-scroll">
         <table class="corpus">
           <thead><tr><th></th><th>nori</th><th>nori -j6</th><th>qpdf</th><th>lopdf</th></tr></thead>
@@ -739,46 +875,89 @@
         <summary>The PDFs that were merged</summary>
         <div class="method-body">
           <ol class="corpus-files">
-            <li><a href="https://commons.wikimedia.org/wiki/File:Patryota._1831,_nr_41_(14_Stycznia)_(IA_dlibra.kul_pl.40296_patriota-41).pdf" target="_blank" rel="noopener">Patryota. 1831, nr 41 (14 Stycznia) (IA dlibra.kul pl.40296 patriota-41).pdf</a><span>4 pages · 196 objects · 1.7 MB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:List_of_Public_Institutions_and_of_Persons_who_have_contributed_to_the_Society%27s_Library,_etc._since_the_last_Anniversary_(IA_paper-doi-10_1093_mnras_13_4_139).pdf" target="_blank" rel="noopener">List of Public Institutions and of Persons who have contributed to the Society's Library, etc. since the last Anniversary (IA paper-doi-10 1093 mnras 13 4 139).pdf</a><span>2 pages · 24 objects · 115 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202502725_of_2025_-_HU_Hungarian.pdf" target="_blank" rel="noopener">OJ C 202502725 of 2025 - HU Hungarian.pdf</a><span>1 pages · 91 objects · 337 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_392_of_2012_-_CS_Czech.pdf" target="_blank" rel="noopener">OJ C 392 of 2012 - CS Czech.pdf</a><span>20 pages · 602 objects · 1.9 MB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202301176_of_2023_-_IT_Italian.pdf" target="_blank" rel="noopener">OJ C 202301176 of 2023 - IT Italian.pdf</a><span>1 pages · 84 objects · 869 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1878_June_0050.pdf" target="_blank" rel="noopener">The New Orleans Bee 1878 June 0050.pdf</a><span>1 pages · 9 objects · 643 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:Comment_on_fonde_une_m%C3%A9thode_(electronic_resource)_-_conf%C3%A9rence_faite_sous_la_pr%C3%A9sidence_du_professeur_Pinard_(IA_b20417226).pdf" target="_blank" rel="noopener">Comment on fonde une méthode (electronic resource) - conférence faite sous la présidence du professeur Pinard (IA b20417226).pdf</a><span>36 pages · 193 objects · 1.4 MB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:Approved_jurisdictional_determination_form_-_USACE-p16021coll15-902.pdf" target="_blank" rel="noopener">Approved jurisdictional determination form - USACE-p16021coll15-902.pdf</a><span>8 pages · 712 objects · 985 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:Regulation_(EEC)_No_646-74_of_the_Commission_of_22_March_1974_amending_for_the_third_time_Regulation_(EEC)_No_320-73_as_regards_the_determination_of_the_price_of_adult_bovine_animals_on_the_representative_markets_(EUR_1974-646).pdf" target="_blank" rel="noopener">Regulation (EEC) No 646-74 of the Commission of 22 March 1974 amending for the third time Regulation (EEC) No 320-73 as regards the determination of the price of adult bovine animals on the representative markets (EUR 1974-646).pdf</a><span>1 pages · 25 objects · 161 KB · OGL 3</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:NLC404-01J001382-18584_%E5%8C%97%E5%B9%B3%E7%94%9F%E6%B4%BB%E8%B2%BB%E6%8C%87%E6%95%B8%E6%9C%88%E5%A0%B1_1934%E5%B9%B46%E5%8D%B75%E6%9C%9F.pdf" target="_blank" rel="noopener">NLC404-01J001382-18584 北平生活費指數月報 1934年6卷5期.pdf</a><span>4 pages · 25 objects · 73 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202503515_of_2025_-_BG_Bulgarian.pdf" target="_blank" rel="noopener">OJ C 202503515 of 2025 - BG Bulgarian.pdf</a><span>1 pages · 112 objects · 560 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_L_315_of_2014_-_RO_Romanian.pdf" target="_blank" rel="noopener">OJ L 315 of 2014 - RO Romanian.pdf</a><span>56 pages · 509 objects · 1.4 MB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202301032_of_2023_-_SK_Slovak.pdf" target="_blank" rel="noopener">OJ C 202301032 of 2023 - SK Slovak.pdf</a><span>7 pages · 478 objects · 545 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:(untitled)_The_North_American_Review,_(1861-07-01),_pages_266-270_(IA_jstor-25100036).pdf" target="_blank" rel="noopener">(untitled) The North American Review, (1861-07-01), pages 266-270 (IA jstor-25100036).pdf</a><span>5 pages · 39 objects · 530 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1907_October_0042.pdf" target="_blank" rel="noopener">The New Orleans Bee 1907 October 0042.pdf</a><span>1 pages · 9 objects · 543 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202401930_of_2024_-_SK_Slovak.pdf" target="_blank" rel="noopener">OJ C 202401930 of 2024 - SK Slovak.pdf</a><span>1 pages · 214 objects · 453 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_Organic_Products_(Amendment)_Regulations_2015_(UKSI_2015-1669_qp).pdf" target="_blank" rel="noopener">The Organic Products (Amendment) Regulations 2015 (UKSI 2015-1669 qp).pdf</a><span>4 pages · 36 objects · 39 KB · OGL 3</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6_%E0%A6%97%E0%A7%87%E0%A6%9C%E0%A7%87%E0%A6%9F,_%E0%A6%85%E0%A6%A4%E0%A6%BF%E0%A6%B0%E0%A6%BF%E0%A6%95%E0%A7%8D%E0%A6%A4,_%E0%A7%A7%E0%A7%AF%E0%A7%AE%E0%A7%AE-%E0%A7%A6%E0%A7%AD-%E0%A7%A6%E0%A7%A7_-_%E0%A6%85%E0%A6%B0%E0%A7%8D%E0%A6%A5_%E0%A6%AE%E0%A6%A8%E0%A7%8D%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A6%A3%E0%A6%BE%E0%A6%B2%E0%A6%AF%E0%A6%BC_(%E0%A7%A8).pdf" target="_blank" rel="noopener">বাংলাদেশ গেজেট, অতিরিক্ত, ১৯৮৮-০৭-০১ - অর্থ মন্ত্রণালয় (২).pdf</a><span>1 pages · 9 objects · 87 KB · EdictGov-Bangladesh</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_L_202500271_of_2025_-_DE_German.pdf" target="_blank" rel="noopener">OJ L 202500271 of 2025 - DE German.pdf</a><span>1 pages · 78 objects · 874 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1870_May_0067.pdf" target="_blank" rel="noopener">The New Orleans Bee 1870 May 0067.pdf</a><span>1 pages · 9 objects · 784 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_A470_Trunk_Road_(Moat_Lane_Level_Crossing,_Nr._Caersws,_Powys)_(Temporary_Prohibition_of_Vehicles)_Order_2011_(WSI_2011-737_we).pdf" target="_blank" rel="noopener">The A470 Trunk Road (Moat Lane Level Crossing, Nr. Caersws, Powys) (Temporary Prohibition of Vehicles) Order 2011 (WSI 2011-737 we).pdf</a><span>2 pages · 33 objects · 90 KB · OGL 3</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:104-10185-10004_(November_9,_2017_Release).pdf" target="_blank" rel="noopener">104-10185-10004 (November 9, 2017 Release).pdf</a><span>2 pages · 12 objects · 73 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_Hovercraft_(Fees)_Regulations_1978_(UKSI_1978-483).pdf" target="_blank" rel="noopener">The Hovercraft (Fees) Regulations 1978 (UKSI 1978-483).pdf</a><span>8 pages · 90 objects · 1.7 MB · OGL 3</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_October_0074.pdf" target="_blank" rel="noopener">The New Orleans Bee 1900 October 0074.pdf</a><span>1 pages · 9 objects · 611 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1901_February_0119.pdf" target="_blank" rel="noopener">The New Orleans Bee 1901 February 0119.pdf</a><span>1 pages · 9 objects · 412 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_Pollution_Prevention_and_Control_(England_and_Wales)_(Amendment)_Regulations_2003_(UKSI_2003-1699_qp).pdf" target="_blank" rel="noopener">The Pollution Prevention and Control (England and Wales) (Amendment) Regulations 2003 (UKSI 2003-1699 qp).pdf</a><span>2 pages · 46 objects · 38 KB · OGL 3</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_January_0125.pdf" target="_blank" rel="noopener">The New Orleans Bee 1900 January 0125.pdf</a><span>1 pages · 9 objects · 525 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202403571_of_2024_-_ET_Estonian.pdf" target="_blank" rel="noopener">OJ C 202403571 of 2024 - ET Estonian.pdf</a><span>1 pages · 107 objects · 559 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:Een_wonderlijcke_history_vand%C4%93_wachtmeester_tot_Calkar_THYSPF_1092.pdf" target="_blank" rel="noopener">Een wonderlijcke history vandē wachtmeester tot Calkar THYSPF 1092.pdf</a><span>9 pages · 59 objects · 2.9 MB · CC BY 4.0</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:CNTS-00048003805_28_%E5%A4%A7%E9%99%B8%E7%A7%91%E5%AD%B8%E9%99%A2%E7%A1%8F%E7%A9%B6%E5%A0%B1%E5%91%8A._%E7%AC%AC1-5%E5%8D%B7.pdf" target="_blank" rel="noopener">CNTS-00048003805 28 大陸科學院硏究報告. 第1-5卷.pdf</a><span>18 pages · 59 objects · 1.8 MB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:Commission_Regulation_(EEC)_No_2438-83_of_29_August_1983_altering_the_rates_of_the_refunds_applicable_to_certain_products_from_the_sugar_sector_exported_in_the_form_of_goods_not_covered_by_Annex_II_to_the_Treaty_(EUR_1983-2438).pdf" target="_blank" rel="noopener">Commission Regulation (EEC) No 2438-83 of 29 August 1983 altering the rates of the refunds applicable to certain products from the sugar sector exported in the form of goods not covered by Annex II to the Treaty (EUR 1983-2438).pdf</a><span>2 pages · 34 objects · 179 KB · OGL 3</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:NCL-15308-0015_%E7%93%B6%E5%8F%B2.pdf" target="_blank" rel="noopener">NCL-15308-0015 瓶史.pdf</a><span>12 pages · 41 objects · 2.5 MB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202403844_of_2024_-_LT_Lithuanian.pdf" target="_blank" rel="noopener">OJ C 202403844 of 2024 - LT Lithuanian.pdf</a><span>2 pages · 528 objects · 497 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_L_202401830_of_2024_-_MT_Maltese.pdf" target="_blank" rel="noopener">OJ L 202401830 of 2024 - MT Maltese.pdf</a><span>2 pages · 214 objects · 899 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:RL33655_(IA_RL33655-crs).pdf" target="_blank" rel="noopener">RL33655 (IA RL33655-crs).pdf</a><span>19 pages · 123 objects · 322 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1917_February_0056.pdf" target="_blank" rel="noopener">The New Orleans Bee 1917 February 0056.pdf</a><span>1 pages · 9 objects · 477 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:Newspaper_clipping_about_the_son_of_Mrs._D._C._Lockey_published_March_11,_1886_-_DPLA_-_6e2280c3646c329672f834762f9fba92.pdf" target="_blank" rel="noopener">Newspaper clipping about the son of Mrs. D. C. Lockey published March 11, 1886 - DPLA - 6e2280c3646c329672f834762f9fba92.pdf</a><span>1 pages · 14 objects · 25 KB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:Carta_de_(Francisco_de_Paula_Rodrigues_Alves_Filho),_secret%C3%A1rio_da_Presid%C3%AAncia_da_Rep%C3%BAblica_para_Juca_comunicando_que_com_a_ida_do_pai_a_Minas,_(Jos%C3%A9_(...),_Arquivo_Nacional_(BR_RJANRIO_ON.0.COR.28-2).pdf" target="_blank" rel="noopener">Carta de (Francisco de Paula Rodrigues Alves Filho), secretário da Presidência da República para Juca comunicando que com a ida do pai a Minas, (José (...), Arquivo Nacional (BR RJANRIO ON.0.COR.28-2).pdf</a><span>4 pages · 41 objects · 2.8 MB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:%D0%A6%D0%94%D0%90%D0%92%D0%9E_4-1-393_%D0%A2%D0%B8%D0%BC_%D0%9B%D1%83%D1%97%D0%B7%D0%B0_%D0%90%D0%BD%D1%82%D0%BE%D0%BD%D1%96%D0%B2%D0%BD%D0%B0_(1922).pdf" target="_blank" rel="noopener">ЦДАВО 4-1-393 Тим Луїза Антонівна (1922).pdf</a><span>13 pages · 44 objects · 2.6 MB · Public domain</span></li>
-            <li><a href="https://commons.wikimedia.org/wiki/File:Alabama_Baptist_State_Convention_Annual_Reports_1827_(IA_alabamabaptistst1827alab).pdf" target="_blank" rel="noopener">Alabama Baptist State Convention Annual Reports 1827 (IA alabamabaptistst1827alab).pdf</a><span>20 pages · 106 objects · 887 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Patryota._1831,_nr_41_(14_Stycznia)_(IA_dlibra.kul_pl.40296_patriota-41).pdf" target="_blank" rel="noopener">Patryota. 1831, nr 41 (14 Stycznia) (IA dlibra.kul pl.40296 patriota-41)</a><span>4 pages · 196 objects · 1.7 MB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:List_of_Public_Institutions_and_of_Persons_who_have_contributed_to_the_Society%27s_Library,_etc._since_the_last_Anniversary_(IA_paper-doi-10_1093_mnras_13_4_139).pdf" target="_blank" rel="noopener">List of Public Institutions and of Persons who have contributed to the Society's Library, etc. since the last Anniversary (IA paper-doi-10 1093 mnras 13 4 139)</a><span>2 pages · 24 objects · 115 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202502725_of_2025_-_HU_Hungarian.pdf" target="_blank" rel="noopener">OJ C 202502725 of 2025 - HU Hungarian</a><span>1 pages · 91 objects · 337 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_392_of_2012_-_CS_Czech.pdf" target="_blank" rel="noopener">OJ C 392 of 2012 - CS Czech</a><span>20 pages · 602 objects · 1.9 MB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202301176_of_2023_-_IT_Italian.pdf" target="_blank" rel="noopener">OJ C 202301176 of 2023 - IT Italian</a><span>1 pages · 84 objects · 869 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1878_June_0050.pdf" target="_blank" rel="noopener">The New Orleans Bee 1878 June 0050</a><span>1 pages · 9 objects · 643 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Comment_on_fonde_une_m%C3%A9thode_(electronic_resource)_-_conf%C3%A9rence_faite_sous_la_pr%C3%A9sidence_du_professeur_Pinard_(IA_b20417226).pdf" target="_blank" rel="noopener">Comment on fonde une méthode (electronic resource) - conférence faite sous la présidence du professeur Pinard (IA b20417226)</a><span>36 pages · 193 objects · 1.4 MB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Approved_jurisdictional_determination_form_-_USACE-p16021coll15-902.pdf" target="_blank" rel="noopener">Approved jurisdictional determination form - USACE-p16021coll15-902</a><span>8 pages · 712 objects · 985 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Regulation_(EEC)_No_646-74_of_the_Commission_of_22_March_1974_amending_for_the_third_time_Regulation_(EEC)_No_320-73_as_regards_the_determination_of_the_price_of_adult_bovine_animals_on_the_representative_markets_(EUR_1974-646).pdf" target="_blank" rel="noopener">Regulation (EEC) No 646-74 of the Commission of 22 March 1974 amending for the third time Regulation (EEC) No 320-73 as regards the determination of the price of adult bovine animals on the representative markets (EUR 1974-646)</a><span>1 pages · 25 objects · 161 KB · OGL 3</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:NLC404-01J001382-18584_%E5%8C%97%E5%B9%B3%E7%94%9F%E6%B4%BB%E8%B2%BB%E6%8C%87%E6%95%B8%E6%9C%88%E5%A0%B1_1934%E5%B9%B46%E5%8D%B75%E6%9C%9F.pdf" target="_blank" rel="noopener">NLC404-01J001382-18584 北平生活費指數月報 1934年6卷5期</a><span>4 pages · 25 objects · 73 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202503515_of_2025_-_BG_Bulgarian.pdf" target="_blank" rel="noopener">OJ C 202503515 of 2025 - BG Bulgarian</a><span>1 pages · 112 objects · 560 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_L_315_of_2014_-_RO_Romanian.pdf" target="_blank" rel="noopener">OJ L 315 of 2014 - RO Romanian</a><span>56 pages · 509 objects · 1.4 MB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202301032_of_2023_-_SK_Slovak.pdf" target="_blank" rel="noopener">OJ C 202301032 of 2023 - SK Slovak</a><span>7 pages · 478 objects · 545 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:(untitled)_The_North_American_Review,_(1861-07-01),_pages_266-270_(IA_jstor-25100036).pdf" target="_blank" rel="noopener">(untitled) The North American Review, (1861-07-01), pages 266-270 (IA jstor-25100036)</a><span>5 pages · 39 objects · 530 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1907_October_0042.pdf" target="_blank" rel="noopener">The New Orleans Bee 1907 October 0042</a><span>1 pages · 9 objects · 543 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202401930_of_2024_-_SK_Slovak.pdf" target="_blank" rel="noopener">OJ C 202401930 of 2024 - SK Slovak</a><span>1 pages · 214 objects · 453 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_Organic_Products_(Amendment)_Regulations_2015_(UKSI_2015-1669_qp).pdf" target="_blank" rel="noopener">The Organic Products (Amendment) Regulations 2015 (UKSI 2015-1669 qp)</a><span>4 pages · 36 objects · 39 KB · OGL 3</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6_%E0%A6%97%E0%A7%87%E0%A6%9C%E0%A7%87%E0%A6%9F,_%E0%A6%85%E0%A6%A4%E0%A6%BF%E0%A6%B0%E0%A6%BF%E0%A6%95%E0%A7%8D%E0%A6%A4,_%E0%A7%A7%E0%A7%AF%E0%A7%AE%E0%A7%AE-%E0%A7%A6%E0%A7%AD-%E0%A7%A6%E0%A7%A7_-_%E0%A6%85%E0%A6%B0%E0%A7%8D%E0%A6%A5_%E0%A6%AE%E0%A6%A8%E0%A7%8D%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A6%A3%E0%A6%BE%E0%A6%B2%E0%A6%AF%E0%A6%BC_(%E0%A7%A8).pdf" target="_blank" rel="noopener">বাংলাদেশ গেজেট, অতিরিক্ত, ১৯৮৮-০৭-০১ - অর্থ মন্ত্রণালয় (২)</a><span>1 pages · 9 objects · 87 KB · EdictGov-Bangladesh</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_L_202500271_of_2025_-_DE_German.pdf" target="_blank" rel="noopener">OJ L 202500271 of 2025 - DE German</a><span>1 pages · 78 objects · 874 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1870_May_0067.pdf" target="_blank" rel="noopener">The New Orleans Bee 1870 May 0067</a><span>1 pages · 9 objects · 784 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_A470_Trunk_Road_(Moat_Lane_Level_Crossing,_Nr._Caersws,_Powys)_(Temporary_Prohibition_of_Vehicles)_Order_2011_(WSI_2011-737_we).pdf" target="_blank" rel="noopener">The A470 Trunk Road (Moat Lane Level Crossing, Nr. Caersws, Powys) (Temporary Prohibition of Vehicles) Order 2011 (WSI 2011-737 we)</a><span>2 pages · 33 objects · 90 KB · OGL 3</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:104-10185-10004_(November_9,_2017_Release).pdf" target="_blank" rel="noopener">104-10185-10004 (November 9, 2017 Release)</a><span>2 pages · 12 objects · 73 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_Hovercraft_(Fees)_Regulations_1978_(UKSI_1978-483).pdf" target="_blank" rel="noopener">The Hovercraft (Fees) Regulations 1978 (UKSI 1978-483)</a><span>8 pages · 90 objects · 1.7 MB · OGL 3</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_October_0074.pdf" target="_blank" rel="noopener">The New Orleans Bee 1900 October 0074</a><span>1 pages · 9 objects · 611 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1901_February_0119.pdf" target="_blank" rel="noopener">The New Orleans Bee 1901 February 0119</a><span>1 pages · 9 objects · 412 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_Pollution_Prevention_and_Control_(England_and_Wales)_(Amendment)_Regulations_2003_(UKSI_2003-1699_qp).pdf" target="_blank" rel="noopener">The Pollution Prevention and Control (England and Wales) (Amendment) Regulations 2003 (UKSI 2003-1699 qp)</a><span>2 pages · 46 objects · 38 KB · OGL 3</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_January_0125.pdf" target="_blank" rel="noopener">The New Orleans Bee 1900 January 0125</a><span>1 pages · 9 objects · 525 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202403571_of_2024_-_ET_Estonian.pdf" target="_blank" rel="noopener">OJ C 202403571 of 2024 - ET Estonian</a><span>1 pages · 107 objects · 559 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Een_wonderlijcke_history_vand%C4%93_wachtmeester_tot_Calkar_THYSPF_1092.pdf" target="_blank" rel="noopener">Een wonderlijcke history vandē wachtmeester tot Calkar THYSPF 1092</a><span>9 pages · 59 objects · 2.9 MB · CC BY 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:CNTS-00048003805_28_%E5%A4%A7%E9%99%B8%E7%A7%91%E5%AD%B8%E9%99%A2%E7%A1%8F%E7%A9%B6%E5%A0%B1%E5%91%8A._%E7%AC%AC1-5%E5%8D%B7.pdf" target="_blank" rel="noopener">CNTS-00048003805 28 大陸科學院硏究報告. 第1-5卷</a><span>18 pages · 59 objects · 1.8 MB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Commission_Regulation_(EEC)_No_2438-83_of_29_August_1983_altering_the_rates_of_the_refunds_applicable_to_certain_products_from_the_sugar_sector_exported_in_the_form_of_goods_not_covered_by_Annex_II_to_the_Treaty_(EUR_1983-2438).pdf" target="_blank" rel="noopener">Commission Regulation (EEC) No 2438-83 of 29 August 1983 altering the rates of the refunds applicable to certain products from the sugar sector exported in the form of goods not covered by Annex II to the Treaty (EUR 1983-2438)</a><span>2 pages · 34 objects · 179 KB · OGL 3</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:NCL-15308-0015_%E7%93%B6%E5%8F%B2.pdf" target="_blank" rel="noopener">NCL-15308-0015 瓶史</a><span>12 pages · 41 objects · 2.5 MB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_C_202403844_of_2024_-_LT_Lithuanian.pdf" target="_blank" rel="noopener">OJ C 202403844 of 2024 - LT Lithuanian</a><span>2 pages · 528 objects · 497 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:OJ_L_202401830_of_2024_-_MT_Maltese.pdf" target="_blank" rel="noopener">OJ L 202401830 of 2024 - MT Maltese</a><span>2 pages · 214 objects · 899 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:RL33655_(IA_RL33655-crs).pdf" target="_blank" rel="noopener">RL33655 (IA RL33655-crs)</a><span>19 pages · 123 objects · 322 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1917_February_0056.pdf" target="_blank" rel="noopener">The New Orleans Bee 1917 February 0056</a><span>1 pages · 9 objects · 477 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Newspaper_clipping_about_the_son_of_Mrs._D._C._Lockey_published_March_11,_1886_-_DPLA_-_6e2280c3646c329672f834762f9fba92.pdf" target="_blank" rel="noopener">Newspaper clipping about the son of Mrs. D. C. Lockey published March 11, 1886 - DPLA - 6e2280c3646c329672f834762f9fba92</a><span>1 pages · 14 objects · 25 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Carta_de_(Francisco_de_Paula_Rodrigues_Alves_Filho),_secret%C3%A1rio_da_Presid%C3%AAncia_da_Rep%C3%BAblica_para_Juca_comunicando_que_com_a_ida_do_pai_a_Minas,_(Jos%C3%A9_(...),_Arquivo_Nacional_(BR_RJANRIO_ON.0.COR.28-2).pdf" target="_blank" rel="noopener">Carta de (Francisco de Paula Rodrigues Alves Filho), secretário da Presidência da República para Juca comunicando que com a ida do pai a Minas, (José (...), Arquivo Nacional (BR RJANRIO ON.0.COR.28-2)</a><span>4 pages · 41 objects · 2.8 MB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%D0%A6%D0%94%D0%90%D0%92%D0%9E_4-1-393_%D0%A2%D0%B8%D0%BC_%D0%9B%D1%83%D1%97%D0%B7%D0%B0_%D0%90%D0%BD%D1%82%D0%BE%D0%BD%D1%96%D0%B2%D0%BD%D0%B0_(1922).pdf" target="_blank" rel="noopener">ЦДАВО 4-1-393 Тим Луїза Антонівна (1922)</a><span>13 pages · 44 objects · 2.6 MB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Alabama_Baptist_State_Convention_Annual_Reports_1827_(IA_alabamabaptistst1827alab).pdf" target="_blank" rel="noopener">Alabama Baptist State Convention Annual Reports 1827 (IA alabamabaptistst1827alab)</a><span>20 pages · 106 objects · 887 KB · Public domain</span></li>
+          </ol>
+        </div>
+      </details>
+
+      <div class="bench-head">
+        <h3 class="bench-title">Japanese PDFs, merged once</h3>
+      </div>
+      <p class="bench-lede">20 PDFs picked at random from Commons’ Japanese-language category (115 pages, 8.9 MB in all) merged in one go: government papers, laws, scanned notices, sheet music, Google Docs exports, from many producers.</p>
+      <div class="table-scroll">
+        <table class="corpus">
+          <thead><tr><th></th><th>nori</th><th>nori -j6</th><th>qpdf</th><th>lopdf</th></tr></thead>
+          <tbody>
+            <tr><th>Time</th><td>56 ms</td><td>43 ms</td><td>118 ms</td><td>87 ms</td></tr>
+            <tr><th>Peak memory</th><td>17.1 MB</td><td>21.7 MB</td><td>14.7 MB</td><td>39.7 MB</td></tr>
+            <tr><th>Output size</th><td>8.7 MB</td><td>8.7 MB</td><td>8.7 MB</td><td>8.9 MB</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bench-lede">All four tools produced a 115-page output that passes qpdf's check. nori took 56 ms, twice as fast as qpdf, in 17 MB, most of it for reading the largest input (a 2.6 MB scan). With only 20 files the gap to qpdf is smaller than in the scaling runs.</p>
+      <details class="method">
+        <summary>The PDFs that were merged</summary>
+        <div class="method-body">
+          <ol class="corpus-files">
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E5%88%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E7%89%B9%E5%AE%9A%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E4%BF%82%E3%82%8B%E7%AB%B6%E4%BA%89%E3%81%AE%E4%BF%83%E9%80%B2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E6%A1%88_%E6%96%B0%E6%97%A7%E5%AF%BE%E7%85%A7%E6%9D%A1%E6%96%87.pdf" target="_blank" rel="noopener">スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案 新旧対照条文</a><span>14 pages · 65 objects · 135 KB · CC BY 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:AV%E5%87%BA%E6%BC%94%E8%A2%AB%E5%AE%B3%E9%98%B2%E6%AD%A2%E3%83%BB%E6%95%91%E6%B8%88%E6%B3%95_%E6%A6%82%E8%A6%81.pdf" target="_blank" rel="noopener">AV出演被害防止・救済法 概要</a><span>1 pages · 690 objects · 391 KB · CC BY 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:GJSTU-2.0-ja.pdf" target="_blank" rel="noopener">GJSTU-2.0-ja</a><span>3 pages · 223 objects · 328 KB · CC BY 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:GJSTU-2.0_commentary.pdf" target="_blank" rel="noopener">GJSTU-2.0 commentary</a><span>9 pages · 521 objects · 443 KB · CC BY 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E4%BB%A4%E5%92%8C4%E5%B9%B41%E6%9C%8811%E6%97%A5%E4%BB%98%E5%BE%B4%E5%BE%B4%EF%BC%91%EF%BC%8D%EF%BC%93%E3%80%8C%E9%96%8B%E7%A4%BA%E6%B1%BA%E5%AE%9A%E7%AD%89%E3%81%AE%E6%9C%9F%E9%99%90%E3%81%AE%E5%BB%B6%E9%95%B7%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%EF%BC%88%E9%80%9A%E7%9F%A5%EF%BC%89%E3%80%8D.pdf" target="_blank" rel="noopener">令和4年1月11日付徴徴１－３「開示決定等の期限の延長について（通知）」</a><span>1 pages · 34 objects · 549 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E9%AB%98%E5%B8%82%E5%86%85%E9%96%A3_%E9%96%A3%E5%83%9A%E5%90%8D%E7%B0%BF.pdf" target="_blank" rel="noopener">高市内閣 閣僚名簿</a><span>1 pages · 39 objects · 136 KB · CC BY 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E8%AC%84%E6%9C%AC%26%E8%B3%87%E6%A0%BC%E8%A8%BC.pdf" target="_blank" rel="noopener">謄本&資格証</a><span>2 pages · 9 objects · 537 KB · CC BY-SA 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:2005_Mudai_Aikido_J.pdf" target="_blank" rel="noopener">2005 Mudai Aikido J</a><span>3 pages · 899 objects · 329 KB · CC BY-SA 3.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Donguri_korokoro_score.pdf" target="_blank" rel="noopener">Donguri korokoro score</a><span>1 pages · 11 objects · 142 KB · CC BY-SA 3.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E5%88%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E7%89%B9%E5%AE%9A%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E4%BF%82%E3%82%8B%E7%AB%B6%E4%BA%89%E3%81%AE%E4%BF%83%E9%80%B2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E6%A1%88_%E5%8F%82%E7%85%A7%E6%9D%A1%E6%96%87.pdf" target="_blank" rel="noopener">スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案 参照条文</a><span>35 pages · 135 objects · 282 KB · CC BY 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E6%95%99%E8%82%B2%E3%83%BB%E6%84%8F%E8%AD%98%E6%94%B9%E5%96%84%E8%BB%B8%E3%81%AE%E5%AE%9F%E8%A1%8C%E3%82%B9%E3%83%86%E3%83%83%E3%83%97.pdf" target="_blank" rel="noopener">教育・意識改善軸の実行ステップ</a><span>1 pages · 352 objects · 112 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E9%AB%98%E5%B8%82%E5%86%85%E9%96%A3_%E5%86%85%E9%96%A3%E7%B7%8F%E7%90%86%E5%A4%A7%E8%87%A3%E8%A3%9C%E4%BD%90%E5%AE%98%E5%90%8D%E7%B0%BF.pdf" target="_blank" rel="noopener">高市内閣 内閣総理大臣補佐官名簿</a><span>1 pages · 26 objects · 72 KB · CC BY 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E9%83%BD%E5%B8%82%E4%BC%8F%E8%A6%8B%E5%8C%BA%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E7%88%86%E7%99%BA%E7%81%AB%E7%81%BD%EF%BC%88%E7%AC%AC%EF%BC%95%E5%A0%B1%EF%BC%89.pdf" target="_blank" rel="noopener">京都府京都市伏見区で発生した爆発火災（第５報）</a><span>1 pages · 200 objects · 117 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:Documents_of_Patent_Hitachi_Koki_and_Maya_Kogyo.pdf" target="_blank" rel="noopener">Documents of Patent Hitachi Koki and Maya Kogyo</a><span>8 pages · 43 objects · 503 KB · CC BY-SA 3.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E6%B3%95%E5%BB%B7%E7%AD%89%E3%81%AE%E7%A7%A9%E5%BA%8F%E7%B6%AD%E6%8C%81%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E9%81%95%E5%8F%8D%E4%BA%8B%E4%BB%B6%E8%A8%98%E9%8C%B2%E7%AC%A6%E5%8F%B7%E8%A6%8F%E7%A8%8B.pdf" target="_blank" rel="noopener">法廷等の秩序維持に関する法律違反事件記録符号規程</a><span>1 pages · 17 objects · 85 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E3%83%A2%E3%83%90%E3%82%A4%E3%83%ABOS%E7%AD%89%E5%AE%9F%E6%85%8B%E8%AA%BF%E6%9F%BB%E5%A0%B1%E5%91%8A%E6%9B%B8%EF%BC%88%E6%A6%82%E8%A6%81%EF%BC%89.pdf" target="_blank" rel="noopener">モバイルOS等実態調査報告書（概要）</a><span>27 pages · 198 objects · 1.5 MB · CC BY 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E9%9B%B2%E6%B2%81%E9%9C%93%E6%92%95.pdf" target="_blank" rel="noopener">雲沁霓撕</a><span>1 pages · 28 objects · 38 KB · CC BY-SA 4.0</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%8A%E3%82%B4%E3%83%BB%E3%83%9E%E3%82%A2%E3%83%8A%E3%82%B4%E3%83%BB%E3%83%8F%E3%83%A2%E3%81%AE%E6%96%B9%E8%A8%80.pdf" target="_blank" rel="noopener">アナゴ・マアナゴ・ハモの方言</a><span>1 pages · 15 objects · 139 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E4%BB%A4%E5%92%8C4%E5%B9%B41%E6%9C%8811%E6%97%A5%E4%BB%98%E5%BE%B4%E5%BE%B4%EF%BC%91%EF%BC%8D%EF%BC%94%E3%80%8C%E9%96%8B%E7%A4%BA%E6%B1%BA%E5%AE%9A%E7%AD%89%E3%81%AE%E6%9C%9F%E9%99%90%E3%81%AE%E5%BB%B6%E9%95%B7%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%EF%BC%88%E9%80%9A%E7%9F%A5%EF%BC%89%E3%80%8D.pdf" target="_blank" rel="noopener">令和4年1月11日付徴徴１－４「開示決定等の期限の延長について（通知）」</a><span>1 pages · 27 objects · 563 KB · Public domain</span></li>
+            <li><a href="https://commons.wikimedia.org/wiki/File:%E4%B8%8A%E7%99%BD%E6%B2%B3%E4%BE%AF%E6%9B%B8.pdf" target="_blank" rel="noopener">上白河侯書</a><span>3 pages · 21 objects · 2.6 MB · Public domain</span></li>
           </ol>
         </div>
       </details>

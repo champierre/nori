@@ -11,6 +11,207 @@
   },
   "fixtures": [
     {
+      "name": "ja-01.pdf",
+      "bytes": 135372,
+      "pages": 14,
+      "objects": 65,
+      "source": {
+        "title": "File:スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案 新旧対照条文.pdf",
+        "page": "https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E5%88%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E7%89%B9%E5%AE%9A%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E4%BF%82%E3%82%8B%E7%AB%B6%E4%BA%89%E3%81%AE%E4%BF%83%E9%80%B2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E6%A1%88_%E6%96%B0%E6%97%A7%E5%AF%BE%E7%85%A7%E6%9D%A1%E6%96%87.pdf",
+        "license": "CC BY 4.0"
+      },
+      "cases": [
+        {
+          "count": 10,
+          "pages": 140,
+          "input_bytes": 1353720,
+          "tools": {
+            "nori": {
+              "time_s": 0.019923931977245957,
+              "time_min_s": 0.019766734971199185,
+              "time_max_s": 0.020312132022809237,
+              "rss_bytes": 2805760,
+              "rss_max_bytes": 3538944,
+              "output_bytes": 1346497,
+              "pages": 140,
+              "check_ok": true
+            },
+            "nori -j6": {
+              "time_s": 0.01759602304082364,
+              "time_min_s": 0.017241727968212217,
+              "time_max_s": 0.017741218965966254,
+              "rss_bytes": 6414336,
+              "rss_max_bytes": 6696960,
+              "output_bytes": 1346497,
+              "pages": 140,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.04951442900346592,
+              "time_min_s": 0.04852794302860275,
+              "time_max_s": 0.051531167002394795,
+              "rss_bytes": 7053312,
+              "rss_max_bytes": 7143424,
+              "output_bytes": 1346847,
+              "pages": 140,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.028442064998671412,
+              "time_min_s": 0.02676821796922013,
+              "time_max_s": 0.029508692969102412,
+              "rss_bytes": 8511488,
+              "rss_max_bytes": 8642560,
+              "output_bytes": 1341526,
+              "pages": 140,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 100,
+          "pages": 1400,
+          "input_bytes": 13537200,
+          "tools": {
+            "nori": {
+              "time_s": 0.07724029402015731,
+              "time_min_s": 0.07491715002106503,
+              "time_max_s": 0.07781539397547022,
+              "rss_bytes": 4362240,
+              "rss_max_bytes": 4493312,
+              "output_bytes": 13479286,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "nori -j6": {
+              "time_s": 0.06598212401149794,
+              "time_min_s": 0.05656795500544831,
+              "time_max_s": 0.10574856802122667,
+              "rss_bytes": 7852032,
+              "rss_max_bytes": 8310784,
+              "output_bytes": 13479286,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 0.28432483301730826,
+              "time_min_s": 0.28381081100087613,
+              "time_max_s": 0.29510324099101126,
+              "rss_bytes": 37953536,
+              "rss_max_bytes": 37978112,
+              "output_bytes": 13481227,
+              "pages": 1400,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 0.18313499400392175,
+              "time_min_s": 0.17991631204495206,
+              "time_max_s": 0.1990902980323881,
+              "rss_bytes": 78761984,
+              "rss_max_bytes": 79724544,
+              "output_bytes": 13426701,
+              "pages": 1400,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 1000,
+          "pages": 14000,
+          "input_bytes": 135372000,
+          "tools": {
+            "nori": {
+              "time_s": 0.7113919220282696,
+              "time_min_s": 0.6562868459732272,
+              "time_max_s": 0.745240131043829,
+              "rss_bytes": 5730304,
+              "rss_max_bytes": 6049792,
+              "output_bytes": 134962789,
+              "pages": 14000,
+              "check_ok": true
+            },
+            "nori -j6": {
+              "time_s": 0.4058735420112498,
+              "time_min_s": 0.37731957499636337,
+              "time_max_s": 0.4538347920170054,
+              "rss_bytes": 10186752,
+              "rss_max_bytes": 10383360,
+              "output_bytes": 134962789,
+              "pages": 14000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 3.8278523110202514,
+              "time_min_s": 3.7560746060335077,
+              "time_max_s": 3.9001437230035663,
+              "rss_bytes": 344485888,
+              "rss_max_bytes": 344522752,
+              "output_bytes": 134967137,
+              "pages": 14000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 2.5936632709926926,
+              "time_min_s": 2.572679524018895,
+              "time_max_s": 2.807370300986804,
+              "rss_bytes": 773369856,
+              "rss_max_bytes": 776368128,
+              "output_bytes": 134423185,
+              "pages": 14000,
+              "check_ok": true
+            }
+          }
+        },
+        {
+          "count": 2000,
+          "pages": 28000,
+          "input_bytes": 270744000,
+          "tools": {
+            "nori": {
+              "time_s": 1.2805622140294872,
+              "time_min_s": 1.2387354260426946,
+              "time_max_s": 1.6072588649694808,
+              "rss_bytes": 8007680,
+              "rss_max_bytes": 8245248,
+              "output_bytes": 270014861,
+              "pages": 28000,
+              "check_ok": true
+            },
+            "nori -j6": {
+              "time_s": 0.7746369249653071,
+              "time_min_s": 0.7448907810030505,
+              "time_max_s": 0.8498360239900649,
+              "rss_bytes": 11489280,
+              "rss_max_bytes": 11608064,
+              "output_bytes": 270014861,
+              "pages": 28000,
+              "check_ok": true
+            },
+            "qpdf": {
+              "time_s": 7.527440544043202,
+              "time_min_s": 7.314175199950114,
+              "time_max_s": 7.602560635015834,
+              "rss_bytes": 686362624,
+              "rss_max_bytes": 687202304,
+              "output_bytes": 269996145,
+              "pages": 28000,
+              "check_ok": true
+            },
+            "lopdf": {
+              "time_s": 7.473329111002386,
+              "time_min_s": 7.28105719294399,
+              "time_max_s": 7.785560259013437,
+              "rss_bytes": 1523929088,
+              "rss_max_bytes": 1538453504,
+              "output_bytes": 268940649,
+              "pages": 28000,
+              "check_ok": true
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "public-13.pdf",
       "bytes": 544648,
       "pages": 7,
@@ -584,491 +785,761 @@
       ]
     }
   ],
-  "corpus": {
-    "directory": "bench/inputs/public",
-    "files": [
-      {
-        "name": "public-01.pdf",
-        "bytes": 1664670,
-        "pages": 4,
-        "objects": 196,
-        "source": {
-          "title": "File:Patryota. 1831, nr 41 (14 Stycznia) (IA dlibra.kul pl.40296 patriota-41).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:Patryota._1831,_nr_41_(14_Stycznia)_(IA_dlibra.kul_pl.40296_patriota-41).pdf",
-          "license": "Public domain"
+  "corpora": {
+    "public": {
+      "directory": "bench/inputs/public",
+      "files": [
+        {
+          "name": "public-01.pdf",
+          "bytes": 1664670,
+          "pages": 4,
+          "objects": 196,
+          "source": {
+            "title": "File:Patryota. 1831, nr 41 (14 Stycznia) (IA dlibra.kul pl.40296 patriota-41).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Patryota._1831,_nr_41_(14_Stycznia)_(IA_dlibra.kul_pl.40296_patriota-41).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-02.pdf",
+          "bytes": 115076,
+          "pages": 2,
+          "objects": 24,
+          "source": {
+            "title": "File:List of Public Institutions and of Persons who have contributed to the Society's Library, etc. since the last Anniversary (IA paper-doi-10 1093 mnras 13 4 139).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:List_of_Public_Institutions_and_of_Persons_who_have_contributed_to_the_Society%27s_Library,_etc._since_the_last_Anniversary_(IA_paper-doi-10_1093_mnras_13_4_139).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-03.pdf",
+          "bytes": 336716,
+          "pages": 1,
+          "objects": 91,
+          "source": {
+            "title": "File:OJ C 202502725 of 2025 - HU Hungarian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202502725_of_2025_-_HU_Hungarian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-04.pdf",
+          "bytes": 1931247,
+          "pages": 20,
+          "objects": 602,
+          "source": {
+            "title": "File:OJ C 392 of 2012 - CS Czech.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_392_of_2012_-_CS_Czech.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-05.pdf",
+          "bytes": 869260,
+          "pages": 1,
+          "objects": 84,
+          "source": {
+            "title": "File:OJ C 202301176 of 2023 - IT Italian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202301176_of_2023_-_IT_Italian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-06.pdf",
+          "bytes": 642512,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1878 June 0050.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1878_June_0050.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-07.pdf",
+          "bytes": 1397237,
+          "pages": 36,
+          "objects": 193,
+          "source": {
+            "title": "File:Comment on fonde une méthode (electronic resource) - conférence faite sous la présidence du professeur Pinard (IA b20417226).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Comment_on_fonde_une_m%C3%A9thode_(electronic_resource)_-_conf%C3%A9rence_faite_sous_la_pr%C3%A9sidence_du_professeur_Pinard_(IA_b20417226).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-08.pdf",
+          "bytes": 984682,
+          "pages": 8,
+          "objects": 712,
+          "source": {
+            "title": "File:Approved jurisdictional determination form - USACE-p16021coll15-902.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Approved_jurisdictional_determination_form_-_USACE-p16021coll15-902.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-09.pdf",
+          "bytes": 161171,
+          "pages": 1,
+          "objects": 25,
+          "source": {
+            "title": "File:Regulation (EEC) No 646-74 of the Commission of 22 March 1974 amending for the third time Regulation (EEC) No 320-73 as regards the determination of the price of adult bovine animals on the representative markets (EUR 1974-646).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Regulation_(EEC)_No_646-74_of_the_Commission_of_22_March_1974_amending_for_the_third_time_Regulation_(EEC)_No_320-73_as_regards_the_determination_of_the_price_of_adult_bovine_animals_on_the_representative_markets_(EUR_1974-646).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-10.pdf",
+          "bytes": 73420,
+          "pages": 4,
+          "objects": 25,
+          "source": {
+            "title": "File:NLC404-01J001382-18584 北平生活費指數月報 1934年6卷5期.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:NLC404-01J001382-18584_%E5%8C%97%E5%B9%B3%E7%94%9F%E6%B4%BB%E8%B2%BB%E6%8C%87%E6%95%B8%E6%9C%88%E5%A0%B1_1934%E5%B9%B46%E5%8D%B75%E6%9C%9F.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-11.pdf",
+          "bytes": 559672,
+          "pages": 1,
+          "objects": 112,
+          "source": {
+            "title": "File:OJ C 202503515 of 2025 - BG Bulgarian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202503515_of_2025_-_BG_Bulgarian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-12.pdf",
+          "bytes": 1422485,
+          "pages": 56,
+          "objects": 509,
+          "source": {
+            "title": "File:OJ L 315 of 2014 - RO Romanian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_L_315_of_2014_-_RO_Romanian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-13.pdf",
+          "bytes": 544648,
+          "pages": 7,
+          "objects": 478,
+          "source": {
+            "title": "File:OJ C 202301032 of 2023 - SK Slovak.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202301032_of_2023_-_SK_Slovak.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-14.pdf",
+          "bytes": 529553,
+          "pages": 5,
+          "objects": 39,
+          "source": {
+            "title": "File:(untitled) The North American Review, (1861-07-01), pages 266-270 (IA jstor-25100036).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:(untitled)_The_North_American_Review,_(1861-07-01),_pages_266-270_(IA_jstor-25100036).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-15.pdf",
+          "bytes": 543090,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1907 October 0042.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1907_October_0042.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-16.pdf",
+          "bytes": 452553,
+          "pages": 1,
+          "objects": 214,
+          "source": {
+            "title": "File:OJ C 202401930 of 2024 - SK Slovak.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202401930_of_2024_-_SK_Slovak.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-17.pdf",
+          "bytes": 38958,
+          "pages": 4,
+          "objects": 36,
+          "source": {
+            "title": "File:The Organic Products (Amendment) Regulations 2015 (UKSI 2015-1669 qp).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_Organic_Products_(Amendment)_Regulations_2015_(UKSI_2015-1669_qp).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-18.pdf",
+          "bytes": 86680,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:বাংলাদেশ গেজেট, অতিরিক্ত, ১৯৮৮-০৭-০১ - অর্থ মন্ত্রণালয় (২).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6_%E0%A6%97%E0%A7%87%E0%A6%9C%E0%A7%87%E0%A6%9F,_%E0%A6%85%E0%A6%A4%E0%A6%BF%E0%A6%B0%E0%A6%BF%E0%A6%95%E0%A7%8D%E0%A6%A4,_%E0%A7%A7%E0%A7%AF%E0%A7%AE%E0%A7%AE-%E0%A7%A6%E0%A7%AD-%E0%A7%A6%E0%A7%A7_-_%E0%A6%85%E0%A6%B0%E0%A7%8D%E0%A6%A5_%E0%A6%AE%E0%A6%A8%E0%A7%8D%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A6%A3%E0%A6%BE%E0%A6%B2%E0%A6%AF%E0%A6%BC_(%E0%A7%A8).pdf",
+            "license": "EdictGov-Bangladesh"
+          }
+        },
+        {
+          "name": "public-19.pdf",
+          "bytes": 873611,
+          "pages": 1,
+          "objects": 78,
+          "source": {
+            "title": "File:OJ L 202500271 of 2025 - DE German.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_L_202500271_of_2025_-_DE_German.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-20.pdf",
+          "bytes": 783816,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1870 May 0067.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1870_May_0067.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-21.pdf",
+          "bytes": 90456,
+          "pages": 2,
+          "objects": 33,
+          "source": {
+            "title": "File:The A470 Trunk Road (Moat Lane Level Crossing, Nr. Caersws, Powys) (Temporary Prohibition of Vehicles) Order 2011 (WSI 2011-737 we).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_A470_Trunk_Road_(Moat_Lane_Level_Crossing,_Nr._Caersws,_Powys)_(Temporary_Prohibition_of_Vehicles)_Order_2011_(WSI_2011-737_we).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-22.pdf",
+          "bytes": 72583,
+          "pages": 2,
+          "objects": 12,
+          "source": {
+            "title": "File:104-10185-10004 (November 9, 2017 Release).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:104-10185-10004_(November_9,_2017_Release).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-23.pdf",
+          "bytes": 1744865,
+          "pages": 8,
+          "objects": 90,
+          "source": {
+            "title": "File:The Hovercraft (Fees) Regulations 1978 (UKSI 1978-483).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_Hovercraft_(Fees)_Regulations_1978_(UKSI_1978-483).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-24.pdf",
+          "bytes": 611212,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1900 October 0074.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_October_0074.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-25.pdf",
+          "bytes": 411658,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1901 February 0119.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1901_February_0119.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-26.pdf",
+          "bytes": 38477,
+          "pages": 2,
+          "objects": 46,
+          "source": {
+            "title": "File:The Pollution Prevention and Control (England and Wales) (Amendment) Regulations 2003 (UKSI 2003-1699 qp).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_Pollution_Prevention_and_Control_(England_and_Wales)_(Amendment)_Regulations_2003_(UKSI_2003-1699_qp).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-27.pdf",
+          "bytes": 524780,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1900 January 0125.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_January_0125.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-28.pdf",
+          "bytes": 558728,
+          "pages": 1,
+          "objects": 107,
+          "source": {
+            "title": "File:OJ C 202403571 of 2024 - ET Estonian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202403571_of_2024_-_ET_Estonian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-29.pdf",
+          "bytes": 2857297,
+          "pages": 9,
+          "objects": 59,
+          "source": {
+            "title": "File:Een wonderlijcke history vandē wachtmeester tot Calkar THYSPF 1092.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Een_wonderlijcke_history_vand%C4%93_wachtmeester_tot_Calkar_THYSPF_1092.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "public-30.pdf",
+          "bytes": 1786973,
+          "pages": 18,
+          "objects": 59,
+          "source": {
+            "title": "File:CNTS-00048003805 28 大陸科學院硏究報告. 第1-5卷.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:CNTS-00048003805_28_%E5%A4%A7%E9%99%B8%E7%A7%91%E5%AD%B8%E9%99%A2%E7%A1%8F%E7%A9%B6%E5%A0%B1%E5%91%8A._%E7%AC%AC1-5%E5%8D%B7.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-31.pdf",
+          "bytes": 179298,
+          "pages": 2,
+          "objects": 34,
+          "source": {
+            "title": "File:Commission Regulation (EEC) No 2438-83 of 29 August 1983 altering the rates of the refunds applicable to certain products from the sugar sector exported in the form of goods not covered by Annex II to the Treaty (EUR 1983-2438).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Commission_Regulation_(EEC)_No_2438-83_of_29_August_1983_altering_the_rates_of_the_refunds_applicable_to_certain_products_from_the_sugar_sector_exported_in_the_form_of_goods_not_covered_by_Annex_II_to_the_Treaty_(EUR_1983-2438).pdf",
+            "license": "OGL 3"
+          }
+        },
+        {
+          "name": "public-32.pdf",
+          "bytes": 2467917,
+          "pages": 12,
+          "objects": 41,
+          "source": {
+            "title": "File:NCL-15308-0015 瓶史.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:NCL-15308-0015_%E7%93%B6%E5%8F%B2.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-33.pdf",
+          "bytes": 497472,
+          "pages": 2,
+          "objects": 528,
+          "source": {
+            "title": "File:OJ C 202403844 of 2024 - LT Lithuanian.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202403844_of_2024_-_LT_Lithuanian.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-34.pdf",
+          "bytes": 898947,
+          "pages": 2,
+          "objects": 214,
+          "source": {
+            "title": "File:OJ L 202401830 of 2024 - MT Maltese.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:OJ_L_202401830_of_2024_-_MT_Maltese.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-35.pdf",
+          "bytes": 322423,
+          "pages": 19,
+          "objects": 123,
+          "source": {
+            "title": "File:RL33655 (IA RL33655-crs).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:RL33655_(IA_RL33655-crs).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-36.pdf",
+          "bytes": 477109,
+          "pages": 1,
+          "objects": 9,
+          "source": {
+            "title": "File:The New Orleans Bee 1917 February 0056.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1917_February_0056.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-37.pdf",
+          "bytes": 25035,
+          "pages": 1,
+          "objects": 14,
+          "source": {
+            "title": "File:Newspaper clipping about the son of Mrs. D. C. Lockey published March 11, 1886 - DPLA - 6e2280c3646c329672f834762f9fba92.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Newspaper_clipping_about_the_son_of_Mrs._D._C._Lockey_published_March_11,_1886_-_DPLA_-_6e2280c3646c329672f834762f9fba92.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-38.pdf",
+          "bytes": 2762166,
+          "pages": 4,
+          "objects": 41,
+          "source": {
+            "title": "File:Carta de (Francisco de Paula Rodrigues Alves Filho), secretário da Presidência da República para Juca comunicando que com a ida do pai a Minas, (José (...), Arquivo Nacional (BR RJANRIO ON.0.COR.28-2).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Carta_de_(Francisco_de_Paula_Rodrigues_Alves_Filho),_secret%C3%A1rio_da_Presid%C3%AAncia_da_Rep%C3%BAblica_para_Juca_comunicando_que_com_a_ida_do_pai_a_Minas,_(Jos%C3%A9_(...),_Arquivo_Nacional_(BR_RJANRIO_ON.0.COR.28-2).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-39.pdf",
+          "bytes": 2588632,
+          "pages": 13,
+          "objects": 44,
+          "source": {
+            "title": "File:ЦДАВО 4-1-393 Тим Луїза Антонівна (1922).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%D0%A6%D0%94%D0%90%D0%92%D0%9E_4-1-393_%D0%A2%D0%B8%D0%BC_%D0%9B%D1%83%D1%97%D0%B7%D0%B0_%D0%90%D0%BD%D1%82%D0%BE%D0%BD%D1%96%D0%B2%D0%BD%D0%B0_(1922).pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "public-40.pdf",
+          "bytes": 886976,
+          "pages": 20,
+          "objects": 106,
+          "source": {
+            "title": "File:Alabama Baptist State Convention Annual Reports 1827 (IA alabamabaptistst1827alab).pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Alabama_Baptist_State_Convention_Annual_Reports_1827_(IA_alabamabaptistst1827alab).pdf",
+            "license": "Public domain"
+          }
         }
-      },
-      {
-        "name": "public-02.pdf",
-        "bytes": 115076,
-        "pages": 2,
-        "objects": 24,
-        "source": {
-          "title": "File:List of Public Institutions and of Persons who have contributed to the Society's Library, etc. since the last Anniversary (IA paper-doi-10 1093 mnras 13 4 139).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:List_of_Public_Institutions_and_of_Persons_who_have_contributed_to_the_Society%27s_Library,_etc._since_the_last_Anniversary_(IA_paper-doi-10_1093_mnras_13_4_139).pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-03.pdf",
-        "bytes": 336716,
-        "pages": 1,
-        "objects": 91,
-        "source": {
-          "title": "File:OJ C 202502725 of 2025 - HU Hungarian.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202502725_of_2025_-_HU_Hungarian.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-04.pdf",
-        "bytes": 1931247,
-        "pages": 20,
-        "objects": 602,
-        "source": {
-          "title": "File:OJ C 392 of 2012 - CS Czech.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_C_392_of_2012_-_CS_Czech.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-05.pdf",
-        "bytes": 869260,
-        "pages": 1,
-        "objects": 84,
-        "source": {
-          "title": "File:OJ C 202301176 of 2023 - IT Italian.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202301176_of_2023_-_IT_Italian.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-06.pdf",
-        "bytes": 642512,
-        "pages": 1,
-        "objects": 9,
-        "source": {
-          "title": "File:The New Orleans Bee 1878 June 0050.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1878_June_0050.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-07.pdf",
-        "bytes": 1397237,
-        "pages": 36,
-        "objects": 193,
-        "source": {
-          "title": "File:Comment on fonde une méthode (electronic resource) - conférence faite sous la présidence du professeur Pinard (IA b20417226).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:Comment_on_fonde_une_m%C3%A9thode_(electronic_resource)_-_conf%C3%A9rence_faite_sous_la_pr%C3%A9sidence_du_professeur_Pinard_(IA_b20417226).pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-08.pdf",
-        "bytes": 984682,
-        "pages": 8,
-        "objects": 712,
-        "source": {
-          "title": "File:Approved jurisdictional determination form - USACE-p16021coll15-902.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:Approved_jurisdictional_determination_form_-_USACE-p16021coll15-902.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-09.pdf",
-        "bytes": 161171,
-        "pages": 1,
-        "objects": 25,
-        "source": {
-          "title": "File:Regulation (EEC) No 646-74 of the Commission of 22 March 1974 amending for the third time Regulation (EEC) No 320-73 as regards the determination of the price of adult bovine animals on the representative markets (EUR 1974-646).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:Regulation_(EEC)_No_646-74_of_the_Commission_of_22_March_1974_amending_for_the_third_time_Regulation_(EEC)_No_320-73_as_regards_the_determination_of_the_price_of_adult_bovine_animals_on_the_representative_markets_(EUR_1974-646).pdf",
-          "license": "OGL 3"
-        }
-      },
-      {
-        "name": "public-10.pdf",
-        "bytes": 73420,
-        "pages": 4,
-        "objects": 25,
-        "source": {
-          "title": "File:NLC404-01J001382-18584 北平生活費指數月報 1934年6卷5期.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:NLC404-01J001382-18584_%E5%8C%97%E5%B9%B3%E7%94%9F%E6%B4%BB%E8%B2%BB%E6%8C%87%E6%95%B8%E6%9C%88%E5%A0%B1_1934%E5%B9%B46%E5%8D%B75%E6%9C%9F.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-11.pdf",
-        "bytes": 559672,
-        "pages": 1,
-        "objects": 112,
-        "source": {
-          "title": "File:OJ C 202503515 of 2025 - BG Bulgarian.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202503515_of_2025_-_BG_Bulgarian.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-12.pdf",
-        "bytes": 1422485,
-        "pages": 56,
-        "objects": 509,
-        "source": {
-          "title": "File:OJ L 315 of 2014 - RO Romanian.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_L_315_of_2014_-_RO_Romanian.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-13.pdf",
-        "bytes": 544648,
-        "pages": 7,
-        "objects": 478,
-        "source": {
-          "title": "File:OJ C 202301032 of 2023 - SK Slovak.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202301032_of_2023_-_SK_Slovak.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-14.pdf",
-        "bytes": 529553,
-        "pages": 5,
-        "objects": 39,
-        "source": {
-          "title": "File:(untitled) The North American Review, (1861-07-01), pages 266-270 (IA jstor-25100036).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:(untitled)_The_North_American_Review,_(1861-07-01),_pages_266-270_(IA_jstor-25100036).pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-15.pdf",
-        "bytes": 543090,
-        "pages": 1,
-        "objects": 9,
-        "source": {
-          "title": "File:The New Orleans Bee 1907 October 0042.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1907_October_0042.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-16.pdf",
-        "bytes": 452553,
-        "pages": 1,
-        "objects": 214,
-        "source": {
-          "title": "File:OJ C 202401930 of 2024 - SK Slovak.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202401930_of_2024_-_SK_Slovak.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-17.pdf",
-        "bytes": 38958,
-        "pages": 4,
-        "objects": 36,
-        "source": {
-          "title": "File:The Organic Products (Amendment) Regulations 2015 (UKSI 2015-1669 qp).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_Organic_Products_(Amendment)_Regulations_2015_(UKSI_2015-1669_qp).pdf",
-          "license": "OGL 3"
-        }
-      },
-      {
-        "name": "public-18.pdf",
-        "bytes": 86680,
-        "pages": 1,
-        "objects": 9,
-        "source": {
-          "title": "File:বাংলাদেশ গেজেট, অতিরিক্ত, ১৯৮৮-০৭-০১ - অর্থ মন্ত্রণালয় (২).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6_%E0%A6%97%E0%A7%87%E0%A6%9C%E0%A7%87%E0%A6%9F,_%E0%A6%85%E0%A6%A4%E0%A6%BF%E0%A6%B0%E0%A6%BF%E0%A6%95%E0%A7%8D%E0%A6%A4,_%E0%A7%A7%E0%A7%AF%E0%A7%AE%E0%A7%AE-%E0%A7%A6%E0%A7%AD-%E0%A7%A6%E0%A7%A7_-_%E0%A6%85%E0%A6%B0%E0%A7%8D%E0%A6%A5_%E0%A6%AE%E0%A6%A8%E0%A7%8D%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A6%A3%E0%A6%BE%E0%A6%B2%E0%A6%AF%E0%A6%BC_(%E0%A7%A8).pdf",
-          "license": "EdictGov-Bangladesh"
-        }
-      },
-      {
-        "name": "public-19.pdf",
-        "bytes": 873611,
-        "pages": 1,
-        "objects": 78,
-        "source": {
-          "title": "File:OJ L 202500271 of 2025 - DE German.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_L_202500271_of_2025_-_DE_German.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-20.pdf",
-        "bytes": 783816,
-        "pages": 1,
-        "objects": 9,
-        "source": {
-          "title": "File:The New Orleans Bee 1870 May 0067.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1870_May_0067.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-21.pdf",
-        "bytes": 90456,
-        "pages": 2,
-        "objects": 33,
-        "source": {
-          "title": "File:The A470 Trunk Road (Moat Lane Level Crossing, Nr. Caersws, Powys) (Temporary Prohibition of Vehicles) Order 2011 (WSI 2011-737 we).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_A470_Trunk_Road_(Moat_Lane_Level_Crossing,_Nr._Caersws,_Powys)_(Temporary_Prohibition_of_Vehicles)_Order_2011_(WSI_2011-737_we).pdf",
-          "license": "OGL 3"
-        }
-      },
-      {
-        "name": "public-22.pdf",
-        "bytes": 72583,
-        "pages": 2,
-        "objects": 12,
-        "source": {
-          "title": "File:104-10185-10004 (November 9, 2017 Release).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:104-10185-10004_(November_9,_2017_Release).pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-23.pdf",
-        "bytes": 1744865,
-        "pages": 8,
-        "objects": 90,
-        "source": {
-          "title": "File:The Hovercraft (Fees) Regulations 1978 (UKSI 1978-483).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_Hovercraft_(Fees)_Regulations_1978_(UKSI_1978-483).pdf",
-          "license": "OGL 3"
-        }
-      },
-      {
-        "name": "public-24.pdf",
-        "bytes": 611212,
-        "pages": 1,
-        "objects": 9,
-        "source": {
-          "title": "File:The New Orleans Bee 1900 October 0074.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_October_0074.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-25.pdf",
-        "bytes": 411658,
-        "pages": 1,
-        "objects": 9,
-        "source": {
-          "title": "File:The New Orleans Bee 1901 February 0119.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1901_February_0119.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-26.pdf",
-        "bytes": 38477,
-        "pages": 2,
-        "objects": 46,
-        "source": {
-          "title": "File:The Pollution Prevention and Control (England and Wales) (Amendment) Regulations 2003 (UKSI 2003-1699 qp).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_Pollution_Prevention_and_Control_(England_and_Wales)_(Amendment)_Regulations_2003_(UKSI_2003-1699_qp).pdf",
-          "license": "OGL 3"
-        }
-      },
-      {
-        "name": "public-27.pdf",
-        "bytes": 524780,
-        "pages": 1,
-        "objects": 9,
-        "source": {
-          "title": "File:The New Orleans Bee 1900 January 0125.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_January_0125.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-28.pdf",
-        "bytes": 558728,
-        "pages": 1,
-        "objects": 107,
-        "source": {
-          "title": "File:OJ C 202403571 of 2024 - ET Estonian.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202403571_of_2024_-_ET_Estonian.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-29.pdf",
-        "bytes": 2857297,
-        "pages": 9,
-        "objects": 59,
-        "source": {
-          "title": "File:Een wonderlijcke history vandē wachtmeester tot Calkar THYSPF 1092.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:Een_wonderlijcke_history_vand%C4%93_wachtmeester_tot_Calkar_THYSPF_1092.pdf",
-          "license": "CC BY 4.0"
-        }
-      },
-      {
-        "name": "public-30.pdf",
-        "bytes": 1786973,
-        "pages": 18,
-        "objects": 59,
-        "source": {
-          "title": "File:CNTS-00048003805 28 大陸科學院硏究報告. 第1-5卷.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:CNTS-00048003805_28_%E5%A4%A7%E9%99%B8%E7%A7%91%E5%AD%B8%E9%99%A2%E7%A1%8F%E7%A9%B6%E5%A0%B1%E5%91%8A._%E7%AC%AC1-5%E5%8D%B7.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-31.pdf",
-        "bytes": 179298,
-        "pages": 2,
-        "objects": 34,
-        "source": {
-          "title": "File:Commission Regulation (EEC) No 2438-83 of 29 August 1983 altering the rates of the refunds applicable to certain products from the sugar sector exported in the form of goods not covered by Annex II to the Treaty (EUR 1983-2438).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:Commission_Regulation_(EEC)_No_2438-83_of_29_August_1983_altering_the_rates_of_the_refunds_applicable_to_certain_products_from_the_sugar_sector_exported_in_the_form_of_goods_not_covered_by_Annex_II_to_the_Treaty_(EUR_1983-2438).pdf",
-          "license": "OGL 3"
-        }
-      },
-      {
-        "name": "public-32.pdf",
-        "bytes": 2467917,
-        "pages": 12,
-        "objects": 41,
-        "source": {
-          "title": "File:NCL-15308-0015 瓶史.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:NCL-15308-0015_%E7%93%B6%E5%8F%B2.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-33.pdf",
-        "bytes": 497472,
-        "pages": 2,
-        "objects": 528,
-        "source": {
-          "title": "File:OJ C 202403844 of 2024 - LT Lithuanian.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_C_202403844_of_2024_-_LT_Lithuanian.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-34.pdf",
-        "bytes": 898947,
-        "pages": 2,
-        "objects": 214,
-        "source": {
-          "title": "File:OJ L 202401830 of 2024 - MT Maltese.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:OJ_L_202401830_of_2024_-_MT_Maltese.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-35.pdf",
-        "bytes": 322423,
-        "pages": 19,
-        "objects": 123,
-        "source": {
-          "title": "File:RL33655 (IA RL33655-crs).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:RL33655_(IA_RL33655-crs).pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-36.pdf",
-        "bytes": 477109,
-        "pages": 1,
-        "objects": 9,
-        "source": {
-          "title": "File:The New Orleans Bee 1917 February 0056.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1917_February_0056.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-37.pdf",
-        "bytes": 25035,
-        "pages": 1,
-        "objects": 14,
-        "source": {
-          "title": "File:Newspaper clipping about the son of Mrs. D. C. Lockey published March 11, 1886 - DPLA - 6e2280c3646c329672f834762f9fba92.pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:Newspaper_clipping_about_the_son_of_Mrs._D._C._Lockey_published_March_11,_1886_-_DPLA_-_6e2280c3646c329672f834762f9fba92.pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-38.pdf",
-        "bytes": 2762166,
-        "pages": 4,
-        "objects": 41,
-        "source": {
-          "title": "File:Carta de (Francisco de Paula Rodrigues Alves Filho), secretário da Presidência da República para Juca comunicando que com a ida do pai a Minas, (José (...), Arquivo Nacional (BR RJANRIO ON.0.COR.28-2).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:Carta_de_(Francisco_de_Paula_Rodrigues_Alves_Filho),_secret%C3%A1rio_da_Presid%C3%AAncia_da_Rep%C3%BAblica_para_Juca_comunicando_que_com_a_ida_do_pai_a_Minas,_(Jos%C3%A9_(...),_Arquivo_Nacional_(BR_RJANRIO_ON.0.COR.28-2).pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-39.pdf",
-        "bytes": 2588632,
-        "pages": 13,
-        "objects": 44,
-        "source": {
-          "title": "File:ЦДАВО 4-1-393 Тим Луїза Антонівна (1922).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:%D0%A6%D0%94%D0%90%D0%92%D0%9E_4-1-393_%D0%A2%D0%B8%D0%BC_%D0%9B%D1%83%D1%97%D0%B7%D0%B0_%D0%90%D0%BD%D1%82%D0%BE%D0%BD%D1%96%D0%B2%D0%BD%D0%B0_(1922).pdf",
-          "license": "Public domain"
-        }
-      },
-      {
-        "name": "public-40.pdf",
-        "bytes": 886976,
-        "pages": 20,
-        "objects": 106,
-        "source": {
-          "title": "File:Alabama Baptist State Convention Annual Reports 1827 (IA alabamabaptistst1827alab).pdf",
-          "page": "https://commons.wikimedia.org/wiki/File:Alabama_Baptist_State_Convention_Annual_Reports_1827_(IA_alabamabaptistst1827alab).pdf",
-          "license": "Public domain"
+      ],
+      "pages": 277,
+      "tools": {
+        "nori": {
+          "time_s": 0.08828088501468301,
+          "time_min_s": 0.08552564901765436,
+          "time_max_s": 0.10933786199893802,
+          "rss_bytes": 21307392,
+          "rss_max_bytes": 22122496,
+          "output_bytes": 32027432,
+          "pages": 277,
+          "check_ok": true
+        },
+        "nori -j6": {
+          "time_s": 0.053492375009227544,
+          "time_min_s": 0.053054978023283184,
+          "time_max_s": 0.05416833999333903,
+          "rss_bytes": 36802560,
+          "rss_max_bytes": 38207488,
+          "output_bytes": 32027432,
+          "pages": 277,
+          "check_ok": true
+        },
+        "qpdf": {
+          "time_s": 1.4303649219800718,
+          "time_min_s": 1.4206547280191444,
+          "time_max_s": 1.4666084200143814,
+          "rss_bytes": 30285824,
+          "rss_max_bytes": 30867456,
+          "output_bytes": 31908935,
+          "pages": 277,
+          "check_ok": true
+        },
+        "lopdf": {
+          "time_s": 0.17043459898559377,
+          "time_min_s": 0.16642439598217607,
+          "time_max_s": 0.1708013080060482,
+          "rss_bytes": 111173632,
+          "rss_max_bytes": 111329280,
+          "output_bytes": 33705873,
+          "pages": 277,
+          "check_ok": true
         }
       }
-    ],
-    "pages": 277,
-    "tools": {
-      "nori": {
-        "time_s": 0.08828088501468301,
-        "time_min_s": 0.08552564901765436,
-        "time_max_s": 0.10933786199893802,
-        "rss_bytes": 21307392,
-        "rss_max_bytes": 22122496,
-        "output_bytes": 32027432,
-        "pages": 277,
-        "check_ok": true
-      },
-      "nori -j6": {
-        "time_s": 0.053492375009227544,
-        "time_min_s": 0.053054978023283184,
-        "time_max_s": 0.05416833999333903,
-        "rss_bytes": 36802560,
-        "rss_max_bytes": 38207488,
-        "output_bytes": 32027432,
-        "pages": 277,
-        "check_ok": true
-      },
-      "qpdf": {
-        "time_s": 1.4303649219800718,
-        "time_min_s": 1.4206547280191444,
-        "time_max_s": 1.4666084200143814,
-        "rss_bytes": 30285824,
-        "rss_max_bytes": 30867456,
-        "output_bytes": 31908935,
-        "pages": 277,
-        "check_ok": true
-      },
-      "lopdf": {
-        "time_s": 0.17043459898559377,
-        "time_min_s": 0.16642439598217607,
-        "time_max_s": 0.1708013080060482,
-        "rss_bytes": 111173632,
-        "rss_max_bytes": 111329280,
-        "output_bytes": 33705873,
-        "pages": 277,
-        "check_ok": true
+    },
+    "ja": {
+      "directory": "bench/inputs/ja",
+      "files": [
+        {
+          "name": "ja-01.pdf",
+          "bytes": 135372,
+          "pages": 14,
+          "objects": 65,
+          "source": {
+            "title": "File:スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案 新旧対照条文.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E5%88%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E7%89%B9%E5%AE%9A%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E4%BF%82%E3%82%8B%E7%AB%B6%E4%BA%89%E3%81%AE%E4%BF%83%E9%80%B2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E6%A1%88_%E6%96%B0%E6%97%A7%E5%AF%BE%E7%85%A7%E6%9D%A1%E6%96%87.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-02.pdf",
+          "bytes": 391240,
+          "pages": 1,
+          "objects": 690,
+          "source": {
+            "title": "File:AV出演被害防止・救済法 概要.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:AV%E5%87%BA%E6%BC%94%E8%A2%AB%E5%AE%B3%E9%98%B2%E6%AD%A2%E3%83%BB%E6%95%91%E6%B8%88%E6%B3%95_%E6%A6%82%E8%A6%81.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-03.pdf",
+          "bytes": 327632,
+          "pages": 3,
+          "objects": 223,
+          "source": {
+            "title": "File:GJSTU-2.0-ja.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:GJSTU-2.0-ja.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-04.pdf",
+          "bytes": 443227,
+          "pages": 9,
+          "objects": 521,
+          "source": {
+            "title": "File:GJSTU-2.0 commentary.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:GJSTU-2.0_commentary.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-05.pdf",
+          "bytes": 548695,
+          "pages": 1,
+          "objects": 34,
+          "source": {
+            "title": "File:令和4年1月11日付徴徴１－３「開示決定等の期限の延長について（通知）」.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E4%BB%A4%E5%92%8C4%E5%B9%B41%E6%9C%8811%E6%97%A5%E4%BB%98%E5%BE%B4%E5%BE%B4%EF%BC%91%EF%BC%8D%EF%BC%93%E3%80%8C%E9%96%8B%E7%A4%BA%E6%B1%BA%E5%AE%9A%E7%AD%89%E3%81%AE%E6%9C%9F%E9%99%90%E3%81%AE%E5%BB%B6%E9%95%B7%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%EF%BC%88%E9%80%9A%E7%9F%A5%EF%BC%89%E3%80%8D.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-06.pdf",
+          "bytes": 136329,
+          "pages": 1,
+          "objects": 39,
+          "source": {
+            "title": "File:高市内閣 閣僚名簿.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E9%AB%98%E5%B8%82%E5%86%85%E9%96%A3_%E9%96%A3%E5%83%9A%E5%90%8D%E7%B0%BF.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-07.pdf",
+          "bytes": 537485,
+          "pages": 2,
+          "objects": 9,
+          "source": {
+            "title": "File:謄本&資格証.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E8%AC%84%E6%9C%AC%26%E8%B3%87%E6%A0%BC%E8%A8%BC.pdf",
+            "license": "CC BY-SA 4.0"
+          }
+        },
+        {
+          "name": "ja-08.pdf",
+          "bytes": 329024,
+          "pages": 3,
+          "objects": 899,
+          "source": {
+            "title": "File:2005 Mudai Aikido J.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:2005_Mudai_Aikido_J.pdf",
+            "license": "CC BY-SA 3.0"
+          }
+        },
+        {
+          "name": "ja-09.pdf",
+          "bytes": 142202,
+          "pages": 1,
+          "objects": 11,
+          "source": {
+            "title": "File:Donguri korokoro score.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Donguri_korokoro_score.pdf",
+            "license": "CC BY-SA 3.0"
+          }
+        },
+        {
+          "name": "ja-10.pdf",
+          "bytes": 281828,
+          "pages": 35,
+          "objects": 135,
+          "source": {
+            "title": "File:スマートフォンにおいて利用される特定ソフトウェアに係る競争の促進に関する法律案 参照条文.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E5%88%A9%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E7%89%B9%E5%AE%9A%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AB%E4%BF%82%E3%82%8B%E7%AB%B6%E4%BA%89%E3%81%AE%E4%BF%83%E9%80%B2%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E6%A1%88_%E5%8F%82%E7%85%A7%E6%9D%A1%E6%96%87.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-11.pdf",
+          "bytes": 112404,
+          "pages": 1,
+          "objects": 352,
+          "source": {
+            "title": "File:教育・意識改善軸の実行ステップ.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E6%95%99%E8%82%B2%E3%83%BB%E6%84%8F%E8%AD%98%E6%94%B9%E5%96%84%E8%BB%B8%E3%81%AE%E5%AE%9F%E8%A1%8C%E3%82%B9%E3%83%86%E3%83%83%E3%83%97.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-12.pdf",
+          "bytes": 72279,
+          "pages": 1,
+          "objects": 26,
+          "source": {
+            "title": "File:高市内閣 内閣総理大臣補佐官名簿.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E9%AB%98%E5%B8%82%E5%86%85%E9%96%A3_%E5%86%85%E9%96%A3%E7%B7%8F%E7%90%86%E5%A4%A7%E8%87%A3%E8%A3%9C%E4%BD%90%E5%AE%98%E5%90%8D%E7%B0%BF.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-13.pdf",
+          "bytes": 117462,
+          "pages": 1,
+          "objects": 200,
+          "source": {
+            "title": "File:京都府京都市伏見区で発生した爆発火災（第５報）.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E9%83%BD%E5%B8%82%E4%BC%8F%E8%A6%8B%E5%8C%BA%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E7%88%86%E7%99%BA%E7%81%AB%E7%81%BD%EF%BC%88%E7%AC%AC%EF%BC%95%E5%A0%B1%EF%BC%89.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-14.pdf",
+          "bytes": 503258,
+          "pages": 8,
+          "objects": 43,
+          "source": {
+            "title": "File:Documents of Patent Hitachi Koki and Maya Kogyo.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:Documents_of_Patent_Hitachi_Koki_and_Maya_Kogyo.pdf",
+            "license": "CC BY-SA 3.0"
+          }
+        },
+        {
+          "name": "ja-15.pdf",
+          "bytes": 85164,
+          "pages": 1,
+          "objects": 17,
+          "source": {
+            "title": "File:法廷等の秩序維持に関する法律違反事件記録符号規程.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E6%B3%95%E5%BB%B7%E7%AD%89%E3%81%AE%E7%A7%A9%E5%BA%8F%E7%B6%AD%E6%8C%81%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%B3%95%E5%BE%8B%E9%81%95%E5%8F%8D%E4%BA%8B%E4%BB%B6%E8%A8%98%E9%8C%B2%E7%AC%A6%E5%8F%B7%E8%A6%8F%E7%A8%8B.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-16.pdf",
+          "bytes": 1481836,
+          "pages": 27,
+          "objects": 198,
+          "source": {
+            "title": "File:モバイルOS等実態調査報告書（概要）.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E3%83%A2%E3%83%90%E3%82%A4%E3%83%ABOS%E7%AD%89%E5%AE%9F%E6%85%8B%E8%AA%BF%E6%9F%BB%E5%A0%B1%E5%91%8A%E6%9B%B8%EF%BC%88%E6%A6%82%E8%A6%81%EF%BC%89.pdf",
+            "license": "CC BY 4.0"
+          }
+        },
+        {
+          "name": "ja-17.pdf",
+          "bytes": 38450,
+          "pages": 1,
+          "objects": 28,
+          "source": {
+            "title": "File:雲沁霓撕.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E9%9B%B2%E6%B2%81%E9%9C%93%E6%92%95.pdf",
+            "license": "CC BY-SA 4.0"
+          }
+        },
+        {
+          "name": "ja-18.pdf",
+          "bytes": 138901,
+          "pages": 1,
+          "objects": 15,
+          "source": {
+            "title": "File:アナゴ・マアナゴ・ハモの方言.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%8A%E3%82%B4%E3%83%BB%E3%83%9E%E3%82%A2%E3%83%8A%E3%82%B4%E3%83%BB%E3%83%8F%E3%83%A2%E3%81%AE%E6%96%B9%E8%A8%80.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-19.pdf",
+          "bytes": 562593,
+          "pages": 1,
+          "objects": 27,
+          "source": {
+            "title": "File:令和4年1月11日付徴徴１－４「開示決定等の期限の延長について（通知）」.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E4%BB%A4%E5%92%8C4%E5%B9%B41%E6%9C%8811%E6%97%A5%E4%BB%98%E5%BE%B4%E5%BE%B4%EF%BC%91%EF%BC%8D%EF%BC%94%E3%80%8C%E9%96%8B%E7%A4%BA%E6%B1%BA%E5%AE%9A%E7%AD%89%E3%81%AE%E6%9C%9F%E9%99%90%E3%81%AE%E5%BB%B6%E9%95%B7%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%EF%BC%88%E9%80%9A%E7%9F%A5%EF%BC%89%E3%80%8D.pdf",
+            "license": "Public domain"
+          }
+        },
+        {
+          "name": "ja-20.pdf",
+          "bytes": 2562035,
+          "pages": 3,
+          "objects": 21,
+          "source": {
+            "title": "File:上白河侯書.pdf",
+            "page": "https://commons.wikimedia.org/wiki/File:%E4%B8%8A%E7%99%BD%E6%B2%B3%E4%BE%AF%E6%9B%B8.pdf",
+            "license": "Public domain"
+          }
+        }
+      ],
+      "pages": 115,
+      "tools": {
+        "nori": {
+          "time_s": 0.05568978301016614,
+          "time_min_s": 0.053092079993803054,
+          "time_max_s": 0.05654858803609386,
+          "rss_bytes": 17072128,
+          "rss_max_bytes": 17711104,
+          "output_bytes": 8710583,
+          "pages": 115,
+          "check_ok": true
+        },
+        "nori -j6": {
+          "time_s": 0.04255533200921491,
+          "time_min_s": 0.03965531202265993,
+          "time_max_s": 0.04427252698224038,
+          "rss_bytes": 21704704,
+          "rss_max_bytes": 21987328,
+          "output_bytes": 8710583,
+          "pages": 115,
+          "check_ok": true
+        },
+        "qpdf": {
+          "time_s": 0.11797116999514401,
+          "time_min_s": 0.1146159729687497,
+          "time_max_s": 0.1541055910056457,
+          "rss_bytes": 14700544,
+          "rss_max_bytes": 14737408,
+          "output_bytes": 8701600,
+          "pages": 115,
+          "check_ok": true
+        },
+        "lopdf": {
+          "time_s": 0.08688130101654679,
+          "time_min_s": 0.08449941000435501,
+          "time_max_s": 0.08841645100619644,
+          "rss_bytes": 39661568,
+          "rss_max_bytes": 40329216,
+          "output_bytes": 8926744,
+          "pages": 115,
+          "check_ok": true
+        }
       }
     }
   }

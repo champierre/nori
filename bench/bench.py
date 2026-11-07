@@ -154,7 +154,9 @@ def main():
     })
     results["fixtures"] = [f for f in results.get("fixtures", []) if f["name"] not in {x.name for x in fixtures}]
     if args.corpus:
-        results["corpus"] = measure_corpus(args, available)
+        # Keyed by directory name, so the all-Commons set and the Japanese set sit side by side.
+        results.setdefault("corpora", {})[args.corpus.name] = measure_corpus(args, available)
+        results.pop("corpus", None)
         RESULTS.write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
     for fixture in fixtures:
         entry = {"name": fixture.name, "bytes": fixture.stat().st_size, "pages": page_count(args.qpdf, fixture),
@@ -200,13 +202,11 @@ def measure_corpus(args, available):
 
 
 def source(name):
-    """Title, Commons page and license of a PDF listed in public-pdfs.json, else None."""
-    listing = HERE / "public-pdfs.json"
-    if not listing.is_file():
-        return None
-    for d in json.loads(listing.read_text())["files"]:
-        if d["name"] == name:
-            return {"title": d["title"], "page": d["page"], "license": d["license"]}
+    """Title, Commons page and license of a PDF listed in one of the public-pdfs*.json files, else None."""
+    for listing in HERE.glob("public-pdfs*.json"):
+        for d in json.loads(listing.read_text())["files"]:
+            if d["name"] == name:
+                return {"title": d["title"], "page": d["page"], "license": d["license"]}
     return None
 
 
@@ -256,9 +256,8 @@ def measure(args, name, build, inputs, expected_pages, out):
 def print_tables(results):
     names = list(results["tools"])
     print(f"median of {results['runs']} runs, {results['platform']}, {results['cpu_count']} CPUs")
-    if "corpus" in results:
-        corpus = results["corpus"]
-        print(f"\n## corpus: {len(corpus['files'])} files, {corpus['pages']:,} pages\n")
+    for key, corpus in results.get("corpora", {}).items():
+        print(f"\n## corpus {key}: {len(corpus['files'])} files, {corpus['pages']:,} pages\n")
         print("| | " + " | ".join(names) + " |")
         print("|---|" + "---:|" * len(names))
         for metric, label, fmt in [("time_s", "Time", human_time), ("rss_bytes", "Peak memory", human_size),
