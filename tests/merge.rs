@@ -30,7 +30,7 @@ impl Drop for Dir {
 }
 
 fn fixture() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("bench/fixtures/statement-libreoffice.pdf")
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/statement.pdf")
 }
 
 fn save(mut doc: Document) -> Vec<u8> {

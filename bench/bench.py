@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
-"""Compare nori, qpdf and lopdf merging many copies of one PDF.
+"""Compare nori, qpdf and lopdf merging PDFs.
 
-For each fixture and count, bench/inputs/ gets that many copies of the fixture, and each tool
-merges them as a command line program, the way an application would call it. Wall-clock time
-and peak memory come from /usr/bin/time; the output is then checked with qpdf (page count and
-`qpdf --check`). Standard library only.
+Two kinds of run. With --fixture, bench/inputs/ gets 10 to 2,000 copies of that PDF and each
+tool merges them, which shows how time and memory grow with the number of files. With
+--corpus, every PDF in a directory (the random Commons PDFs that fetch.py downloads) is merged
+once, which shows that real-world files of every make come through. Each tool runs as a
+command line program, the way an application would call it. Wall-clock time and peak memory
+come from /usr/bin/time; the output is then checked with qpdf (page count and `qpdf --check`).
+Standard library only.
 
 Every tool runs with the open-file limit raised, because qpdf keeps every input open and the
 default limit on macOS (256) is below the larger counts.
 
-Usage: bench.py [--fixture PDF ...] [--counts 10,100,1000,2000] [--runs 5] [--warmup 1]
-                [--jobs N] [--max-count TOOL=N ...] [--nori PATH] [--lopdf-merge PATH] [--qpdf PATH]
-A tool whose binary is missing is skipped. Writes bench/results-macos.json or
-bench/results-linux.json and prints the tables used in the README.
+Usage: bench.py --fixture PDF [--counts 10,100,1000,2000] [--runs 5] [--warmup 1] [--jobs N]
+                [--max-count TOOL=N ...] [--nori PATH] [--lopdf-merge PATH] [--qpdf PATH]
+       bench.py --corpus bench/inputs/public [--runs 5] ...
+A tool whose binary is missing is skipped. Results accumulate in bench/results-macos.json or
+bench/results-linux.json (one entry per fixture, plus the corpus); the tables used in the
+README are printed at the end.
 """
 import argparse
 import json
@@ -87,7 +92,8 @@ def prepare_inputs(fixture, count):
 
 
 def page_count(qpdf, pdf):
-    result = subprocess.run([qpdf, "--show-npages", str(pdf)], capture_output=True, text=True)
+    """Pages as qpdf counts them; a file qpdf can read only with warnings still has a count."""
+    result = subprocess.run([qpdf, "--warning-exit-0", "--show-npages", str(pdf)], capture_output=True, text=True)
     return int(result.stdout) if result.returncode == 0 else None
 
 
@@ -106,8 +112,10 @@ def human_time(s):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--fixture", type=pathlib.Path, action="append",
-                        help="input PDF to copy (repeatable; default: both PDFs in bench/fixtures)")
+    parser.add_argument("--fixture", type=pathlib.Path, action="append", default=[],
+                        help="input PDF to copy 10 to 2,000 times (repeatable)")
+    parser.add_argument("--corpus", type=pathlib.Path,
+                        help="directory of PDFs to merge once, all together, instead of copies of a fixture")
     parser.add_argument("--counts", default="10,100,1000,2000")
     parser.add_argument("--runs", type=int, default=5)
     parser.add_argument("--warmup", type=int, default=1)
@@ -118,9 +126,16 @@ def main():
     parser.add_argument("--nori", default=str(ROOT / "target" / "release" / "nori"))
     parser.add_argument("--lopdf-merge", default=str(ROOT / "target" / "release" / "lopdf-merge"))
     parser.add_argument("--qpdf", default="qpdf")
+    parser.add_argument("--keep", action="store_true", help="leave the copied inputs and merged outputs on disk")
+    parser.add_argument("--tables-only", action="store_true", help="print the tables from the results file and exit")
     args = parser.parse_args()
+    if args.tables_only:
+        print_tables(json.loads(RESULTS.read_text()))
+        return
 
-    fixtures = args.fixture or sorted((HERE / "fixtures").glob("*.pdf"))
+    fixtures = args.fixture
+    if not fixtures and not args.corpus:
+        sys.exit("give --fixture PDF and/or --corpus DIR (or --tables-only)")
     counts = [int(c) for c in args.counts.split(",")]
     max_counts = {name: int(n) for name, n in (item.split("=") for item in args.max_count)}
     available = tools(args)
@@ -138,9 +153,12 @@ def main():
         "tools": {name: version(name, binary) for name, (binary, _) in available.items()},
     })
     results["fixtures"] = [f for f in results.get("fixtures", []) if f["name"] not in {x.name for x in fixtures}]
+    if args.corpus:
+        results["corpus"] = measure_corpus(args, available)
+        RESULTS.write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
     for fixture in fixtures:
         entry = {"name": fixture.name, "bytes": fixture.stat().st_size, "pages": page_count(args.qpdf, fixture),
-                 "objects": object_count(args.qpdf, fixture), "cases": []}
+                 "objects": object_count(args.qpdf, fixture), "source": source(fixture.name), "cases": []}
         results["fixtures"].append(entry)
         results["fixtures"].sort(key=lambda f: f["name"])
         print(f"== {fixture.name}: {entry['pages']} pages, {entry['objects']} objects, {human_size(entry['bytes'])}")
@@ -156,9 +174,40 @@ def main():
                 case["tools"][name] = measure(args, name, build, inputs, case["pages"],
                                               OUTPUTS / f"{fixture.stem}-{count}-{name.replace(' ', '')}.pdf")
             RESULTS.write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
+            if not args.keep:
+                # Thousands of copies and their merged outputs run to gigabytes; keep the disk clear.
+                shutil.rmtree(inputs[0].parent, ignore_errors=True)
+                for out in OUTPUTS.glob(f"{fixture.stem}-{count}-*.pdf"):
+                    out.unlink()
 
     print()
     print_tables(results)
+
+
+def measure_corpus(args, available):
+    """Merges every PDF in the corpus directory once, in name order."""
+    inputs = sorted(args.corpus.glob("*.pdf"))
+    files = [{"name": p.name, "bytes": p.stat().st_size, "pages": page_count(args.qpdf, p),
+              "objects": object_count(args.qpdf, p), "source": source(p.name)} for p in inputs]
+    pages = sum(f["pages"] or 0 for f in files)
+    print(f"== corpus {args.corpus}: {len(inputs)} files, {pages} pages, "
+          f"{human_size(sum(f['bytes'] for f in files))}")
+    tools = {}
+    for name, (_, build) in available.items():
+        tools[name] = measure(args, name, build, inputs, pages, OUTPUTS / f"corpus-{name.replace(' ', '')}.pdf")
+    return {"directory": str(args.corpus.relative_to(ROOT)) if args.corpus.is_relative_to(ROOT) else str(args.corpus),
+            "files": files, "pages": pages, "tools": tools}
+
+
+def source(name):
+    """Title, Commons page and license of a PDF listed in public-pdfs.json, else None."""
+    listing = HERE / "public-pdfs.json"
+    if not listing.is_file():
+        return None
+    for d in json.loads(listing.read_text())["files"]:
+        if d["name"] == name:
+            return {"title": d["title"], "page": d["page"], "license": d["license"]}
+    return None
 
 
 def version(name, binary):
@@ -207,6 +256,16 @@ def measure(args, name, build, inputs, expected_pages, out):
 def print_tables(results):
     names = list(results["tools"])
     print(f"median of {results['runs']} runs, {results['platform']}, {results['cpu_count']} CPUs")
+    if "corpus" in results:
+        corpus = results["corpus"]
+        print(f"\n## corpus: {len(corpus['files'])} files, {corpus['pages']:,} pages\n")
+        print("| | " + " | ".join(names) + " |")
+        print("|---|" + "---:|" * len(names))
+        for metric, label, fmt in [("time_s", "Time", human_time), ("rss_bytes", "Peak memory", human_size),
+                                   ("output_bytes", "Output size", human_size)]:
+            cells = [fmt(corpus["tools"][n][metric]) if n in corpus["tools"] and metric in corpus["tools"][n] else "-"
+                     for n in names]
+            print(f"| {label} | " + " | ".join(cells) + " |")
     for fixture in results["fixtures"]:
         print(f"\n## {fixture['name']} ({fixture['pages']} pages, {fixture['objects']} objects, "
               f"{human_size(fixture['bytes'])})")

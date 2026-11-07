@@ -12,71 +12,124 @@ nori -o merged.pdf a.pdf b.pdf c.pdf
 
 ## Comparison with qpdf and lopdf
 
-The same 14-page PDF was copied 10 to 2,000 times and merged with nori, with [qpdf](https://qpdf.sourceforge.io/), and with the merge code from the [lopdf](https://github.com/J-F-Liu/lopdf) README. Wall-clock time, peak memory and output size were measured; see [How the comparison was made](#how-the-comparison-was-made).
+PDFs picked at random from Wikimedia Commons were merged with nori, with [qpdf](https://qpdf.sourceforge.io/), and with the merge code from the [lopdf](https://github.com/J-F-Liu/lopdf) README. Wall-clock time, peak memory and output size were measured; see [How the comparison was made](#how-the-comparison-was-made) for the procedure and how the inputs were chosen.
 
-Measured on a Mac (Intel Core i5-8500B, 6 cores, 16 GB, macOS 15.8) with qpdf 12.4.2, lopdf 0.47.0 and nori 0.1.0. Values are the median of 5 runs; memory is peak RSS. `nori -j6` parses six inputs at a time. A `-` marks a case not run because the next step would not fit in memory (on the Chrome PDF, qpdf needs 5 GB at 1,000 files and lopdf 2.6 GB at 100).
+Measured on a Mac (Intel Core i5-8500B, 6 cores, 16 GB, macOS 15.8) with qpdf 12.4.2, lopdf 0.47.0 and nori 0.1.0. Values are the median of 5 runs; memory is peak RSS. `nori -j6` parses six inputs at a time. A `-` marks a case not run because the next step would not fit in memory.
 
-### PDF made by LibreOffice (14 pages, 58 objects, 73 KB)
+### 40 PDFs of every make, merged once
 
-Time
+40 random files (277 pages, 33.8 MB in all: official journals, regulations, scanned newspapers and notebooks, Internet Archive books) were merged in one go, in name order. All four tools produced a 277-page output that passes qpdf's check. The list is in `bench/public-pdfs.json`.
 
-| Files | Pages | nori | nori -j6 | qpdf | lopdf |
-|---:|---:|---:|---:|---:|---:|
-| 10 | 140 | 22 ms | 18 ms | 151 ms | 26 ms |
-| 100 | 1,400 | 76 ms | 49 ms | 1.34 s | 141 ms |
-| 1,000 | 14,000 | 577 ms | 331 ms | 15.08 s | 2.31 s |
-| 2,000 | 28,000 | 1.30 s | 762 ms | 31.38 s | 6.63 s |
+| | nori | nori -j6 | qpdf | lopdf |
+|---|---:|---:|---:|---:|
+| Time | 88 ms | 53 ms | 1.43 s | 170 ms |
+| Peak memory | 21.3 MB | 36.8 MB | 30.3 MB | 111.2 MB |
+| Output size | 32.0 MB | 32.0 MB | 31.9 MB | 33.7 MB |
 
-Peak memory
+### One PDF copied 10 to 2,000 times
 
-| Files | Pages | nori | nori -j6 | qpdf | lopdf |
-|---:|---:|---:|---:|---:|---:|
-| 10 | 140 | 2.2 MB | 4.2 MB | 5.8 MB | 5.8 MB |
-| 100 | 1,400 | 3.3 MB | 5.3 MB | 24.9 MB | 48.3 MB |
-| 1,000 | 14,000 | 4.7 MB | 7.1 MB | 211.2 MB | 461.6 MB |
-| 2,000 | 28,000 | 5.9 MB | 8.5 MB | 419.1 MB | 918.3 MB |
+Three of the 40 were chosen for how differently they are built.
 
-Output size
+| PDF | What it is | Pages | Objects | Size |
+|---|---|---:|---:|---:|
+| [UK regulation](https://commons.wikimedia.org/wiki/File:The_Organic_Products_(Amendment)_Regulations_2015_(UKSI_2015-1669_qp).pdf) | Text only, made with Ghostscript; a light PDF | 4 | 36 | 40 KB |
+| [EU Official Journal](https://commons.wikimedia.org/wiki/File:OJ_C_202301032_of_2023_-_SK_Slovak.pdf) | Made with PDFlib, with many objects per page | 7 | 478 | 540 KB |
+| [Scanned newspaper](https://commons.wikimedia.org/wiki/File:The_New_Orleans_Bee_1900_October_0074.pdf) | A 1900 front page; each page is one image | 1 | 9 | 610 KB |
 
-| Files | Pages | nori | nori -j6 | qpdf | lopdf |
-|---:|---:|---:|---:|---:|---:|
-| 10 | 140 | 0.7 MB | 0.7 MB | 0.7 MB | 0.7 MB |
-| 100 | 1,400 | 6.6 MB | 6.6 MB | 6.7 MB | 6.7 MB |
-| 1,000 | 14,000 | 65.9 MB | 65.9 MB | 66.8 MB | 67.2 MB |
-| 2,000 | 28,000 | 131.9 MB | 131.9 MB | 133.6 MB | 134.5 MB |
-
-On inputs with few objects, nori is 7 to 24 times faster than qpdf and uses 6 MB even for 2,000 files (28,000 pages). qpdf and lopdf grow in proportion to the number of inputs.
-
-### PDF made by Chrome (14 pages, 3,002 objects, 670 KB)
+#### UK regulation (4 pages, 36 objects, 40 KB)
 
 Time
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
-| 10 | 140 | 311 ms | 157 ms | 399 ms | 669 ms |
-| 100 | 1,400 | 2.74 s | 1.44 s | 3.71 s | 6.87 s |
-| 1,000 | 14,000 | 28.01 s | 14.01 s | 85.33 s | - |
-| 2,000 | 28,000 | 54.33 s | 28.71 s | - | - |
+| 10 | 40 | 17 ms | 16 ms | 44 ms | 29 ms |
+| 100 | 400 | 59 ms | 41 ms | 203 ms | 109 ms |
+| 1,000 | 4,000 | 522 ms | 360 ms | 3.28 s | 1.49 s |
+| 2,000 | 8,000 | 1.12 s | 626 ms | 5.86 s | 3.61 s |
 
 Peak memory
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
-| 10 | 140 | 51.9 MB | 117.6 MB | 70.3 MB | 272.1 MB |
-| 100 | 1,400 | 76.6 MB | 138.5 MB | 672.8 MB | 2.63 GB |
-| 1,000 | 14,000 | 79.6 MB | 210.8 MB | 5.05 GB | - |
-| 2,000 | 28,000 | 83.4 MB | 253.6 MB | - | - |
+| 10 | 40 | 1.8 MB | 3.6 MB | 5.4 MB | 4.5 MB |
+| 100 | 400 | 2.8 MB | 5.4 MB | 24.7 MB | 35.2 MB |
+| 1,000 | 4,000 | 4.6 MB | 7.5 MB | 212.8 MB | 349.7 MB |
+| 2,000 | 8,000 | 5.7 MB | 8.5 MB | 422.5 MB | 694.7 MB |
 
 Output size
 
 | Files | Pages | nori | nori -j6 | qpdf | lopdf |
 |---:|---:|---:|---:|---:|---:|
-| 10 | 140 | 2.6 MB | 2.6 MB | 2.7 MB | 6.1 MB |
-| 100 | 1,400 | 26.6 MB | 26.6 MB | 26.7 MB | 62.2 MB |
-| 1,000 | 14,000 | 267.7 MB | 267.7 MB | 268.3 MB | - |
-| 2,000 | 28,000 | 536.0 MB | 536.0 MB | - | - |
+| 10 | 40 | 0.4 MB | 0.4 MB | 0.4 MB | 0.4 MB |
+| 100 | 400 | 3.8 MB | 3.8 MB | 3.8 MB | 3.8 MB |
+| 1,000 | 4,000 | 38.4 MB | 38.4 MB | 38.4 MB | 38.2 MB |
+| 2,000 | 8,000 | 76.8 MB | 76.8 MB | 76.8 MB | 76.3 MB |
 
-On inputs with many objects, lopdf takes 24 ms to parse each file, which is 80% of nori's time. nori is still 1.3 to 3 times faster than qpdf, and 2.5 to 6 times with `-j6`. qpdf reaches 5 GB at 1,000 files where nori uses 80 MB, and nori stays at 83 MB for 2,000 files. lopdf's output is twice the size because the README's merge code keeps objects that no page refers to, such as the structure tree of tagged PDF.
+#### EU Official Journal (7 pages, 478 objects, 540 KB)
+
+Time
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 70 | 46 ms | 33 ms | 93 ms | 95 ms |
+| 100 | 700 | 343 ms | 189 ms | 778 ms | 925 ms |
+| 1,000 | 7,000 | 3.46 s | 2.03 s | 8.59 s | - |
+| 2,000 | 14,000 | 6.14 s | 3.96 s | 17.95 s | - |
+
+Peak memory
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 70 | 5.0 MB | 23.5 MB | 14.0 MB | 42.3 MB |
+| 100 | 700 | 13.0 MB | 27.8 MB | 105.4 MB | 409.6 MB |
+| 1,000 | 7,000 | 14.8 MB | 33.4 MB | 1.02 GB | - |
+| 2,000 | 14,000 | 16.3 MB | 36.7 MB | 2.03 GB | - |
+
+Output size
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 70 | 4.9 MB | 4.9 MB | 4.9 MB | 5.4 MB |
+| 100 | 700 | 49.2 MB | 49.2 MB | 49.2 MB | 54.1 MB |
+| 1,000 | 7,000 | 492.0 MB | 492.0 MB | 492.0 MB | - |
+| 2,000 | 14,000 | 984.2 MB | 984.2 MB | 984.3 MB | - |
+
+#### Scanned newspaper (1 page, 9 objects, 610 KB)
+
+Time
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 10 | 21 ms | 19 ms | 31 ms | 26 ms |
+| 100 | 100 | 70 ms | 61 ms | 104 ms | 133 ms |
+| 1,000 | 1,000 | 715 ms | 661 ms | 1.16 s | 1.62 s |
+| 2,000 | 2,000 | 1.53 s | 1.41 s | 2.60 s | - |
+
+Peak memory
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 10 | 3.6 MB | 11.4 MB | 4.9 MB | 14.0 MB |
+| 100 | 100 | 3.9 MB | 10.4 MB | 7.9 MB | 128.0 MB |
+| 1,000 | 1,000 | 4.6 MB | 11.7 MB | 30.6 MB | 1.26 GB |
+| 2,000 | 2,000 | 5.4 MB | 11.8 MB | 56.7 MB | - |
+
+Output size
+
+| Files | Pages | nori | nori -j6 | qpdf | lopdf |
+|---:|---:|---:|---:|---:|---:|
+| 10 | 10 | 6.1 MB | 6.1 MB | 6.1 MB | 6.1 MB |
+| 100 | 100 | 61.1 MB | 61.1 MB | 61.1 MB | 61.1 MB |
+| 1,000 | 1,000 | 610.7 MB | 610.7 MB | 610.8 MB | 610.9 MB |
+| 2,000 | 2,000 | 1.22 GB | 1.22 GB | 1.22 GB | - |
+
+### What the numbers say
+
+- With few objects per file, both speed and memory differ by orders of magnitude. Merging 2,000 copies of the regulation (8,000 pages) took nori 1.12 s and 5.7 MB, qpdf 5.9 s and 423 MB, lopdf 3.6 s and 695 MB. nori's memory barely moved from the 1.8 MB it used for 10 files
+- With many objects per file, memory still stays flat. The journal has 478 objects per file and takes longer to parse, yet nori is 2.9 times faster than qpdf, 4.5 times with `-j6`. At 2,000 files nori used 16 MB and qpdf 2 GB
+- With scanned images, the gap in time narrows. The newspaper has 9 objects per page, so merging is mostly copying image data. For 2,000 files (1.2 GB) nori took 1.53 s and qpdf 2.60 s, 1.7 times apart, but memory was 5.4 MB for nori, 57 MB for qpdf and 1.3 GB for lopdf at 1,000 files
+- lopdf is not slow; the merge code is the problem. nori itself parses inputs with lopdf. The README's merge code gathers every input into one `Document` and saves at the end, so memory grows with the total input, and objects no page refers to stay in the output, which makes it a little larger
+- Outputs are about the same size from every tool, all pass `qpdf --check`, and all have the expected page count
 
 ## Installation
 
@@ -155,24 +208,26 @@ end
 
 ## How the comparison was made
 
-`bench/bench.py` copies a PDF from `bench/fixtures/` as many times as the file count says, runs each tool on the copies, and takes wall-clock time and peak RSS from `/usr/bin/time`. Each output is checked with qpdf for its page count and with `qpdf --check`.
+`bench/bench.py` runs each tool as a command and takes wall-clock time and peak RSS from `/usr/bin/time`. Each output is checked with qpdf for its page count and with `qpdf --check`. There are two kinds of run.
+
+- `--fixture`: one PDF is copied 10 to 2,000 times and merged, to show how time and memory grow with the number of files
+- `--corpus`: every PDF in a directory is merged once, all together, to show that real-world files of every make come through
+
+The inputs are PDFs picked at random from Wikimedia Commons. `bench/fetch.py select` asks CirrusSearch for PDFs in random order (`srsort=random`), keeps 40 that are at most 3 MB and 60 pages, and writes their titles, URLs and licenses to `bench/public-pdfs.json`. `bench/fetch.py fetch` downloads that list into `bench/inputs/public/` (the PDFs themselves are not in the repository). For the scaling runs, three of the 40 were chosen for how differently they are built.
 
 ```bash
 cargo build --release --workspace
-python3 bench/bench.py --counts 10,100,1000,2000 --runs 5 --max-count lopdf=100
+python3 bench/fetch.py fetch
+python3 bench/bench.py --corpus bench/inputs/public
+python3 bench/bench.py --fixture bench/inputs/public/public-17.pdf
+python3 bench/bench.py --fixture bench/inputs/public/public-13.pdf --max-count lopdf=100
+python3 bench/bench.py --fixture bench/inputs/public/public-24.pdf --max-count lopdf=1000
 ```
 
 - qpdf is run as `qpdf --warning-exit-0 --empty --pages <inputs>... -- <output>`
 - lopdf is `bench/lopdf-merge/`, the merge code from the lopdf README made into a binary. It loads every input, gathers all objects into one `Document`, and saves at the end
 - nori itself parses inputs with lopdf. lopdf is neither slow nor memory-hungry; the README's merge code holds every input in memory until the final save, so its memory grows with the total input. nori writes each input out as soon as it is read, so its memory does not depend on the number of inputs
-
-The benchmark PDFs are the same HTML rendered to PDF by LibreOffice and by Google Chrome (`bench/fixtures/make_fixtures.py`). Both are 14 pages, but they are built very differently.
-
-| | LibreOffice | Chrome |
-|---|---:|---:|
-| Objects | 58 | 3,002 |
-| Fonts | embedded subsets | Type3, one stream per glyph |
-| Size | 73 KB | 670 KB |
+- `--max-count` stops a tool before its memory would exceed the benchmark machine's 16 GB
 
 ## Tests
 

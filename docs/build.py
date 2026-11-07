@@ -30,15 +30,15 @@ T = {
             "public-24.pdf": "The New Orleans Bee、1900 年 10 月の 1 面。1 ページがまるごと画像のスキャン",
         },
         "chart_caption": {
-            "public-17.pdf": "CAPTION_17",
-            "public-13.pdf": "CAPTION_13",
-            "public-24.pdf": "CAPTION_24",
+            "public-17.pdf": "文字だけの軽い PDF。qpdf と lopdf は入力の数に比例して増え、nori は 2,000 ファイル（8,000 ページ）でも 5.7 MB です。",
+            "public-13.pdf": "1 ページあたりのオブジェクトが多い PDF。qpdf は 2,000 ファイルで 2 GB に達し、nori は 16 MB です。lopdf は 100 ファイルで 410 MB だったので、その先は測っていません。",
+            "public-24.pdf": "1 ページが画像のスキャン。オブジェクトが少ないぶん qpdf のメモリも伸びにくいものの、2,000 ファイルで nori 5.4 MB に対して qpdf は 57 MB、lopdf は 1,000 ファイルで 1.3 GB でした。",
         },
         "fixture_col": "PDF", "fixture_desc_col": "どんな PDF か", "pages_col": "ページ", "objects_col": "オブジェクト", "size_col": "サイズ",
         "objects": "オブジェクト", "output_title": "出力サイズ",
         "corpus_title": "ばらばらな PDF を 1 回でつなぐ",
         "corpus_lede": "Wikimedia Commons からランダムに選んだ {files} 件（{pages} ページ、合計 {size}）を、名前の順に 1 回でつなぎました。官報、法令、新聞やノートのスキャン、Internet Archive の書籍など、作り手も年代もばらばらです。",
-        "corpus_note": "CORPUS_NOTE",
+        "corpus_note": "4 ツールとも 277 ページの出力を作り、qpdf の検査も通りました。nori は 88 ms と、qpdf の 16 倍速く、lopdf の 2 倍速い結果です。メモリは 21 MB で、いちばん大きい入力（2.9 MB）を読むぶんが主です。",
         "corpus_files": "つないだ PDF の一覧",
         "not_measured": "計測せず",
         "how_title": "読んだそばから書き、捨てる",
@@ -63,14 +63,14 @@ T = {
         "ratio_time": "倍", "ratio_time_small": "qpdf 比", "ratio_memory_small": "qpdf 比",
         "ratio_none": "qpdf は計測せず",
         "notes": [
-            ("オブジェクトの少ない PDF では、速さもメモリも桁が違います", "LibreOffice 版の 2,000 ファイル（28,000 ページ）は、nori が 1.30 秒・5.9 MB、qpdf が 31.4 秒・419 MB、lopdf が 6.6 秒・918 MB でした。nori のメモリは 10 ファイルの 2.2 MB からほとんど増えていません。"),
-            ("オブジェクトの多い PDF では、差は主にメモリに出ます", "Chrome 版は lopdf の解析に 1 ファイル 24 ms かかり、nori の時間の 8 割を占めます。それでも qpdf より 1.3〜3 倍速く、<code>-j6</code> なら 2.5〜6 倍です。メモリは qpdf が 1,000 ファイルで 5 GB、nori は 80 MB でした。"),
-            ("lopdf が遅いのではなく、結合コードの作りの問題です", "nori 自身も入力の解析には lopdf を使っています。README の結合コードは全入力を 1 つの <code>Document</code> に集めて最後に保存するため、メモリが入力の合計に比例し、ページから参照されないオブジェクトも出力に残るので出力も倍の大きさになります。"),
-            ("出力は qpdf とほぼ同じ大きさです", "ストリームを入力のまま書くので、LibreOffice 版 2,000 ファイルで nori 131.9 MB、qpdf 133.6 MB でした。出力はすべて <code>qpdf --check</code> を通り、ページ数も一致しています。"),
+            ("オブジェクトの少ない PDF では、速さもメモリも桁が違います", "英国の法令を 2,000 ファイル（8,000 ページ）つなぐと、nori が 1.12 秒・5.7 MB、qpdf が 5.9 秒・423 MB、lopdf が 3.6 秒・695 MB でした。nori のメモリは 10 ファイルの 1.8 MB からほとんど増えていません。"),
+            ("オブジェクトの多い PDF でも、メモリは一定のままです", "EU 官報は 1 ファイル 478 オブジェクトあり、解析に時間がかかります。それでも nori は qpdf の 2.9 倍速く、<code>-j6</code> なら 4.5 倍です。メモリは 2,000 ファイルで nori 16 MB、qpdf 2 GB でした。"),
+            ("スキャンした画像の PDF では、時間の差は縮まります", "新聞のスキャンは 1 ページ 9 オブジェクトしかなく、処理の大半が画像データの書き写しです。2,000 ファイル（1.2 GB）で nori 1.53 秒、qpdf 2.60 秒と差は 1.7 倍にとどまりますが、メモリは nori 5.4 MB、qpdf 57 MB、lopdf は 1,000 ファイルで 1.3 GB でした。"),
+            ("lopdf が遅いのではなく、結合コードの作りの問題です", "nori 自身も入力の解析には lopdf を使っています。README の結合コードは全入力を 1 つの <code>Document</code> に集めて最後に保存するため、メモリが入力の合計に比例します。ページから参照されないオブジェクトも出力に残すので、出力が少し大きくなります。"),
         ],
         "method_summary": "計測方法",
-        "method_p1": "Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8）で、nori 0.1.0、qpdf 12.4.2、lopdf 0.47.0 を比べました。入力を指定した数だけコピーし、各ツールをコマンドとして 1 回ウォームアップしてから 5 回実行し、時間とメモリ（最大常駐メモリ）を <code>/usr/bin/time</code> で取得しています。出力は qpdf でページ数と <code>--check</code> を確かめました。",
-        "method_p2": "Chrome 版の qpdf は 1,000 ファイルで 5 GB、lopdf は 100 ファイルで 2.6 GB のメモリを使ったため、その先はこのマシンでは測っていません。計測スクリプトと入力の作り方は <a href=\"https://github.com/champierre/nori/tree/main/bench\" target=\"_blank\" rel=\"noopener\">bench/</a> にあります。",
+        "method_p1": "Mac（Intel Core i5-8500B 6 コア、メモリ 16 GB、macOS 15.8）で、nori 0.1.0、qpdf 12.4.2、lopdf 0.47.0 を比べました。伸び方の計測では入力を指定した数だけコピーし、各ツールをコマンドとして 1 回ウォームアップしてから 5 回実行し、時間とメモリ（最大常駐メモリ）を <code>/usr/bin/time</code> で取得しています。出力は qpdf でページ数と <code>--check</code> を確かめました。",
+        "method_p2": "入力は Wikimedia Commons からランダムに選んだ PDF で、<code>bench/fetch.py</code> が一覧の作成と取得をします。lopdf は EU 官報で 100 ファイル、新聞のスキャンで 1,000 ファイルの時点でメモリが 400 MB〜1.3 GB に達したため、その先はこのマシンでは測っていません。計測スクリプトと入力の一覧は <a href=\"https://github.com/champierre/nori/tree/main/bench\" target=\"_blank\" rel=\"noopener\">bench/</a> にあります。",
         "scope_title": "コピーするもの、引き継がないもの",
         "scope_yes_title": "コピーするもの",
         "scope_yes": ["ページと、その順序", "コンテンツストリーム、リソース、フォント、画像", "注釈（ページを指す参照は出力のページに付け替えます）", "ページツリーの途中で指定された MediaBox・CropBox・Resources・Rotate（各ページに書き込みます）"],
@@ -110,8 +110,8 @@ end""",
         "lede": "nori は複数の PDF を 1 つにつなぐコマンドです。入力を 1 枚ずつ読み、そのページに要るものだけを出力に貼り足してから、次の 1 枚を開きます。だから、メモリ使用量は入力の数に関係なく、いちばん大きい入力 1 つ分にとどまります。",
         "paste_memory": "メモリ", "paste_memory_note": "枚数が増えても変わらない",
         "paste_caption": "入力を 1 枚ずつ読み、要るものを書き足してから捨てる。だから貼る枚数が増えても、手元に持つのは 1 枚分。",
-        "cards": [("6 MB", "2,000 ファイル・28,000 ページをつないだときの最大メモリ"), ("24 倍", "qpdf より速い（オブジェクトの少ない PDF を 2,000 ファイル）"), ("1 つ", "外部コマンドに依存しない単体のバイナリ。MIT ライセンス")],
-        "chart_section_lede": "横軸はファイル数。nori の線は、入力が 200 倍になってもほとんど動きません。",
+        "cards": [("6 MB", "2,000 ファイルをつないでも、メモリはこれだけ（3 種類の PDF で 5.4〜16 MB）"), ("16 倍", "qpdf より速い（Wikimedia Commons のランダムな 40 件を 1 回でつなぐ）"), ("1 つ", "外部コマンドに依存しない単体のバイナリ。MIT ライセンス")],
+        "chart_section_lede": "横軸はファイル数。nori の線は、入力が 200 倍になってもほとんど動きません。lopdf の線が途中で終わるのは、その先はメモリが計測機に収まらないためです。",
     },
     "en": {
         "lang": "en", "dir": "en/", "alt_href": "../", "alt_label": "日本語", "alt_lang": "ja",
@@ -129,15 +129,15 @@ end""",
             "public-24.pdf": "The New Orleans Bee, front page, October 1900. A scan: each page is one image",
         },
         "chart_caption": {
-            "public-17.pdf": "CAPTION_17",
-            "public-13.pdf": "CAPTION_13",
-            "public-24.pdf": "CAPTION_24",
+            "public-17.pdf": "A light, text-only PDF. qpdf and lopdf grow with the number of inputs; nori is at 5.7 MB even for 2,000 files (8,000 pages).",
+            "public-13.pdf": "A PDF with many objects per page. qpdf reaches 2 GB at 2,000 files; nori uses 16 MB. lopdf was at 410 MB for 100 files, so larger counts were not run.",
+            "public-24.pdf": "A scan with one image per page. With so few objects even qpdf's memory grows slowly, yet at 2,000 files nori used 5.4 MB against qpdf's 57 MB, and lopdf 1.3 GB at 1,000.",
         },
         "fixture_col": "PDF", "fixture_desc_col": "What it is", "pages_col": "Pages", "objects_col": "Objects", "size_col": "Size",
         "objects": "objects", "output_title": "Output size",
         "corpus_title": "Merging PDFs of every make, once",
         "corpus_lede": "{files} PDFs picked at random from Wikimedia Commons ({pages} pages, {size} in all) merged in one go, in name order: official journals, regulations, scanned newspapers and notebooks, Internet Archive books, from many producers and decades.",
-        "corpus_note": "CORPUS_NOTE",
+        "corpus_note": "All four tools produced a 277-page output that passes qpdf's check. nori took 88 ms, 16 times faster than qpdf and twice as fast as lopdf, in 21 MB of memory, most of it for reading the largest input (2.9 MB).",
         "corpus_files": "The PDFs that were merged",
         "not_measured": "not run",
         "how_title": "Write as you read, then let go",
@@ -162,14 +162,14 @@ end""",
         "ratio_time": "×", "ratio_time_small": "vs qpdf", "ratio_memory_small": "of qpdf",
         "ratio_none": "qpdf not run",
         "notes": [
-            ("With few objects per file, both speed and memory differ by orders of magnitude", "For 2,000 LibreOffice files (28,000 pages), nori took 1.30 s and 5.9 MB, qpdf 31.4 s and 419 MB, lopdf 6.6 s and 918 MB. nori's memory barely moved from the 2.2 MB it used for 10 files."),
-            ("With many objects per file, the difference is mostly memory", "On the Chrome PDF, lopdf takes 24 ms to parse each file, which is 80% of nori's time. nori is still 1.3 to 3 times faster than qpdf, and 2.5 to 6 times with <code>-j6</code>. qpdf reached 5 GB at 1,000 files; nori used 80 MB."),
-            ("lopdf is not slow; the merge code is the problem", "nori itself parses inputs with lopdf. The README's merge code gathers every input into one <code>Document</code> and saves at the end, so memory grows with the total input, and objects no page refers to stay in the output, which is why its output is twice the size."),
-            ("The output is about the same size as qpdf's", "Streams are written as read, so 2,000 LibreOffice files came to 131.9 MB with nori and 133.6 MB with qpdf. Every output passed <code>qpdf --check</code> with the expected page count."),
+            ("With few objects per file, both speed and memory differ by orders of magnitude", "Merging 2,000 copies of the UK regulation (8,000 pages) took nori 1.12 s and 5.7 MB, qpdf 5.9 s and 423 MB, lopdf 3.6 s and 695 MB. nori's memory barely moved from the 1.8 MB it used for 10 files."),
+            ("With many objects per file, memory still stays flat", "The EU journal has 478 objects per file and takes longer to parse. nori is still 2.9 times faster than qpdf, 4.5 times with <code>-j6</code>. At 2,000 files nori used 16 MB and qpdf 2 GB."),
+            ("With scanned images, the gap in time narrows", "The scanned newspaper has 9 objects per page, so merging is mostly copying image data. For 2,000 files (1.2 GB) nori took 1.53 s and qpdf 2.60 s, only 1.7 times apart, but memory was 5.4 MB for nori, 57 MB for qpdf and 1.3 GB for lopdf at 1,000 files."),
+            ("lopdf is not slow; the merge code is the problem", "nori itself parses inputs with lopdf. The README's merge code gathers every input into one <code>Document</code> and saves at the end, so memory grows with the total input. Objects no page refers to stay in the output, which makes it a little larger."),
         ],
         "method_summary": "How it was measured",
         "method_p1": "On a Mac (Intel Core i5-8500B, 6 cores, 16 GB, macOS 15.8) with nori 0.1.0, qpdf 12.4.2 and lopdf 0.47.0. The input was copied the given number of times, each tool was run as a command once to warm up and then 5 times, and time and peak resident memory were taken from <code>/usr/bin/time</code>. Outputs were checked with qpdf for page count and with <code>--check</code>.",
-        "method_p2": "On the Chrome PDF, qpdf used 5 GB at 1,000 files and lopdf 2.6 GB at 100, so larger counts were not run on this machine. The benchmark script and the fixture generator are in <a href=\"https://github.com/champierre/nori/tree/main/bench\" target=\"_blank\" rel=\"noopener\">bench/</a>.",
+        "method_p2": "The inputs are PDFs picked at random from Wikimedia Commons; <code>bench/fetch.py</code> builds the list and downloads them. lopdf reached 400 MB to 1.3 GB at 100 files of the journal and 1,000 of the newspaper, so larger counts were not run on this machine. The benchmark script and the list of inputs are in <a href=\"https://github.com/champierre/nori/tree/main/bench\" target=\"_blank\" rel=\"noopener\">bench/</a>.",
         "scope_title": "What is copied, what is not",
         "scope_yes_title": "Copied",
         "scope_yes": ["Pages, in input order", "Content streams, resources, fonts, images", "Annotations (references to pages are redirected to the output pages)", "MediaBox, CropBox, Resources and Rotate set higher in the page tree (written into each page)"],
@@ -209,8 +209,8 @@ end""",
         "lede": "nori merges PDF files into one. It reads one input, pastes what its pages need onto the output, and only then opens the next. Memory use therefore stays around the size of the largest single input, however many files you merge.",
         "paste_memory": "memory", "paste_memory_note": "does not grow with the sheets",
         "paste_caption": "One sheet at a time: read it, paste what its pages need, let it go. However many sheets, only one is in hand.",
-        "cards": [("6 MB", "peak memory merging 2,000 files, 28,000 pages"), ("24×", "faster than qpdf (2,000 files of a PDF with few objects)"), ("1", "single binary, no external commands. MIT license")],
-        "chart_section_lede": "The x axis is the number of files. nori's line barely moves while the input grows 200-fold.",
+        "cards": [("6 MB", "peak memory for 2,000 files (5.4 to 16 MB across three kinds of PDF)"), ("16×", "faster than qpdf merging 40 random PDFs from Wikimedia Commons"), ("1", "single binary, no external commands. MIT license")],
+        "chart_section_lede": "The x axis is the number of files. nori's line barely moves while the input grows 200-fold. lopdf's line stops where the next step would not fit in the machine's memory.",
     },
 }
 
@@ -220,7 +220,9 @@ def fmt_time(s, lang):
 
 
 def fmt_size(b):
-    return f"{b / 1e9:,.2f} GB" if b >= 1e9 else f"{b / 1e6:,.1f} MB"
+    if b >= 1e9:
+        return f"{b / 1e9:,.2f} GB"
+    return f"{b / 1e6:,.1f} MB" if b >= 1e6 else f"{b / 1e3:,.0f} KB"
 
 
 def load():
@@ -800,7 +802,9 @@ CSS = """  /* Kraft paper, white sheets, sumi ink, and one color: the red of a t
   .fixtures, .corpus { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
   .fixtures th, .fixtures td, .corpus th, .corpus td { padding: 8px 12px; border-bottom: 1px solid var(--rule-light); text-align: left; vertical-align: top; }
   .fixtures th, .corpus thead th { font-size: 0.8125rem; color: var(--ink-soft); font-weight: 400; }
+  .corpus thead th { text-align: right; }
   .fixtures td:nth-child(n+3), .fixtures th:nth-child(n+3), .corpus td { text-align: right; font-family: var(--code); white-space: nowrap; }
+  .fixtures td:first-child { white-space: nowrap; }
   .corpus tbody th { white-space: nowrap; }
   .corpus td:nth-child(2), .corpus td:nth-child(3) { color: var(--nori); font-weight: 700; }
   .corpus-files { margin: 0; padding-left: 1.6em; font-size: 0.875rem; }
